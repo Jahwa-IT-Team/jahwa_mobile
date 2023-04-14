@@ -5,10 +5,10 @@ import 'dart:math' as math;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:jahwa_mobile/Common/badges.dart';
+///import 'package:jahwa_mobile/Common/badges.dart';
 
 const double _kActiveFontSize = 14.0;
-const double _kBottomMargin = 8.0;
+const double _kBottomMargin = 0.0;
 enum BubbleBottomBarFabLocation { end, center }
 
 // ignore: must_be_immutable
@@ -107,8 +107,8 @@ class _BottomNavigationTile extends StatelessWidget {
               padding: padding!,
               child: InkResponse(
                 borderRadius: BorderRadius.horizontal(
-                  right: Radius.circular(50),
-                  left: Radius.circular(50),
+                  right: Radius.circular(30),
+                  left: Radius.circular(30),
                 ),
                 containedInkWell: true,
                 onTap: onTap,
@@ -119,14 +119,14 @@ class _BottomNavigationTile extends StatelessWidget {
                     : Colors.transparent,
                 highlightColor: Colors.transparent,
                 child: Container(
-                  height: 48,
+                  height: 25,
                   decoration: BoxDecoration(
                       color: selected
                           ? item.backgroundColor!.withOpacity(opacity)
                           : Colors.transparent,
                       borderRadius: BorderRadius.horizontal(
-                        right: Radius.circular(50),
-                        left: Radius.circular(50),
+                        right: Radius.circular(30),
+                        left: Radius.circular(30),
                       )),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -192,19 +192,13 @@ class _TileIcon extends StatelessWidget {
     return Align(
       alignment: Alignment.topCenter,
       heightFactor: 1.0,
-      child: Badge(
-        showBadge: item.showBadge,
-        badgeContent: item.badge,
-        badgeColor: item.badgeColor,
-        animationType: BadgeAnimationType.fade,
-        child: Container(
-          child: IconTheme(
-            data: IconThemeData(
-              color: selected ? item.backgroundColor : iconColor,
-              size: iconSize,
-            ),
-            child: selected ? item.activeIcon! : item.icon,
+      child: Container(
+        child: IconTheme(
+          data: IconThemeData(
+            color: selected ? item.backgroundColor : iconColor,
+            size: iconSize,
           ),
+          child: selected ? item.activeIcon! : item.icon,
         ),
       ),
     );

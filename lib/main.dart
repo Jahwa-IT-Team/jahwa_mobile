@@ -13,7 +13,10 @@ class MainApp extends StatelessWidget {
       title: 'Jahwa Mobile',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        fontFamily: 'Malgun', /// Custom Font 사용, pubspec.yaml에 정의된 Font
+        textTheme: Theme.of(context).textTheme.apply(
+          fontSizeFactor: 0.8,
+          fontSizeDelta: 1.0,
+        ),
       ),
       routes: routes, /// program_list.dart에 정의된 주소를 기반으로 이동을 진행함
     );

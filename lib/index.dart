@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intrinsic_grid_view/intrinsic_grid_view.dart';
 
 import 'package:jahwa_mobile/Common/bubble_bottom_bar.dart';
+import 'package:jahwa_mobile/Common/variable.dart';
 
 class Index extends StatefulWidget {
   @override
@@ -11,17 +12,20 @@ class Index extends StatefulWidget {
 }
 
 class _IndexState extends State<Index> {
-  late int currentIndex;
 
   void initState() {
     // TODO: implement initState
     super.initState();
-    currentIndex = 0;
+    changePage;
   }
 
   void changePage(int? index) {
     setState(() {
       currentIndex = index!;
+      if(index == 0) Navigator.pushReplacementNamed(context, '/');
+      else if(index == 1) Navigator.pushReplacementNamed(context, '/Menu');
+      else if(index == 2) Navigator.pushReplacementNamed(context, '/Search');
+      else if(index == 3) Navigator.pushReplacementNamed(context, '/Profile');
     });
   }
 
@@ -31,17 +35,14 @@ class _IndexState extends State<Index> {
         backgroundColor: const Color(0xFFb9d2ff),
         appBar: AppBar(
           centerTitle: true,
-          toolbarHeight: 50,
+          toolbarHeight: 45,
           backgroundColor: const Color(0xFF729ee2),
           elevation: 0.0,
           title:Row(
             children: <Widget> [
-              Icon(FontAwesomeIcons.idCardAlt,
-                size: 13, //Icon Size
-                color: Colors.lightGreen, //Color Of Icon
-              ),
+              Icon(FontAwesomeIcons.home, size: bSize, color: Colors.lightGreen),
               Container(padding: EdgeInsets.only(left: 10.0),),
-              Text('Nice to meet you, Lee Yong Seong.', style: TextStyle(fontFamily: 'NanumBarunGothic', fontSize: 11, fontWeight: FontWeight.bold, color: Colors.white)),
+              Text('Lee Yong Seong. Have a nice day.', style: TextStyle(fontFamily:'Malgun', fontSize: mSize, fontWeight: FontWeight.bold, color: Colors.white)),
             ],
           ),
         ),
@@ -64,12 +65,9 @@ class _IndexState extends State<Index> {
                               children: <Widget> [
                                 Row(
                                   children: <Widget> [
-                                    Icon(FontAwesomeIcons.listUl,
-                                      size: 13, //Icon Size
-                                      color: Colors.indigoAccent, //Color Of Icon
-                                    ),
-                                    Container(padding: EdgeInsets.only(left: 10.0),),
-                                    Text('Recent Posts', style: TextStyle(fontFamily: 'NanumBarunGothic', fontSize: 11, fontWeight: FontWeight.bold, color: const Color(0xFF000000))),
+                                    Icon(FontAwesomeIcons.listUl, size: bSize, color: const Color(0xFF729ee2)),
+                                    SizedBox(width: 10),
+                                    Text('Recent Posts', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black54)),
                                   ],
                                 ),
                                 Container(
@@ -80,14 +78,12 @@ class _IndexState extends State<Index> {
                                       children: <Widget>[
                                         InkWell(
                                           child: Container(
-                                            height: 20,
+                                            height: 30,
                                             child: Row(
                                               children: <Widget> [
                                                 Icon(Icons.circle, size: 8, color: Colors.black54),
-                                                Container(padding: EdgeInsets.only(left: 10.0),),
-                                                Flexible(
-                                                  child: Text('Posts 1 가나다라마바사아자차가타파하거너더러머버서어저처커터퍼허고노도로모보소오조초코토포호구누두루무부수우주추쿠투푸후', softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: 'NanumBarunGothic', fontSize: 11, fontWeight: FontWeight.normal, color: const Color(0xFF000000))),
-                                                ),
+                                                SizedBox(width: 5),
+                                                Flexible(child: Text('Posts 1 가나다라마바사아자차가타파하거너더러머버서어저처커터퍼허고노도로모보소오조초코토포호구누두루무부수우주추쿠투푸후', softWrap: false, overflow: TextOverflow.ellipsis)),
                                               ],
                                             ),
                                           ),
@@ -95,14 +91,12 @@ class _IndexState extends State<Index> {
                                         ),
                                         InkWell(
                                           child: Container(
-                                            height: 20,
+                                            height: 30,
                                             child: Row(
                                               children: <Widget> [
                                                 Icon(Icons.circle, size: 8, color: Colors.black54),
-                                                Container(padding: EdgeInsets.only(left: 10.0),),
-                                                Flexible(
-                                                  child: Text('Posts 2 가나다라마바사아자차가타파하거너더러머버서어저처커터퍼허고노도로모보소오조초코토포호구누두루무부수우주추쿠투푸후', softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: 'NanumBarunGothic', fontSize: 11, fontWeight: FontWeight.normal, color: const Color(0xFF000000))),
-                                                ),
+                                                SizedBox(width: 5),
+                                                Flexible(child: Text('Posts 2 ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz', softWrap: false, overflow: TextOverflow.ellipsis)),
                                               ],
                                             ),
                                           ),
@@ -110,14 +104,12 @@ class _IndexState extends State<Index> {
                                         ),
                                         InkWell(
                                           child: Container(
-                                            height: 20,
+                                            height: 30,
                                             child: Row(
                                               children: <Widget> [
                                                 Icon(Icons.circle, size: 8, color: Colors.black54),
-                                                Container(padding: EdgeInsets.only(left: 10.0),),
-                                                Flexible(
-                                                  child: Text('Posts 3 가나다라마바사아자차가타파하거너더러머버서어저처커터퍼허고노도로모보소오조초코토포호구누두루무부수우주추쿠투푸후', softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: 'NanumBarunGothic', fontSize: 11, fontWeight: FontWeight.normal, color: const Color(0xFF000000))),
-                                                ),
+                                                SizedBox(width: 5),
+                                                Flexible(child: Text('Posts 3 abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ', softWrap: false, overflow: TextOverflow.ellipsis)),
                                               ],
                                             ),
                                           ),
@@ -125,14 +117,12 @@ class _IndexState extends State<Index> {
                                         ),
                                         InkWell(
                                           child: Container(
-                                            height: 20,
+                                            height: 30,
                                             child: Row(
                                               children: <Widget> [
                                                 Icon(Icons.circle, size: 8, color: Colors.black54),
-                                                Container(padding: EdgeInsets.only(left: 10.0),),
-                                                Flexible(
-                                                  child: Text('Posts 4 가나다라마바사아자차가타파하거너더러머버서어저처커터퍼허고노도로모보소오조초코토포호구누두루무부수우주추쿠투푸후', softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: 'NanumBarunGothic', fontSize: 11, fontWeight: FontWeight.normal, color: const Color(0xFF000000))),
-                                                ),
+                                                SizedBox(width: 5),
+                                                Flexible(child: Text('Posts 4 123456789 0123456789 0123456789 01234567890', softWrap: false, overflow: TextOverflow.ellipsis)),
                                               ],
                                             ),
                                           ),
@@ -140,14 +130,12 @@ class _IndexState extends State<Index> {
                                         ),
                                         InkWell(
                                           child: Container(
-                                            height: 20,
+                                            height: 30,
                                             child: Row(
                                               children: <Widget> [
                                                 Icon(Icons.circle, size: 8, color: Colors.black54),
-                                                Container(padding: EdgeInsets.only(left: 10.0),),
-                                                Flexible(
-                                                  child: Text('Posts 5 가나다라마바사아자차가타파하거너더러머버서어저처커터퍼허고노도로모보소오조초코토포호구누두루무부수우주추쿠투푸후', softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: 'NanumBarunGothic', fontSize: 11, fontWeight: FontWeight.normal, color: const Color(0xFF000000))),
-                                                ),
+                                                SizedBox(width: 5),
+                                                Flexible(child: Text('Posts 5 ~!@#%^&*()-=_+[]}|;:",./<>?~!@#%^&*()-=_+[]}|;:",./<>?~!@#%^&*()-=_+[]}|;:",./<>?', softWrap: false, overflow: TextOverflow.ellipsis)),
                                               ],
                                             ),
                                           ),
@@ -156,10 +144,7 @@ class _IndexState extends State<Index> {
                                       ],
                                     ),
                                   ),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                                    color: const Color(0xFFFFFFFF),
-                                  ),
+                                  decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: Colors.white),
                                 ),
                               ],
                             ),
@@ -167,10 +152,7 @@ class _IndexState extends State<Index> {
                         ],
                       ),
                     ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      color: const Color(0xFFC8DEFF),
-                    ),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: const Color(0xFFC8DEFF)),
                   ),
                   /// My Working Time
                   Container(
@@ -185,12 +167,9 @@ class _IndexState extends State<Index> {
                               children: <Widget> [
                                 Row(
                                   children: <Widget> [
-                                    Icon(FontAwesomeIcons.userClock,
-                                      size: 13, //Icon Size
-                                      color: Colors.indigoAccent, //Color Of Icon
-                                    ),
-                                    Container(padding: EdgeInsets.only(left: 10.0),),
-                                    Text('My Working Time', style: TextStyle(fontFamily: 'NanumBarunGothic', fontSize: 11, fontWeight: FontWeight.bold, color: const Color(0xFF000000))),
+                                    Icon(FontAwesomeIcons.userClock, size: bSize, color: const Color(0xFF729ee2)),
+                                    SizedBox(width: 10),
+                                    Text('My Working Time', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black54)),
                                   ],
                                 ),
                                 Container(
@@ -204,61 +183,57 @@ class _IndexState extends State<Index> {
                                           child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.center,
                                             children: <Widget>[
-                                              Text('출퇴근(예정)시간', softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: 'NanumBarunGothic', fontSize: 11, fontWeight: FontWeight.normal, color: const Color(0xFF000000))),
-                                              SizedBox(height: 10,),
+                                              Text('출퇴근(예정)시간', softWrap: false, overflow: TextOverflow.ellipsis),
+                                              SizedBox(height: 10),
                                               Container(
                                                 alignment: Alignment.center,
                                                 child:Row(
                                                   mainAxisSize: MainAxisSize.min,
                                                   children: <Widget>[
-                                                    Text('08:15', style: TextStyle(fontFamily: 'NanumBarunGothic', fontSize: 12, fontWeight: FontWeight.bold, color: const Color(0xFF000000))),
-                                                    Text(' / 16:55', style: TextStyle(fontFamily: 'NanumBarunGothic', fontSize: 10, fontWeight: FontWeight.normal, color: const Color(0xFF555555))),
+                                                    Text('08:15', style: TextStyle(fontSize: mSize, fontWeight: FontWeight.bold, color: Colors.black)),
+                                                    Text(' / 16:55'),
                                                   ],
                                                 ),
                                               ),
                                             ],
                                           ),
                                         ),
-                                        SizedBox(
-                                          width: 15,
-                                        ),
+                                        SizedBox(width: 15),
                                         Expanded(
                                           flex: 3,
                                           child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.center,
                                             children: <Widget>[
-                                              Text('잔업현황', softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: 'NanumBarunGothic', fontSize: 11, fontWeight: FontWeight.normal, color: const Color(0xFF000000))),
-                                              SizedBox(height: 10,),
+                                              Text('잔업현황', softWrap: false, overflow: TextOverflow.ellipsis),
+                                              SizedBox(height: 10),
                                               Container(
                                                 alignment: Alignment.center,
                                                 child:Row(
                                                   mainAxisSize: MainAxisSize.min,
                                                   children: <Widget>[
-                                                    Text('28.6', style: TextStyle(fontFamily: 'NanumBarunGothic', fontSize: 12, fontWeight: FontWeight.bold, color: const Color(0xFF000000))),
-                                                    Text(' / 52', style: TextStyle(fontFamily: 'NanumBarunGothic', fontSize: 10, fontWeight: FontWeight.normal, color: const Color(0xFF555555))),
+                                                    Text('28.6', style: TextStyle(fontSize: mSize, fontWeight: FontWeight.bold)),
+                                                    Text(' / 52'),
                                                   ],
                                                 ),
                                               ),
                                             ],
                                           ),
                                         ),
-                                        SizedBox(
-                                          width: 15,
-                                        ),
+                                        SizedBox(width: 15),
                                         Expanded(
                                           flex: 3,
                                           child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.center,
                                             children: <Widget>[
-                                              Text('연차현황', softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: 'NanumBarunGothic', fontSize: 11, fontWeight: FontWeight.normal, color: const Color(0xFF000000))),
-                                              SizedBox(height: 10,),
+                                              Text('연차현황', softWrap: false, overflow: TextOverflow.ellipsis),
+                                              SizedBox(height: 10),
                                               Container(
                                                 alignment: Alignment.center,
                                                 child:Row(
                                                   mainAxisSize: MainAxisSize.min,
                                                   children: <Widget>[
-                                                    Text('17.5', style: TextStyle(fontFamily: 'NanumBarunGothic', fontSize: 12, fontWeight: FontWeight.bold, color: const Color(0xFF000000))),
-                                                    Text(' / 22', style: TextStyle(fontFamily: 'NanumBarunGothic', fontSize: 10, fontWeight: FontWeight.normal, color: const Color(0xFF555555))),
+                                                    Text('17.5', style: TextStyle(fontSize: mSize, fontWeight: FontWeight.bold, color: Colors.black)),
+                                                    Text(' / 22'),
                                                   ],
                                                 ),
                                               ),
@@ -268,10 +243,7 @@ class _IndexState extends State<Index> {
                                       ],
                                     ),
                                   ),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                                    color: const Color(0xFFFFFFFF),
-                                  ),
+                                  decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: const Color(0xFFFFFFFF)),
                                 ),
                               ],
                             ),
@@ -279,10 +251,7 @@ class _IndexState extends State<Index> {
                         ],
                       ),
                     ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      color: const Color(0xFFC8DEFF),
-                    ),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: const Color(0xFFC8DEFF)),
                   ),
                   /// Worklist
                   Container(
@@ -297,31 +266,34 @@ class _IndexState extends State<Index> {
                               children: <Widget> [
                                 Row(
                                   children: <Widget> [
-                                    Icon(FontAwesomeIcons.clipboardList,
-                                      size: 13, //Icon Size
-                                      color: Colors.indigoAccent, //Color Of Icon
-                                    ),
-                                    Container(padding: EdgeInsets.only(left: 10.0),),
-                                    Text('Worklist', style: TextStyle(fontFamily: 'NanumBarunGothic', fontSize: 11, fontWeight: FontWeight.bold, color: const Color(0xFF000000))),
+                                    Icon(FontAwesomeIcons.listAlt, size: bSize, color: const Color(0xFF729ee2)),
+                                    SizedBox(width: 10),
+                                    Text('Worklist', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black54)),
                                   ],
                                 ),
                                 Container(
                                   padding: EdgeInsets.all(10.0),
                                   margin: EdgeInsets.only(top: 10),
                                   child: IntrinsicGridView.vertical(
-                                      //padding: EdgeInsets.only(top: 16, bottom: 12, left: 12, right: 12),
                                       columnCount: 2,
-                                      verticalSpace: 10,
-                                      horizontalSpace: 10,
+                                      verticalSpace: 15,
+                                      horizontalSpace: 15,
                                       children: [
                                         Container(
                                           child: Row(
                                             children: <Widget> [
                                               Icon(Icons.circle, size: 8, color: Colors.black54),
-                                              Container(padding: EdgeInsets.only(left: 10.0),),
-                                              Flexible(
-                                                child: Text('예고함 : 5건', softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: 'NanumBarunGothic', fontSize: 11, fontWeight: FontWeight.normal, color: const Color(0xFF000000))),
-                                              ),
+                                              SizedBox(width: 5),
+                                              Flexible(child: Text('예고함 : 5', softWrap: false, overflow: TextOverflow.ellipsis)),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          child: Row(
+                                            children: <Widget> [
+                                              Icon(Icons.circle, size: 8, color: Colors.deepOrange),
+                                              SizedBox(width: 5),
+                                              Flexible(child: Text('미결함 : 5', softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: mSize, fontWeight: FontWeight.bold, color: Colors.deepOrange))),
                                             ],
                                           ),
                                         ),
@@ -329,10 +301,8 @@ class _IndexState extends State<Index> {
                                           child: Row(
                                             children: <Widget> [
                                               Icon(Icons.circle, size: 8, color: Colors.black54),
-                                              Container(padding: EdgeInsets.only(left: 10.0),),
-                                              Flexible(
-                                                child: Text('미결함 : 5건', softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: 'NanumBarunGothic', fontSize: 11, fontWeight: FontWeight.bold, color: const Color(0xFF000000))),
-                                              ),
+                                              SizedBox(width: 5),
+                                              Flexible(child: Text('진행함 : 5', softWrap: false, overflow: TextOverflow.ellipsis)),
                                             ],
                                           ),
                                         ),
@@ -340,10 +310,8 @@ class _IndexState extends State<Index> {
                                           child: Row(
                                             children: <Widget> [
                                               Icon(Icons.circle, size: 8, color: Colors.black54),
-                                              Container(padding: EdgeInsets.only(left: 10.0),),
-                                              Flexible(
-                                                child: Text('진행함 : 5건', softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: 'NanumBarunGothic', fontSize: 11, fontWeight: FontWeight.normal, color: const Color(0xFF000000))),
-                                              ),
+                                              SizedBox(width: 5),
+                                              Flexible(child: Text('수신함 : 5', softWrap: false, overflow: TextOverflow.ellipsis)),
                                             ],
                                           ),
                                         ),
@@ -351,10 +319,8 @@ class _IndexState extends State<Index> {
                                           child: Row(
                                             children: <Widget> [
                                               Icon(Icons.circle, size: 8, color: Colors.black54),
-                                              Container(padding: EdgeInsets.only(left: 10.0),),
-                                              Flexible(
-                                                child: Text('수신함 : 5건', softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: 'NanumBarunGothic', fontSize: 11, fontWeight: FontWeight.normal, color: const Color(0xFF000000))),
-                                              ),
+                                              SizedBox(width: 5),
+                                              Flexible(child: Text('참조/회람함 : 952', softWrap: false, overflow: TextOverflow.ellipsis)),
                                             ],
                                           ),
                                         ),
@@ -362,30 +328,14 @@ class _IndexState extends State<Index> {
                                           child: Row(
                                             children: <Widget> [
                                               Icon(Icons.circle, size: 8, color: Colors.black54),
-                                              Container(padding: EdgeInsets.only(left: 10.0),),
-                                              Flexible(
-                                                child: Text('참조/회람함 : 952건', softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: 'NanumBarunGothic', fontSize: 11, fontWeight: FontWeight.normal, color: const Color(0xFF000000))),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Container(
-                                          child: Row(
-                                            children: <Widget> [
-                                              Icon(Icons.circle, size: 8, color: Colors.black54),
-                                              Container(padding: EdgeInsets.only(left: 10.0),),
-                                              Flexible(
-                                                child: Text('협조진행함 : 0건', softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: 'NanumBarunGothic', fontSize: 11, fontWeight: FontWeight.normal, color: const Color(0xFF000000))),
-                                              ),
+                                              SizedBox(width: 5),
+                                              Flexible(child: Text('협조진행함 : 0', softWrap: false, overflow: TextOverflow.ellipsis)),
                                             ],
                                           ),
                                         ),
                                       ],
                                   ), //
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                                    color: const Color(0xFFFFFFFF),
-                                  ),
+                                  decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: const Color(0xFFFFFFFF)),
                                 ),
                               ],
                             ),
@@ -393,90 +343,73 @@ class _IndexState extends State<Index> {
                         ],
                       ),
                     ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      color: const Color(0xFFC8DEFF),
-                    ),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: const Color(0xFFC8DEFF)),
                   ),
                 ],
               ),
             ),
           ),
         ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(Icons.apps),
-        backgroundColor: Colors.red,
+      floatingActionButton: Container(
+        height: 45.0,
+        width: 45.0,
+        child: FittedBox(
+          child: FloatingActionButton(
+            onPressed: () {
+              Navigator.pushReplacementNamed(context, '/Favorite');
+            },
+            child: Icon(FontAwesomeIcons.solidStar, size: 15, color: const Color(0xFFC8DEFF),),
+            backgroundColor: Colors.green,
+          ),
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      bottomNavigationBar: BubbleBottomBar(
-        //iconSize: 30,
-        backgroundColor: const Color(0xFFC8DEFF),
-        hasNotch: true,
-        fabLocation: BubbleBottomBarFabLocation.end,
-        opacity: .8,
-        currentIndex: currentIndex,
-        onTap: changePage,
-        //borderRadius: BorderRadius.all(Radius.circular(10)), //border radius doesn't work when the notch is enabled.
-        elevation: 20,
-        tilesPadding: EdgeInsets.symmetric(
-          ///vertical: 10,
-          horizontal: 10,
+      bottomNavigationBar: Container(
+        height:40,
+        child: BubbleBottomBar(
+          iconSize: 18,
+          backgroundColor: const Color(0xFFC8DEFF),
+          hasNotch: true,
+          fabLocation: BubbleBottomBarFabLocation.end,
+          opacity: .8,
+          currentIndex: currentIndex,
+          onTap: changePage,
+          //borderRadius: BorderRadius.all(Radius.circular(10)), //border radius doesn't work when the notch is enabled.
+          elevation: 20,
+          tilesPadding: EdgeInsets.symmetric(
+            vertical: 0,
+            horizontal: 8,
+          ),
+          items: <BubbleBottomBarItem>[
+            BubbleBottomBarItem(
+              ///showBadge: true,
+              ///badge: Text("5"),
+              ///badgeColor: Colors.deepPurpleAccent,
+                backgroundColor: const Color(0xFF729ee2),
+                icon: Icon(Icons.home, color: const Color(0xFF729ee2)),
+                activeIcon: Icon(Icons.home, color: Colors.white),
+                title: Text('Home', softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.white))
+            ),
+            BubbleBottomBarItem(
+                backgroundColor: const Color(0xFF729ee2),
+                icon: Icon(Icons.apps, color: const Color(0xFF729ee2)),
+                activeIcon: Icon(Icons.apps, color: Colors.white),
+                title: Text('Menu', softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.white))
+            ),
+            BubbleBottomBarItem(
+                backgroundColor: const Color(0xFF729ee2),
+                icon: Icon(Icons.search, color: const Color(0xFF729ee2)),
+                activeIcon: Icon(Icons.search, color: Colors.white),
+                title: Text('Search', softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.white))
+            ),
+            BubbleBottomBarItem(
+                backgroundColor: const Color(0xFF729ee2),
+                icon: Icon(Icons.person, color: const Color(0xFF729ee2)),
+                activeIcon: Icon(Icons.person, color: Colors.white),
+                title: Text('Profile', softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.white))
+            ),
+          ],
         ),
-        items: <BubbleBottomBarItem>[
-          BubbleBottomBarItem(
-            ///showBadge: true,
-            ///badge: Text("5"),
-            ///badgeColor: Colors.deepPurpleAccent,
-            backgroundColor: const Color(0xFF729ee2),
-            icon: Icon(
-              ///FontAwesomeIcons.house,
-              Icons.home,
-              color: const Color(0xFF729ee2),
-            ),
-            activeIcon: Icon(
-              FontAwesomeIcons.house,
-              color: Colors.white,
-            ),
-            title: Text('Home', softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: 'NanumBarunGothic', fontSize: 11, fontWeight: FontWeight.bold, color: Colors.white)),
-          ),
-          BubbleBottomBarItem(
-              backgroundColor: const Color(0xFF729ee2),
-              icon: Icon(
-                Icons.apps,
-                color: const Color(0xFF729ee2),
-              ),
-              activeIcon: Icon(
-                Icons.apps,
-                color: Colors.white,
-              ),
-              title: Text('Menu', softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: 'NanumBarunGothic', fontSize: 11, fontWeight: FontWeight.bold, color: Colors.white)),
-          ),
-          BubbleBottomBarItem(
-              backgroundColor: const Color(0xFF729ee2),
-              icon: Icon(
-                Icons.search,
-                color: const Color(0xFF729ee2),
-              ),
-              activeIcon: Icon(
-                Icons.search,
-                color: Colors.white,
-              ),
-              title: Text('Search', softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: 'NanumBarunGothic', fontSize: 11, fontWeight: FontWeight.bold, color: Colors.white)),
-          ),
-          BubbleBottomBarItem(
-              backgroundColor: const Color(0xFF729ee2),
-              icon: Icon(
-                Icons.person,
-                color: const Color(0xFF729ee2),
-              ),
-              activeIcon: Icon(
-                Icons.person,
-                color: Colors.white,
-              ),
-              title: Text('My Profile', softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: 'NanumBarunGothic', fontSize: 11, fontWeight: FontWeight.bold, color: Colors.white)),
-          ),
-        ],
       ),
     );
   }
