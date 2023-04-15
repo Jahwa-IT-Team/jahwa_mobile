@@ -42,7 +42,7 @@ class _IndexState extends State<Index> {
             children: <Widget> [
               Icon(FontAwesomeIcons.home, size: bSize, color: Colors.lightGreen),
               Container(padding: EdgeInsets.only(left: 10.0),),
-              Text('Lee Yong Seong. Have a nice day.', style: TextStyle(fontFamily:'Malgun', fontSize: mSize, fontWeight: FontWeight.bold, color: Colors.white)),
+              Flexible(child: Text('JAHWA VINA  IT(전산) LEE YONG SEONG 수석(Principal Manager)', softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: mSize, fontWeight: FontWeight.bold, color: Colors.white))),
             ],
           ),
         ),
@@ -355,11 +355,9 @@ class _IndexState extends State<Index> {
         width: 45.0,
         child: FittedBox(
           child: FloatingActionButton(
-            onPressed: () {
-              Navigator.pushReplacementNamed(context, '/Favorite');
-            },
-            child: Icon(FontAwesomeIcons.solidStar, size: 15, color: const Color(0xFFC8DEFF),),
             backgroundColor: Colors.green,
+            onPressed: () { Navigator.pushReplacementNamed(context, '/Favorite'); },
+            child: Icon(FontAwesomeIcons.solidStar, size: 15, color: const Color(0xFFC8DEFF),),
           ),
         ),
       ),

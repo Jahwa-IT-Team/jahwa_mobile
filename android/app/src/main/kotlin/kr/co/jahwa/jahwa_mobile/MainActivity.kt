@@ -1,4 +1,4 @@
-package kr.co.jahwa.JahwaM.jahwa_mobile
+package kr.co.jahwa.jahwa_mobile
 
 import io.flutter.embedding.android.FlutterActivity
 

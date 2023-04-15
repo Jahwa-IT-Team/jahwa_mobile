@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import 'package:jahwa_mobile/Common/bubble_bottom_bar.dart';
 import 'package:jahwa_mobile/Common/variable.dart';
@@ -12,10 +14,20 @@ class Menu extends StatefulWidget {
 
 class _MenuState extends State<Menu> {
 
+  PackageInfo _packageInfo = PackageInfo(
+    appName: 'Unknown',
+    packageName: 'Unknown',
+    version: 'Unknown',
+    buildNumber: 'Unknown',
+    buildSignature: 'Unknown',
+    installerStore: 'Unknown',
+  );
+
   void initState() {
     super.initState();
     currentIndex = 1;
     changePage;
+    _initPackageInfo();
   }
 
   void changePage(int? index) {
@@ -26,6 +38,20 @@ class _MenuState extends State<Menu> {
       else if(index == 2) Navigator.pushReplacementNamed(context, '/Search');
       else if(index == 3) Navigator.pushReplacementNamed(context, '/Profile');
     });
+  }
+
+  Future<void> _initPackageInfo() async {
+    final info = await PackageInfo.fromPlatform();
+    setState(() {
+      _packageInfo = info;
+    });
+  }
+
+  Widget _infoTile(String title, String subtitle) {
+    return ListTile(
+      title: Text(title),
+      subtitle: Text(subtitle.isEmpty ? 'Not set' : subtitle),
+    );
   }
 
   @override
@@ -52,7 +78,15 @@ class _MenuState extends State<Menu> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-
+                _infoTile('App name', _packageInfo.appName),
+                _infoTile('Package name', _packageInfo.packageName),
+                _infoTile('App version', _packageInfo.version),
+                _infoTile('Build number', _packageInfo.buildNumber),
+                _infoTile('Build signature', _packageInfo.buildSignature),
+                _infoTile(
+                  'Installer store',
+                  _packageInfo.installerStore ?? 'not available',
+                ),
               ],
             ),
           ),
