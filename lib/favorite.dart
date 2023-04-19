@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'package:jahwa_mobile/Common/bubble_bottom_bar.dart';
 import 'package:jahwa_mobile/Common/variable.dart';
 
 class Favorite extends StatefulWidget {
@@ -14,16 +13,6 @@ class _FavoriteState extends State<Favorite> {
 
   void initState() {
     super.initState();
-    changePage;
-  }
-
-  void changePage(int? index) {
-    setState(() {
-      if(index == 0) Navigator.pushReplacementNamed(context, '/');
-      else if(index == 1) Navigator.pushReplacementNamed(context, '/Menu');
-      else if(index == 2) Navigator.pushReplacementNamed(context, '/Search');
-      else if(index == 3) Navigator.pushReplacementNamed(context, '/Profile');
-    });
   }
 
   @override
@@ -54,67 +43,6 @@ class _FavoriteState extends State<Favorite> {
               ],
             ),
           ),
-        ),
-      ),
-      floatingActionButton: Container(
-        height: 45.0,
-        width: 45.0,
-        child: FittedBox(
-          child: FloatingActionButton(
-            onPressed: () {
-              Navigator.pushReplacementNamed(context, '/Favorite');
-            },
-            child: Icon(FontAwesomeIcons.solidStar, size: 15, color: const Color(0xFFC8DEFF),),
-            backgroundColor: Colors.green,
-          ),
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      bottomNavigationBar: Container(
-        height:40,
-        child: BubbleBottomBar(
-          iconSize: 18,
-          backgroundColor: const Color(0xFFC8DEFF),
-          hasNotch: true,
-          fabLocation: BubbleBottomBarFabLocation.end,
-          opacity: .8,
-          currentIndex: currentIndex,
-          onTap: changePage,
-          //borderRadius: BorderRadius.all(Radius.circular(10)), //border radius doesn't work when the notch is enabled.
-          elevation: 20,
-          tilesPadding: EdgeInsets.symmetric(
-            vertical: 0,
-            horizontal: 8,
-          ),
-          items: <BubbleBottomBarItem>[
-            BubbleBottomBarItem(
-              ///showBadge: true,
-              ///badge: Text("5"),
-              ///badgeColor: Colors.deepPurpleAccent,
-                backgroundColor: const Color(0xFF729ee2),
-                icon: Icon(Icons.home, color: const Color(0xFF729ee2)),
-                activeIcon: Icon(Icons.home, color: Colors.white),
-                title: Text('Home', softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.white))
-            ),
-            BubbleBottomBarItem(
-                backgroundColor: const Color(0xFF729ee2),
-                icon: Icon(Icons.apps, color: const Color(0xFF729ee2)),
-                activeIcon: Icon(Icons.apps, color: Colors.white),
-                title: Text('Menu', softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.white))
-            ),
-            BubbleBottomBarItem(
-                backgroundColor: const Color(0xFF729ee2),
-                icon: Icon(Icons.search, color: const Color(0xFF729ee2)),
-                activeIcon: Icon(Icons.search, color: Colors.white),
-                title: Text('Search', softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.white))
-            ),
-            BubbleBottomBarItem(
-                backgroundColor: const Color(0xFF729ee2),
-                icon: Icon(Icons.person, color: const Color(0xFF729ee2)),
-                activeIcon: Icon(Icons.person, color: Colors.white),
-                title: Text('Profile', softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.white))
-            ),
-          ],
         ),
       ),
     );
