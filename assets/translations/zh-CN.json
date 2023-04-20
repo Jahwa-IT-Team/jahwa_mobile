@@ -1,3 +1,7 @@
 {
-  "Title": "Title(CN)"
+  "Title": "Title(CN)",
+  "Login": {
+    "Employee Number" : "Employee Number(CN)",
+    "Password" : "Password(CN)"
+  }
 }

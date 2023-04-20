@@ -1,17 +1,16 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
-import 'package:easy_localization/easy_localization.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sn_progress_dialog/sn_progress_dialog.dart';
 import 'package:update_checker/update_checker.dart';
 
-import 'package:jahwa_mobile/Common/variable.dart';
+import 'package:jahwa_mobile/common/function.dart';
+import 'package:jahwa_mobile/common/variable.dart';
 
 class Check extends StatefulWidget {
   @override
@@ -23,26 +22,9 @@ class _CheckState extends State<Check> {
   void initState() {
     super.initState();
 
-    print('Title'.tr());
-
-    var checker = UpdateChecker(); // create an object from UpdateChecker
-
     Timer(Duration(seconds: 1), () {
-      preferenceSetting(); /// Make Session And Language Data, Check Login
+      preferenceSetting(); /// Check Upgrade & Session Data
     });
-
-    /*
-    if (Platform.isIOS) {
-      checker.checkForUpdates("YOUR_APP_STORE_URL").then((value) => {
-        // if value is true you can show a dialog to redirect user to app store to perform update
-      });
-    }
-    else if (Platform.isAndroid) {
-      checker
-          .checkForUpdates("YOUR_PLAY_STORE_URL", )
-          .then((value) => { ; });
-    }
-    */
   }
 
   @override
@@ -56,39 +38,15 @@ class _CheckState extends State<Check> {
     if(baseWidth > 280) baseWidth = 280;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFb9d2ff),
-      appBar: AppBar(
-        centerTitle: true,
-        toolbarHeight: 45,
-        backgroundColor: const Color(0xFF729ee2),
-        elevation: 0.0,
-        title:Row(
-          children: <Widget> [
-            Icon(FontAwesomeIcons.tasks, size: bSize, color: Colors.lightGreen),
-            Container(padding: EdgeInsets.only(left: 10.0),),
-            Text('Update Check', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.white)),
-          ],
-        ),
-      ),
-      body: Container(
-        child : SingleChildScrollView ( // this will make your body scrollable
-          child: Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Container( /// 회사 마크
-                    width: screenWidth,
-                    height: (screenHeight - statusBarHeight) * 0.40,
-                    alignment: Alignment.center,
-                    child: SizedBox(
-                      width: baseWidth,
-                      child: Image.asset("assets/images/jahwa_mark_m.png"),
-                    )
-                ),
-              ],
-            ),
-          ),
+      body: SingleChildScrollView ( // this will make your body scrollable
+        child: Container( /// 회사 마크
+          width: screenWidth,
+          height: (screenHeight - statusBarHeight) * 0.65,
+          alignment: Alignment.center,
+          child: SizedBox(
+            width: baseWidth,
+            child: Image.asset("assets/images/jahwa_mark_m.png"),
+          )
         ),
       ),
     );
@@ -98,20 +56,103 @@ class _CheckState extends State<Check> {
     ProgressDialog pd = ProgressDialog(context: context);
     pd.show(
       barrierDismissible: true,
-      msg: "Please waiting...",
+      progressBgColor: Colors.transparent,
+      msg: "Check Upgrade...",
       hideValue: true,
     );
 
     /// 0. Update Check
+    var checker = UpdateChecker(); // create an object from UpdateChecker
+
+    /*
+    if (Platform.isIOS) {
+      checker.checkForUpdates("YOUR_APP_STORE_URL").then((value) => {
+        // if value is true you can show a dialog to redirect user to app store to perform update
+      });
+    }
+    else if (Platform.isAndroid) {
+      checker
+          .checkForUpdates("YOUR_PLAY_STORE_URL", )
+          .then((value) => { ; });
+    }
+    */
+
     /// 1. Login Check
+    await Future.delayed(Duration(milliseconds: 500));
+    pd.update(msg: "Check Session...");
 
-    /** You can update the message value after a certain action **/
-    await Future.delayed(Duration(milliseconds: 1000));
-    pd.update(msg: "Almost done...");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    await Future.delayed(Duration(milliseconds: 1000));
-    pd.close();
+    /// 2. Session Check
+    if(await checkLogin())
+    {
+      /// If need Login, Go to Login Page
+      await Future.delayed(Duration(milliseconds: 500));
+      pd.close();
 
-    Navigator.pushReplacementNamed(context, '/Login');
+      print("Go to Login");
+      ///Navigator.pushNamedAndRemoveUntil(context, '/Login', (route) => false);
+    }
+    else {
+      session['EntCode'] = prefs.getString('EntCode') ?? '';
+      session['EntName'] = prefs.getString('EntName') ?? '';
+      session['DeptCode'] = prefs.getString('DeptCode') ?? '';
+      session['DeptName'] = prefs.getString('DeptName') ?? '';
+      session['EmpCode'] = prefs.getString('EmpCode') ?? '';
+      session['Name'] = prefs.getString('Name') ?? '';
+      session['RollPstn'] = prefs.getString('RollPstn') ?? '';
+      session['Position'] = prefs.getString('Position') ?? '';
+      session['Role'] = prefs.getString('Role') ?? '';
+      session['Title'] = prefs.getString('Title') ?? '';
+      session['PayGrade'] = prefs.getString('PayGrade') ?? '';
+      session['Level'] = prefs.getString('Level') ?? '';
+      session['Email'] = prefs.getString('Email') ?? '';
+      session['Photo'] = prefs.getString('Photo') ?? '';
+      session['Auth'] = prefs.getInt('Auth').toString() ?? '0';
+      session['EntGroup'] = prefs.getString('EntGroup') ?? '';
+      session['OfficeTel'] = prefs.getString('OfficeTel') ?? '';
+      session['Mobile'] = prefs.getString('Mobile') ?? '';
+      session['DueDate'] = prefs.getString('DueDate') ?? '';
+      session['Token'] = prefs.getString('Token') ?? '';
+
+      await Future.delayed(Duration(milliseconds: 500));
+      pd.close();
+
+      print("Go to Index");
+      ///Navigator.pushReplacementNamed(context, '/Index'); /// Move to First Page
+    }
+  }
+
+  /// Check Login Info -> Move to Login Or Main Page : Index Page Use
+  Future<bool> checkLogin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    /// Send to Token and check valuable.
+    if(prefs.getString('Token') == "" ) {
+      return false;
+    }
+    else {
+      try {
+
+        var url = 'https://jhapi.jahwa.co.kr/NewLoginCheck';  /// API Url
+        var data = {'EmpCode': 'K20604007', 'Token' : '11185A7AF5B42A76000D30B38C3954D832DDC354FF754BE0E3D228B682AD22EA5EC3358AA618CCADDC14C4C306FEEAA6543118562A841CEEA38DA84D2D170075'}; /// Send Parameter
+
+        return await http.post(Uri.parse(url), body: json.encode(data), headers: {"Content-Type": "application/json"}).timeout(const Duration(seconds: 15)).then<bool>((http.Response response) {
+          if(response.statusCode != 200 || response.body == null || response.body == "{}" || response.body == "{\"Table\":[]}" ) { return true; }
+          if(response.statusCode == 200){
+            Map<String, dynamic> table = jsonDecode(response.body);
+            Map userMap = table['Table'][0];
+            var user = User.fromJson(userMap); /// globals.dart에 정의된 User를 이용해 정보를 Mapping하는 것
+            ///addUserSharedPreferences(user); /// 사용자 정보 세션 생성
+            ///addPasswordSharedPreferences(password); /// 비밀번호 관련 세션 생성
+            return false;
+          }
+          else { return true; }
+        });
+      } catch (e) {
+        print("signIn Error : " + e.toString());
+        return true;
+      }
+      return false;
+    }
   }
 }

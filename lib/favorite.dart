@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'package:jahwa_mobile/Common/variable.dart';
+import 'package:jahwa_mobile/common/variable.dart';
 
 class Favorite extends StatefulWidget {
   @override

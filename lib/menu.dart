@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-import 'package:jahwa_mobile/Common/bubble_bottom_bar.dart';
-import 'package:jahwa_mobile/Common/variable.dart';
+import 'package:jahwa_mobile/common/bubble_bottom_bar.dart';
+import 'package:jahwa_mobile/common/variable.dart';
 
 class Menu extends StatefulWidget {
   @override

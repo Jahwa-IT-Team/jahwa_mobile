@@ -4,8 +4,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intrinsic_grid_view/intrinsic_grid_view.dart';
 
-import 'package:jahwa_mobile/Common/bubble_bottom_bar.dart';
-import 'package:jahwa_mobile/Common/variable.dart';
+import 'package:jahwa_mobile/common/bubble_bottom_bar.dart';
+import 'package:jahwa_mobile/common/variable.dart';
 
 class Index extends StatefulWidget {
   @override
