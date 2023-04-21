@@ -1,10 +1,12 @@
 import 'dart:async';
+import 'dart:core';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sn_progress_dialog/sn_progress_dialog.dart';
 import 'package:update_checker/update_checker.dart';
@@ -91,7 +93,7 @@ class _CheckState extends State<Check> {
       pd.close();
 
       print("Go to Login");
-      ///Navigator.pushNamedAndRemoveUntil(context, '/Login', (route) => false);
+      Navigator.pushNamedAndRemoveUntil(context, '/Login', (route) => false);
     }
     else {
       session['EntCode'] = prefs.getString('EntCode') ?? '';
@@ -114,12 +116,13 @@ class _CheckState extends State<Check> {
       session['Mobile'] = prefs.getString('Mobile') ?? '';
       session['DueDate'] = prefs.getString('DueDate') ?? '';
       session['Token'] = prefs.getString('Token') ?? '';
+      session['Route'] = prefs.getString('Route') ?? '';
 
       await Future.delayed(Duration(milliseconds: 500));
       pd.close();
 
       print("Go to Index");
-      ///Navigator.pushReplacementNamed(context, '/Index'); /// Move to First Page
+      Navigator.pushReplacementNamed(context, '/Index'); /// Move to First Page
     }
   }
 
@@ -142,7 +145,7 @@ class _CheckState extends State<Check> {
             Map<String, dynamic> table = jsonDecode(response.body);
             Map userMap = table['Table'][0];
             var user = User.fromJson(userMap); /// globals.dart에 정의된 User를 이용해 정보를 Mapping하는 것
-            ///addUserSharedPreferences(user); /// 사용자 정보 세션 생성
+            addUserSharedPreferences(user); /// 사용자 정보 세션 생성
             ///addPasswordSharedPreferences(password); /// 비밀번호 관련 세션 생성
             return false;
           }
@@ -154,5 +157,62 @@ class _CheckState extends State<Check> {
       }
       return false;
     }
+  }
+
+  /// Add User SharedPreferences
+  Future<void> addUserSharedPreferences(var user) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance(); /// Cookie 대용
+
+    var today = DateTime.now();
+    var oneWeekFromNow = today.add(const Duration(days: 7));
+
+    try {
+      prefs.setString('EntCode', user.EntCode);
+      prefs.setString('EntName', user.EntName);
+      prefs.setString('DeptCode', user.DeptCode);
+      prefs.setString('DeptName', user.DeptName);
+      prefs.setString('EmpCode', user.EmpCode);
+      prefs.setString('Name', user.Name);
+      prefs.setString('RollPstn', user.RollPstn);
+      prefs.setString('Position', user.Position);
+      prefs.setString('Role', user.Role);
+      prefs.setString('Title', user.Title);
+      prefs.setString('PayGrade', user.PayGrade);
+      prefs.setString('Level', user.Level);
+      prefs.setString('Email', user.Email);
+      prefs.setString('Photo', user.Photo);
+      prefs.setInt('Auth', user.Auth);
+      prefs.setString('EntGroup', user.EntGroup);
+      prefs.setString('OfficeTel', user.OfficeTel);
+      prefs.setString('Mobile', user.Mobile);
+      prefs.setString('DueDate', DateFormat('yyyy-MM-dd').format(oneWeekFromNow));
+      ///prefs.setString('Language', language);
+      prefs.setString('Token', user.Token);
+      prefs.setString('Route', user.Route);
+
+      /// common.dart에 정의된 session 정보
+      session['EntCode'] =  user.EntCode;
+      session['EntName'] = user.EntName;
+      session['DeptCode'] = user.DeptCode;
+      session['DeptName'] = user.DeptName;
+      session['EmpCode'] = user.EmpCode;
+      session['Name'] = user.Name;
+      session['RollPstn'] = user.RollPstn;
+      session['Position'] = user.Position;
+      session['Role'] = user.Role;
+      session['Title'] = user.Title;
+      session['PayGrade'] = user.PayGrade;
+      session['Level'] = user.Level;
+      session['Email'] = user.Email;
+      session['Photo'] = user.Photo;
+      session['Auth'] = user.Auth.toString();
+      session['EntGroup'] = user.EntGroup;
+      session['OfficeTel'] = user.OfficeTel;
+      session['Mobile'] = user.Mobile;
+      session['DueDate'] = DateFormat('yyyy-MM-dd').format(oneWeekFromNow);
+      session['Token'] = user.Token;
+      session['Route'] = user.Route;
+    }
+    catch (e) { print(e.toString()); }
   }
 }

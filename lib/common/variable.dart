@@ -24,7 +24,8 @@ var session = {
   'Email' : '', 'Photo' : '',
   'Auth' : "0", 'EntGroup' : '',
   'OfficeTel' : '', 'Mobile' : '',
-  'DueDate' : '', 'Token' : ''
+  'DueDate' : '', 'Token' : '',
+  'Route' : '', 'Languge' : ''
 };
 
 /// User Info Map - Login
@@ -38,9 +39,9 @@ class User {
   final String Email; final String Photo;
   final int Auth; final String EntGroup;
   final String OfficeTel; final String Mobile;
-  final String Token;
+  final String Token; final String Route;
 
-  User(this.EntCode, this.EntName, this.DeptCode, this.DeptName, this.EmpCode, this.Name, this.RollPstn, this.Position, this.Role, this.Title, this.PayGrade, this.Level, this.Email, this.Photo, this.Auth, this.EntGroup, this.OfficeTel, this.Mobile, this.Token);
+  User(this.EntCode, this.EntName, this.DeptCode, this.DeptName, this.EmpCode, this.Name, this.RollPstn, this.Position, this.Role, this.Title, this.PayGrade, this.Level, this.Email, this.Photo, this.Auth, this.EntGroup, this.OfficeTel, this.Mobile, this.Token, this.Route);
 
   User.fromJson(Map<dynamic, dynamic> json)
 
@@ -53,7 +54,7 @@ class User {
         Email = json['Email'], Photo = json['Photo'],
         Auth = json['Auth'], EntGroup = json['EntGroup'],
         OfficeTel = json['OfficeTel'], Mobile = json['Mobile'],
-        Token = json['Token'];
+        Token = json['Token'], Route = json['Route'];
 
   Map<dynamic, dynamic> toJson() =>
       {
@@ -66,6 +67,6 @@ class User {
         'Email' : Email, 'Photo' : Photo,
         'Auth' : Auth, 'EntGroup' : EntGroup,
         'OfficeTel' : OfficeTel, 'Mobile' : Mobile,
-        'Token' : Token,
+        'Token' : Token, 'Route' : Route,
       };
 }

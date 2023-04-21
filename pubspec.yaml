@@ -39,6 +39,7 @@ dependencies:
   easy_localization: ^3.0.1 # Multi Language
   font_awesome_flutter: ^10.3.0 # Icon
   http: ^0.13.5 # API Call
+  intl: ^0.17.0 # DateFormat ETC
   intrinsic_grid_view: ^0.0.2 # Grid View - Index Worklist
   package_info_plus: ^3.1.0 # Version Info
   shared_preferences: ^2.1.0 # Cookie
