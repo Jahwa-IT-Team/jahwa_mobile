@@ -1,3 +1,5 @@
+library common;
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
@@ -54,7 +56,7 @@ Widget setBottomNavigator(BuildContext context) {
     fabLocation: BubbleBottomBarFabLocation.end,
     opacity: .8,
     currentIndex: currentIndex,
-    onTap: changePage(context),
+    ///onTap: changePage(context),
     //borderRadius: BorderRadius.all(Radius.circular(10)), //border radius doesn't work when the notch is enabled.
     elevation: 20,
     tilesPadding: EdgeInsets.symmetric(
@@ -90,9 +92,9 @@ Widget setBottomNavigator(BuildContext context) {
   );
 }
 
-changePage(context) {
+changePage(BuildContext context) {
   ///setState(() {
-    ///currentIndex = index!;
+    //currentIndex = index!;
     if(currentIndex == 0) Navigator.pushReplacementNamed(context, '/');
     else if(currentIndex == 1) Navigator.pushReplacementNamed(context, '/Menu');
     else if(currentIndex == 2) Navigator.pushReplacementNamed(context, '/Search');

@@ -6,7 +6,7 @@ import 'package:intrinsic_grid_view/intrinsic_grid_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:jahwa_mobile/common/bubble_bottom_bar.dart';
-import 'package:jahwa_mobile/common/function.dart';
+import 'package:jahwa_mobile/common/common.dart';
 import 'package:jahwa_mobile/common/variable.dart';
 
 class Index extends StatefulWidget {
@@ -19,10 +19,8 @@ class _IndexState extends State<Index> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    changePage(context);
+    ///changePage(context);
   }
-
-
 
   @override
   Widget build(BuildContext context) {

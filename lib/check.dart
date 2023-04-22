@@ -11,7 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sn_progress_dialog/sn_progress_dialog.dart';
 import 'package:update_checker/update_checker.dart';
 
-import 'package:jahwa_mobile/common/function.dart';
+import 'package:jahwa_mobile/common/common.dart';
 import 'package:jahwa_mobile/common/variable.dart';
 
 class Check extends StatefulWidget {
