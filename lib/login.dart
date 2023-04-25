@@ -67,23 +67,9 @@ class _LoginState extends State<Login> {
               child: Column(
                 children: <Widget>[
                   SizedBox( height: statusBarHeight, ), /// Status Bar
-                  Container( /// Language Select
-                    width: screenWidth,
-                    height: (screenHeight - statusBarHeight) * 0.1,
-                    alignment: Alignment.centerRight,
-                    padding: EdgeInsets.only(right: 20.0) ,
-                    child: IconButton(
-                        icon: FaIcon(FontAwesomeIcons.language),
-                        iconSize: 40,
-                        color: Colors.blueAccent,
-                        onPressed: () {
-                          ;
-                        }
-                    ),
-                  ),
                   Container( /// Jahwa Mark
                       width: screenWidth,
-                      height: (screenHeight - statusBarHeight) * 0.35,
+                      height: (screenHeight - statusBarHeight) * 0.45,
                       alignment: Alignment.center,
                       child: SizedBox(
                         width: baseWidth,
@@ -95,7 +81,7 @@ class _LoginState extends State<Login> {
                     alignment: Alignment.center,
                     child: Container(
                       width: baseWidth,
-                      height: (screenHeight - statusBarHeight) * 0.35,
+                      height: (screenHeight - statusBarHeight) * 0.30,
                       alignment: Alignment.center,
                       child: Column(
                         children: <Widget> [
@@ -127,8 +113,7 @@ class _LoginState extends State<Login> {
                             keyboardType: TextInputType.text,
                             focusNode: passwordFocusNode,
                             onSubmitted: (String inputText) async {
-                              ///ng, Style
-                              ///loginCheck(context, empcodeController, passwordController, pr); /// Input Box에서 Enter 적용시 바로 로그인 프로세스가 진행됨
+                              loginCheck(context, empcodeController, passwordController); /// Input Box에서 Enter 적용시 바로 로그인 프로세스가 진행됨
                             },
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
@@ -143,109 +128,48 @@ class _LoginState extends State<Login> {
                             ),
                             textInputAction: TextInputAction.done,
                           ),
-                          /*Container(
+                          Container(
                             alignment: Alignment.centerRight,
-                            child: FlatButton(
+                            child: TextButton(
                               onPressed: () async {
-                                if(await getSelectList('Company')) Navigator.pushNamed(context, '/CheckEmployee'); /// 사원확인 페이지로 이동
+                                Navigator.pushNamed(context, '/CheckEmployee'); /// 사원확인 페이지로 이동
                               },
-                              child: Text(
-                                translateText(context, 'Forgot Password?'),
-                                style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey, fontSize: 14, ),
+                              child: Text('Login.Forgot Password?'.tr(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey, fontSize: 14, ),
                               ),
                             ),
-                          ),*/
+                          ),
                         ],
                       ),
                     ),
                   ),
-                  /*Container( /// Login Button
-                    width: screenWidth,
+                  Container( /// Login Button
+                    width: baseWidth,
                     height: (screenHeight - statusBarHeight) * 0.2,
                     alignment: Alignment.topCenter,
                     child: ButtonTheme(
                       minWidth: baseWidth,
-                      height: 50.0,
-                      child: RaisedButton(
-                        child:Text(translateText(context, 'Login'), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white,)),
-                        shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
-                        splashColor: Colors.grey,
+                      child: ElevatedButton(
+                        child:Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(FontAwesomeIcons.solidUser, size: 16),
+                            SizedBox(height: 45, width: 20),
+                            Text('Login.Login'.tr(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white,)),
+                          ],
+                        ),
+                        style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
                         onPressed: () async {
-                          await pr.show(); /// 3. Progress Dialog Show - Need Declaration, Setting, Style
-                          loginCheck(context, empcodeController, passwordController, pr); /// 수동으로 로그인 프로세스를 실행시킴
+                          loginCheck(context, empcodeController, passwordController); /// 수동으로 로그인 프로세스를 실행시킴
                         },
                       ),
                     ),
-                  ),*/
+                  ),
                 ],
               ),
             )
         ),
       ),
     );
-  }
-
-  /// Add User SharedPreferences
-  Future<void> addPasswordSharedPreferences(var password) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    ///try { prefs.setString('Password', encryptText('Encrypt', password)); }
-    ///catch (e) { print(e.toString()); }
-  }
-
-  /// Add User SharedPreferences
-  Future<void> addUserSharedPreferences(var user) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance(); /// Cookie 대용
-
-    var today = DateTime.now();
-    var oneWeekFromNow = today.add(const Duration(days: 7));
-
-    try {
-      prefs.setString('EntCode', user.EntCode);
-      prefs.setString('EntName', user.EntName);
-      prefs.setString('DeptCode', user.DeptCode);
-      prefs.setString('DeptName', user.DeptName);
-      prefs.setString('EmpCode', user.EmpCode);
-      prefs.setString('Name', user.Name);
-      prefs.setString('RollPstn', user.RollPstn);
-      prefs.setString('Position', user.Position);
-      prefs.setString('Role', user.Role);
-      prefs.setString('Title', user.Title);
-      prefs.setString('PayGrade', user.PayGrade);
-      prefs.setString('Level', user.Level);
-      prefs.setString('Email', user.Email);
-      prefs.setString('Photo', user.Photo);
-      prefs.setInt('Auth', user.Auth);
-      prefs.setString('EntGroup', user.EntGroup);
-      prefs.setString('OfficeTel', user.OfficeTel);
-      prefs.setString('Mobile', user.Mobile);
-      prefs.setString('DueDate', DateFormat('yyyy-MM-dd').format(oneWeekFromNow));
-      ///prefs.setString('Language', language);
-      prefs.setString('Token', user.Token);
-
-      /// common.dart에 정의된 session 정보
-      session['EntCode'] =  user.EntCode;
-      session['EntName'] = user.EntName;
-      session['DeptCode'] = user.DeptCode;
-      session['DeptName'] = user.DeptName;
-      session['EmpCode'] = user.EmpCode;
-      session['Name'] = user.Name;
-      session['RollPstn'] = user.RollPstn;
-      session['Position'] = user.Position;
-      session['Role'] = user.Role;
-      session['Title'] = user.Title;
-      session['PayGrade'] = user.PayGrade;
-      session['Level'] = user.Level;
-      session['Email'] = user.Email;
-      session['Photo'] = user.Photo;
-      session['Auth'] = user.Auth.toString();
-      session['EntGroup'] = user.EntGroup;
-      session['OfficeTel'] = user.OfficeTel;
-      session['Mobile'] = user.Mobile;
-      session['DueDate'] = DateFormat('yyyy-MM-dd').format(oneWeekFromNow);
-      session['Token'] = user.Token;
-    }
-    catch (e) { print(e.toString()); }
   }
 
   /// Password Validation Check
@@ -263,10 +187,8 @@ class _LoginState extends State<Login> {
   }
 
   /// Login Process
-  Future<void> loginCheck(BuildContext context, TextEditingController empcodeController, TextEditingController passwordController, ProgressDialog pr) async {
+  Future<void> loginCheck(BuildContext context, TextEditingController empcodeController, TextEditingController passwordController) async {
 
-    ///pr.hide(); /// 4. Progress Dialog Close
-/*
     if(empcodeController.text.isEmpty) { showMessageBox(context, 'Alert', 'Employee Number Not Exists !!!'); } /// Employee Number Empty Check
     else if(passwordController.text.isEmpty) { showMessageBox(context, 'Alert', 'Password Not Exists !!!'); } /// Password Empty Check
     else if(!isPasswordCompliant(passwordController.text)) { showMessageBox(context, 'Alert', 'Password invalid !!!'); } /// Password Validation Check
@@ -277,7 +199,7 @@ class _LoginState extends State<Login> {
         Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false); /// 로그인 성공시 Check 페이지로 이동
       }
       else { showMessageBox(context, 'Alert', 'The login information is incorrect.'); } /// Login 실패 메시지
-    }*/
+    }
   }
 
   /// 세션을 이용한 사번 자동 세팅
@@ -287,26 +209,48 @@ class _LoginState extends State<Login> {
   }
 
   /// Login Check Process
-  Future<bool> signIn(String email, String password) async {
+  Future<bool> signIn(String empcode, String password) async {
+
+    ProgressDialog pd = ProgressDialog(context: context);
+    pd.show(
+      barrierDismissible: true,
+      progressBgColor: Colors.transparent,
+      msg: "Check User Information...",
+      hideValue: true,
+    );
+
     try {
 
-      var url = 'https://jhapi.jahwa.co.kr/Login';  /// API Url
-      var data = {'id': email, 'password' : password}; /// Send Parameter
+      var url = 'https://jhapi.jahwa.co.kr/MLogin';  /// API Url
+      var data = {'id': empcode, 'password' : password}; /// Send Parameter
 
       return await http.post(Uri.parse(url), body: json.encode(data), headers: {"Content-Type": "application/json"}).timeout(const Duration(seconds: 15)).then<bool>((http.Response response) {
-        if(response.statusCode != 200 || response.body == null || response.body == "{}" ) { return false; }
+        if(response.statusCode != 200 || response.body == null || response.body == "{}" ) {
+          pd.close();
+          return false;
+        }
         if(response.statusCode == 200){
-          Map<String, dynamic> table = jsonDecode(response.body);
+          Map<dynamic, dynamic> table = jsonDecode(response.body);
           Map userMap = table['Table'][0];
           var user = User.fromJson(userMap); /// globals.dart에 정의된 User를 이용해 정보를 Mapping하는 것
           addUserSharedPreferences(user); /// 사용자 정보 세션 생성
-          addPasswordSharedPreferences(password); /// 비밀번호 관련 세션 생성
+          //addPasswordSharedPreferences(password); /// 비밀번호 관련 세션 생성
+          pd.close();
           return true;
         }
-        else { return false; }
+        else {
+          pd.close();
+          return false;
+        }
       });
+
+      return false;
     } catch (e) {
       print("signIn Error : " + e.toString());
+
+      await Future.delayed(Duration(milliseconds: 500));
+      pd.close();
+
       return false;
     }
   }

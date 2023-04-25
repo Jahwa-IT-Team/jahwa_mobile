@@ -129,20 +129,24 @@ class _CheckState extends State<Check> {
   /// Check Login Info -> Move to Login Or Main Page : Index Page Use
   Future<bool> checkLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    var EmpCode = prefs.getString('EmpCode');
+    var Token = prefs.getString('Token');
+
     /// Send to Token and check valuable.
     if(prefs.getString('Token') == "" ) {
-      return false;
+      return true;
     }
     else {
       try {
 
-        var url = 'https://jhapi.jahwa.co.kr/NewLoginCheck';  /// API Url
-        var data = {'EmpCode': 'K20604007', 'Token' : '11185A7AF5B42A76000D30B38C3954D832DDC354FF754BE0E3D228B682AD22EA5EC3358AA618CCADDC14C4C306FEEAA6543118562A841CEEA38DA84D2D170075'}; /// Send Parameter
+        var url = 'https://jhapi.jahwa.co.kr/MLoginCheck';  /// API Url
+        var data = {'EmpCode': EmpCode, 'Token' : Token}; /// Send Parameter
 
         return await http.post(Uri.parse(url), body: json.encode(data), headers: {"Content-Type": "application/json"}).timeout(const Duration(seconds: 15)).then<bool>((http.Response response) {
           if(response.statusCode != 200 || response.body == null || response.body == "{}" || response.body == "{\"Table\":[]}" ) { return true; }
           if(response.statusCode == 200){
-            Map<String, dynamic> table = jsonDecode(response.body);
+            Map<dynamic, dynamic> table = jsonDecode(response.body);
             Map userMap = table['Table'][0];
             var user = User.fromJson(userMap); /// globals.dart에 정의된 User를 이용해 정보를 Mapping하는 것
             addUserSharedPreferences(user); /// 사용자 정보 세션 생성
@@ -159,60 +163,5 @@ class _CheckState extends State<Check> {
     }
   }
 
-  /// Add User SharedPreferences
-  Future<void> addUserSharedPreferences(var user) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance(); /// Cookie 대용
 
-    var today = DateTime.now();
-    var oneWeekFromNow = today.add(const Duration(days: 7));
-
-    try {
-      prefs.setString('EntCode', user.EntCode);
-      prefs.setString('EntName', user.EntName);
-      prefs.setString('DeptCode', user.DeptCode);
-      prefs.setString('DeptName', user.DeptName);
-      prefs.setString('EmpCode', user.EmpCode);
-      prefs.setString('Name', user.Name);
-      prefs.setString('RollPstn', user.RollPstn);
-      prefs.setString('Position', user.Position);
-      prefs.setString('Role', user.Role);
-      prefs.setString('Title', user.Title);
-      prefs.setString('PayGrade', user.PayGrade);
-      prefs.setString('Level', user.Level);
-      prefs.setString('Email', user.Email);
-      prefs.setString('Photo', user.Photo);
-      prefs.setInt('Auth', user.Auth);
-      prefs.setString('EntGroup', user.EntGroup);
-      prefs.setString('OfficeTel', user.OfficeTel);
-      prefs.setString('Mobile', user.Mobile);
-      prefs.setString('DueDate', DateFormat('yyyy-MM-dd').format(oneWeekFromNow));
-      ///prefs.setString('Language', language);
-      prefs.setString('Token', user.Token);
-      prefs.setString('Route', user.Route);
-
-      /// common.dart에 정의된 session 정보
-      session['EntCode'] =  user.EntCode;
-      session['EntName'] = user.EntName;
-      session['DeptCode'] = user.DeptCode;
-      session['DeptName'] = user.DeptName;
-      session['EmpCode'] = user.EmpCode;
-      session['Name'] = user.Name;
-      session['RollPstn'] = user.RollPstn;
-      session['Position'] = user.Position;
-      session['Role'] = user.Role;
-      session['Title'] = user.Title;
-      session['PayGrade'] = user.PayGrade;
-      session['Level'] = user.Level;
-      session['Email'] = user.Email;
-      session['Photo'] = user.Photo;
-      session['Auth'] = user.Auth.toString();
-      session['EntGroup'] = user.EntGroup;
-      session['OfficeTel'] = user.OfficeTel;
-      session['Mobile'] = user.Mobile;
-      session['DueDate'] = DateFormat('yyyy-MM-dd').format(oneWeekFromNow);
-      session['Token'] = user.Token;
-      session['Route'] = user.Route;
-    }
-    catch (e) { print(e.toString()); }
-  }
 }

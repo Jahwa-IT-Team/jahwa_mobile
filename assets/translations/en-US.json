@@ -1,7 +1,9 @@
 {
-  "Title": "Title(EN)",
   "Login": {
     "Employee Number" : "Employee Number(EN)",
+    "Forgot Password?" : "Forgot Password?(EN)",
+    "Login" : "Login(EN)",
     "Password" : "Password(EN)"
-  }
+  },
+  "Title": "Title(EN)"
 }

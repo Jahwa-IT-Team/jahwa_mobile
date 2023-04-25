@@ -1,7 +1,9 @@
 {
-  "Title": "Title(KO)",
   "Login": {
     "Employee Number" : "Employee Number(KO)",
+    "Forgot Password?" : "Forgot Password?(KO)",
+    "Login" : "Login(KO)",
     "Password" : "Password(KO)"
-  }
+  },
+  "Title": "Title(KO)"
 }
