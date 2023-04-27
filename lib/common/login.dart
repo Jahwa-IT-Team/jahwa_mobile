@@ -198,7 +198,9 @@ class _LoginState extends State<Login> {
         passwordController.clear(); /// Password Clear
         Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false); /// 로그인 성공시 Check 페이지로 이동
       }
-      else { showMessageBox(context, 'Alert', 'The login information is incorrect.'); } /// Login 실패 메시지
+      else {
+        showMessageBox(context, 'Alert', 'The login information is incorrect.');
+      } /// Login 실패 메시지
     }
   }
 

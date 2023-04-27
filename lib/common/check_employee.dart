@@ -29,7 +29,7 @@ class _CheckEmployeeState extends State<CheckEmployee> {
   FocusNode empcodeFocusNode = FocusNode(); /// Employee Number Input Focus
   FocusNode nameFocusNode = FocusNode(); /// Name Input Focus
 
-  var Company = "KO532";
+  var Company = "";
 
   void initState() {
     super.initState();
@@ -53,8 +53,16 @@ class _CheckEmployeeState extends State<CheckEmployee> {
       },
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Color.fromARGB(0xFF, 0x34, 0x40, 0x4E),
-          title: Text("Check Employee", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 15,),
+          centerTitle: true,
+          toolbarHeight: 45,
+          backgroundColor: const Color(0xFF729ee2),
+          elevation: 0.0,
+          title:Row(
+            children: <Widget> [
+              Icon(FontAwesomeIcons.userCheck, size: bSize, color: Colors.lightGreen),
+              Container(padding: EdgeInsets.only(left: 10.0),),
+              Text('Check Employee', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.white)),
+            ],
           ),
         ),
         body: SingleChildScrollView ( /// Scroll이 생기도록 하는 Object
@@ -124,19 +132,6 @@ class _CheckEmployeeState extends State<CheckEmployee> {
                           textInputAction: TextInputAction.next,
                         ),
                         SizedBox(height: 16,),
-                        /*ButtonTheme(
-                          minWidth: baseWidth,
-                          height: 50.0,
-                          child: RaisedButton(
-                            child:Text('Check Employee', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white,)),
-                            shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
-                            splashColor: Colors.grey,
-                            onPressed: () async {
-                              checkEmployee(context, empcodeController, nameController);
-                            },
-                          ),
-
-                        ),*/
                         ElevatedButton(
                           child:Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -178,7 +173,7 @@ class _CheckEmployeeState extends State<CheckEmployee> {
       try {
 
         // Login API Url
-        var url = 'https://jhapi.jahwa.co.kr/CheckEmployee';
+        var url = 'https://jhapi.jahwa.co.kr/MCheckEmployee';
 
         // Send Parameter
         var data = {'Company': Company, 'EmpCode': empcodeController.text, 'Name' : nameController.text};
@@ -190,6 +185,7 @@ class _CheckEmployeeState extends State<CheckEmployee> {
             else if (response.body == "A/D Not Use.") {
               ///Navigator.pushNamed(context, '/ResetPasswordQuestion'); ///주민등록번호를 이용한 비밀번호 초기화로 이동
               ////showMessageBox(context, "Alert", "본 앱에서는 A/D사용자만 사용이 가능합니다.");
+              showMessageBox(context, "Alert", "Res No Reset!!!");
             }
             else {
               if(jsonDecode(response.body)['DATA'].length != 0) {
@@ -197,7 +193,8 @@ class _CheckEmployeeState extends State<CheckEmployee> {
                   if (element['Question1'].toString() == "" || element['Question2'].toString() == "") { showMessageBox(context, "Alert", "Not Exists Reset Question Data"); }
                   else {
                     if (element['Dispatch'].toString() == "1" && (Company == 'KO532' || Company == 'KO536')) {
-                      Navigator.pushNamed(context, '/ResetPasswordQuestion'); /// 질문 답변 인증 페이지로 이동
+                      ///Navigator.pushNamed(context, '/ResetPasswordQuestion'); /// 질문 답변 인증 페이지로 이동
+                      showMessageBox(context, "Alert", "Question Reset!!!");
                     }
                     else if (Company == 'KO532' || Company == 'KO536') {
                       ///resetpass['Table'][0]['company'] = Company.toString();
@@ -230,7 +227,8 @@ class _CheckEmployeeState extends State<CheckEmployee> {
                       );
                     }
                     else {
-                      Navigator.pushNamed(context, '/ResetPasswordQuestion'); /// 질문 답변 인증 페이지로 이동
+                      ///Navigator.pushNamed(context, '/ResetPasswordQuestion'); /// 질문 답변 인증 페이지로 이동
+                      showMessageBox(context, "Alert", "Question Reset!!!");
                     }
                   }
                 });
