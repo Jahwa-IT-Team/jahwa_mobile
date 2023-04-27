@@ -249,7 +249,7 @@ class _CheckEmployeeState extends State<CheckEmployee> {
       try {
 
         // Login API Url
-        var url = 'https://jhapi.jahwa.co.kr/CheckPhone';
+        var url = 'https://jhapi.jahwa.co.kr/MCheckPhone';
 
         // Send Parameter
         var data = {'EmpCode': empcodeController.text, 'Name' : nameController.text};
