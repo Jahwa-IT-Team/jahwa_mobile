@@ -53,9 +53,16 @@ class _ResetPasswordResNoState extends State<ResetPasswordResNo> {
       },
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Color.fromARGB(0xFF, 0x34, 0x40, 0x4E),
-          title: Text("Reset Password",
-            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 15,),
+          centerTitle: true,
+          toolbarHeight: 45,
+          backgroundColor: const Color(0xFF729ee2),
+          elevation: 0.0,
+          title:Row(
+            children: <Widget> [
+              Icon(FontAwesomeIcons.userCheck, size: bSize, color: Colors.lightGreen),
+              Container(padding: EdgeInsets.only(left: 10.0),),
+              Text('Reset Password', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.white)),
+            ],
           ),
         ),
         body: SingleChildScrollView ( /// Scroll이 생기도록 하는 Object
@@ -108,8 +115,7 @@ class _ResetPasswordResNoState extends State<ResetPasswordResNo> {
                             focusNode: nameFocusNode,
                             keyboardType: TextInputType.text,
                             onSubmitted: (String inputText) async {
-                              await pr.show(); /// 3. Progress Dialog Show - Need Declaration, Setting, Style
-                              checkEmployee(context, empcodeController, nameController, pr); /// 수동으로 로그인 프로세스를 실행시킴
+                              checkEmployee(context, empcodeController, nameController); /// 수동으로 로그인 프로세스를 실행시킴
                             },
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
@@ -144,7 +150,7 @@ class _ResetPasswordResNoState extends State<ResetPasswordResNo> {
                             keyboardType: TextInputType.text,
                             focusNode: passwordFocusNode,
                             onSubmitted: (String inputText) async {
-                              resetPassword(context, empcodeController, nameController, passwordController, pr); /// Input Box에서 Enter 적용시 바로 로그인 프로세스가 진행됨
+                              resetPassword(context, empcodeController, nameController, passwordController); /// Input Box에서 Enter 적용시 바로 로그인 프로세스가 진행됨
                             },
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
@@ -154,7 +160,7 @@ class _ResetPasswordResNoState extends State<ResetPasswordResNo> {
                                   width: 1.0,
                                 ),
                               ),
-                              labelText: translateText(context, 'New Password'),
+                              labelText: 'New Password',
                               contentPadding: EdgeInsets.all(10),
                             ),
                             textInputAction: TextInputAction.done,
@@ -163,15 +169,15 @@ class _ResetPasswordResNoState extends State<ResetPasswordResNo> {
                           ButtonTheme(
                             minWidth: baseWidth,
                             height: 50.0,
-                            child: RaisedButton(
-                              child:Text(translateText(context, 'Reset Password'), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white,)),
-                              shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
+                            child: /*RaisedButton(
+                              child:*/Text('Reset Password', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white,)),
+                              /*shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                               splashColor: Colors.grey,
                               onPressed: () async {
                                 await pr.show(); /// 3. Progress Dialog Show - Need Declaration, Setting, Style
                                 resetPassword(context, empcodeController, nameController, passwordController, pr); /// Input Box에서 Enter 적용시 바로 로그인 프로세스가 진행됨
                               },
-                            ),
+                            ),*/
                           ),
                         ],
                       ),
@@ -186,14 +192,12 @@ class _ResetPasswordResNoState extends State<ResetPasswordResNo> {
   }
 
   /// Check Employee
-  Future<void> checkEmployee(BuildContext context, TextEditingController empcodeController, TextEditingController nameController, ProgressDialog pr) async {
-
-    pr.hide(); /// 4. Progress Dialog Close
+  Future<void> checkEmployee(BuildContext context, TextEditingController empcodeController, TextEditingController nameController) async {
 
     FocusScopeNode currentFocus = FocusScope.of(context);
-    if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+    /*if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
       FocusManager.instance.primaryFocus.unfocus();
-    }
+    }*/
 
     var list;
 
@@ -207,7 +211,7 @@ class _ResetPasswordResNoState extends State<ResetPasswordResNo> {
         // Send Parameter
         var data = {'EmpCode': empcodeController.text, 'Name' : nameController.text};
 
-        return await http.post(Uri.parse(url), body: json.encode(data), headers: {"Content-Type": "application/json"}).timeout(const Duration(seconds: 15)).then<bool>((http.Response response) {
+        return await http.post(Uri.parse(url), body: json.encode(data), headers: {"Content-Type": "application/json"}).timeout(const Duration(seconds: 15)).then<void>((http.Response response) {
           if(response.statusCode != 200 || response.body == null || response.body == "{}" ){ return false; }
           if(response.statusCode == 200){
             if(jsonDecode(response.body)['Table'].length != 0) {
@@ -219,7 +223,10 @@ class _ResetPasswordResNoState extends State<ResetPasswordResNo> {
                 builder: (BuildContext context) {
                   return SimpleDialog(
                     title: const Text('Select Employee ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black, )),
-                    children: makeDialogItems(context, 'FindEmployee', list, "", empcodeController, nameController),
+                    children: <Widget> [
+
+                    ]
+                    /*makeDialogItems(context, 'FindEmployee', list, "", empcodeController, nameController)*/,
                   );
                 },
               );
@@ -230,25 +237,25 @@ class _ResetPasswordResNoState extends State<ResetPasswordResNo> {
               showMessageBox(context, "Alert", "검색결과가 존재하지 않습니다.");
             }
           }
-          else{ return false; }
+          else{ ///return false;
+            ;
+          }
         });
       }
       catch (e) {
         print("get Notiofy Error : " + e.toString());
-        return false;
+        ///return false;
       }
     }
   }
 
   /// Reset Password Process
-  Future<void> resetPassword(BuildContext context, TextEditingController empcodeController, TextEditingController nameController, TextEditingController passwordController, ProgressDialog pr) async {
-
-    pr.hide(); /// 4. Progress Dialog Close
+  Future<void> resetPassword(BuildContext context, TextEditingController empcodeController, TextEditingController nameController, TextEditingController passwordController) async {
 
     FocusScopeNode currentFocus = FocusScope.of(context);
-    if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+    /*if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
       FocusManager.instance.primaryFocus.unfocus();
-    }
+    }*/
 
     if(empcodeController.text.isEmpty || nameController.text.isEmpty) { showMessageBox(context, 'Alert', 'Employee Number or Name Not Exists !!!'); } /// Employee Number and Name Empty Check
     else {
@@ -260,7 +267,7 @@ class _ResetPasswordResNoState extends State<ResetPasswordResNo> {
         // Send Parameter
         var data = {'Page' : "AdminPage", 'EmpCode': empcodeController.text, 'Name' : nameController.text, 'Password' : passwordController.text, 'Company' : '', 'Answer1' : '', 'Answer2' : ''};
 
-        return await http.post(Uri.parse(url), body: json.encode(data), headers: {"Content-Type": "application/json"}).timeout(const Duration(seconds: 15)).then<bool>((http.Response response) {
+        return await http.post(Uri.parse(url), body: json.encode(data), headers: {"Content-Type": "application/json"}).timeout(const Duration(seconds: 15)).then<void>((http.Response response) {
           if(response.statusCode != 200 || response.body == null || response.body == "{}" ){ return false; }
           if(response.statusCode == 200) {
             showMessageBox(context, "", response.body.toString());
@@ -270,7 +277,7 @@ class _ResetPasswordResNoState extends State<ResetPasswordResNo> {
       }
       catch (e) {
         print("reset Password Error : " + e.toString());
-        return false;
+        ///return false;
       }
     }
   }

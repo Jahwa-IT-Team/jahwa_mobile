@@ -46,25 +46,6 @@ class _ResetPasswordMobileState extends State<ResetPasswordMobile> {
   @override
   Widget build(BuildContext context) {
 
-    pr = ProgressDialog( /// 1. Progress Dialog Setting
-      context,
-      type: ProgressDialogType.Normal,
-      isDismissible: true,
-    );
-
-    pr.style( /// 2. Progress Dialog Style
-      message: translateText(context, 'Wait a Moment...'),
-      borderRadius: 10.0,
-      backgroundColor: Colors.white,
-      elevation: 10.0,
-      insetAnimCurve: Curves.easeInOut,
-      progress: 0.0,
-      progressWidgetAlignment: Alignment.center,
-      maxProgress: 100.0,
-      progressTextStyle: TextStyle(color: Colors.black, fontSize: 14.0, fontWeight: FontWeight.w400),
-      messageTextStyle: TextStyle(color: Colors.black, fontSize: 16.0, fontWeight: FontWeight.w600),
-    );
-
     screenWidth = MediaQuery.of(context).size.width; /// Screen Width
     screenHeight = MediaQuery.of(context).size.height; /// Screen Height
     statusBarHeight = MediaQuery.of(context).padding.top; /// Status Bar Height
@@ -79,9 +60,16 @@ class _ResetPasswordMobileState extends State<ResetPasswordMobile> {
       },
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Color.fromARGB(0xFF, 0x34, 0x40, 0x4E),
-          title: Text("Reset with Mobile",
-            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 15,),
+          centerTitle: true,
+          toolbarHeight: 45,
+          backgroundColor: const Color(0xFF729ee2),
+          elevation: 0.0,
+          title:Row(
+            children: <Widget> [
+              Icon(FontAwesomeIcons.userCheck, size: bSize, color: Colors.lightGreen),
+              Container(padding: EdgeInsets.only(left: 10.0),),
+              Text('Reset with Mobile', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.white)),
+            ],
           ),
         ),
         body: SingleChildScrollView ( /// Scroll이 생기도록 하는 Object
@@ -95,7 +83,7 @@ class _ResetPasswordMobileState extends State<ResetPasswordMobile> {
                     width: screenWidth,
                     height: (screenHeight - statusBarHeight) * 0.15,
                     alignment: Alignment.center,
-                    child: Text(translateText(context, 'Reset Password'), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30, color: Colors.black,)),
+                    child: Text('Reset Password', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30, color: Colors.black,)),
                   ),
                   Container( /// Input Area
                     width: screenWidth,
@@ -122,7 +110,7 @@ class _ResetPasswordMobileState extends State<ResetPasswordMobile> {
                                   width: 1.0,
                                 ),
                               ),
-                              labelText: translateText(context, '인증번호 입력'),
+                              labelText: '인증번호 입력',
                               contentPadding: EdgeInsets.all(10),
                             ),
                             textInputAction: TextInputAction.next,
@@ -153,8 +141,7 @@ class _ResetPasswordMobileState extends State<ResetPasswordMobile> {
                             focusNode: passwordFocusNode,
                             onSubmitted: (String inputText) async {
                               FocusScope.of(context).unfocus();
-                              await pr.show(); /// Progress Dialog Show - Need Declaration, Setting, Style
-                              resetPassword(context, answer1Controller, passwordController, pr);
+                              resetPassword(context, answer1Controller, passwordController);
                             },
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
@@ -164,7 +151,7 @@ class _ResetPasswordMobileState extends State<ResetPasswordMobile> {
                                   width: 1.0,
                                 ),
                               ),
-                              labelText: translateText(context, 'Password'),
+                              labelText: 'Password',
                               contentPadding: EdgeInsets.all(10),
                             ),
                             textInputAction: TextInputAction.done,
@@ -173,16 +160,16 @@ class _ResetPasswordMobileState extends State<ResetPasswordMobile> {
                           ButtonTheme(
                             minWidth: baseWidth,
                             height: 50.0,
-                            child: RaisedButton(
-                              child:Text(translateText(context, 'Reset Password'), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white,)),
-                              shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
+                            child: /*RaisedButton(
+                              child:*/Text('Reset Password', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white,)),
+                              /*shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                               splashColor: Colors.grey,
                               onPressed: () async {
                                 FocusScope.of(context).unfocus();
                                 await pr.show(); /// 3. Progress Dialog Show - Need Declaration, Setting, Style
                                 resetPassword(context, answer1Controller, passwordController, pr);
                               },
-                            ),
+                            ),*/
                           ),
                         ],
                       ),
@@ -211,14 +198,12 @@ class _ResetPasswordMobileState extends State<ResetPasswordMobile> {
   }
 
   /// Reset Password Process
-  Future<void> resetPassword(BuildContext context, TextEditingController answer1Controller, TextEditingController passwordController, ProgressDialog pr) async {
-
-    pr.hide(); /// 4. Progress Dialog Close
+  Future<void> resetPassword(BuildContext context, TextEditingController answer1Controller, TextEditingController passwordController) async {
 
     FocusScopeNode currentFocus = FocusScope.of(context);
-    if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+    /*if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
       FocusManager.instance.primaryFocus.unfocus();
-    }
+    }*/
 
     if(remain == 0)  { showMessageBox(context, 'Alert', 'The authentication time has expired.'); }
     else if(answer1Controller.text.isEmpty) { showMessageBox(context, 'Alert', 'Answer Not Exists !!!'); }
@@ -232,9 +217,9 @@ class _ResetPasswordMobileState extends State<ResetPasswordMobile> {
         var url = 'https://jhapi.jahwa.co.kr/ResetPassword';
 
         // Send Parameter
-        var data = {'Page': "ResetPassword3", 'EmpCode': resetpass['Table'][0]['empcode'].toString(), 'Name' : '', 'Password' : passwordController.text, 'Company' : resetpass['Table'][0]['company'].toString(), 'Answer1' : '', 'Answer2' : ''};
+        var data = {'Page': "ResetPassword3", 'EmpCode': resetpass['empcode'].toString(), 'Name' : '', 'Password' : passwordController.text, 'Company' : resetpass['company'].toString(), 'Answer1' : '', 'Answer2' : ''};
 
-        return await http.post(Uri.parse(url), body: json.encode(data), headers: {"Content-Type": "application/json"}).timeout(const Duration(seconds: 15)).then<bool>((http.Response response) {
+        return await http.post(Uri.parse(url), body: json.encode(data), headers: {"Content-Type": "application/json"}).timeout(const Duration(seconds: 15)).then<void>((http.Response response) {
           if(response.statusCode != 200 || response.body == null || response.body == "{}" ){ return false; }
           if(response.statusCode == 200) {
             if (response.body.toString().substring(0, 4) == "LOCK") {
@@ -260,7 +245,7 @@ class _ResetPasswordMobileState extends State<ResetPasswordMobile> {
       }
       catch (e) {
         print("reset Password Error : " + e.toString());
-        return false;
+        ///return false;
       }
     }
   }

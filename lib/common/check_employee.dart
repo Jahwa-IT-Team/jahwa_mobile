@@ -161,20 +161,12 @@ class _CheckEmployeeState extends State<CheckEmployee> {
   /// Check Employee
   Future<void> checkEmployee(BuildContext context, TextEditingController empcodeController, TextEditingController nameController) async {
 
-    FocusScopeNode currentFocus = FocusScope.of(context);
-    ////if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
-      ////FocusManager.instance.primaryFocus.unfocus();
-    ////}
-
-    var list;
-
     if(empcodeController.text.isEmpty || nameController.text.isEmpty) { showMessageBox(context, 'Alert', 'Employee Number Or Name Not Exists !!!'); } /// Employee Number and Name Empty Check
     else {
       try {
 
         // Login API Url
         var url = 'https://jhapi.jahwa.co.kr/MCheckEmployee';
-
         // Send Parameter
         var data = {'Company': Company, 'EmpCode': empcodeController.text, 'Name' : nameController.text};
 
@@ -183,9 +175,8 @@ class _CheckEmployeeState extends State<CheckEmployee> {
           if(response.statusCode == 200){
             if (response.body == "User does not exist." || response.body == "User Name is incorrect." || response.body == "Error") showMessageBox(context, "Alert", response.body);
             else if (response.body == "A/D Not Use.") {
-              ///Navigator.pushNamed(context, '/ResetPasswordQuestion'); ///주민등록번호를 이용한 비밀번호 초기화로 이동
-              ////showMessageBox(context, "Alert", "본 앱에서는 A/D사용자만 사용이 가능합니다.");
-              showMessageBox(context, "Alert", "Res No Reset!!!");
+              Navigator.pushNamed(context, '/ResetPasswordResNo'); ///주민등록번호를 이용한 비밀번호 초기화로 이동
+              ///showMessageBox(context, "Alert", "본 앱에서는 A/D사용자만 사용이 가능합니다.");
             }
             else {
               if(jsonDecode(response.body)['DATA'].length != 0) {
@@ -193,15 +184,16 @@ class _CheckEmployeeState extends State<CheckEmployee> {
                   if (element['Question1'].toString() == "" || element['Question2'].toString() == "") { showMessageBox(context, "Alert", "Not Exists Reset Question Data"); }
                   else {
                     if (element['Dispatch'].toString() == "1" && (Company == 'KO532' || Company == 'KO536')) {
-                      ///Navigator.pushNamed(context, '/ResetPasswordQuestion'); /// 질문 답변 인증 페이지로 이동
-                      showMessageBox(context, "Alert", "Question Reset!!!");
+                      Navigator.pushNamed(context, '/ResetPasswordQuestion'); /// 질문 답변 인증 페이지로 이동
+                      ///showMessageBox(context, "Alert", "Question Reset 1!!!");
                     }
-                    else if (Company == 'KO532' || Company == 'KO536') {
-                      ///resetpass['Table'][0]['company'] = Company.toString();
-                      ///resetpass['Table'][0]['empcode'] = empcodeController.text;
-                      ///resetpass['Table'][0]['name'] = nameController.text;
-                      ///resetpass['Table'][0]['question1'] = element['Question1'].toString();
-                      ///resetpass['Table'][0]['question2'] = element['Question2'].toString();
+                    else if (Company == 'KO532' || Company == 'KO536')
+                    {
+                      resetpass['company'] = Company.toString();
+                      resetpass['empcode'] = empcodeController.text;
+                      resetpass['name'] = nameController.text;
+                      resetpass['question1'] = element['Question1'].toString();
+                      resetpass['question2'] = element['Question2'].toString();
                       showDialog(
                         context: context,
                         barrierDismissible: true,
@@ -227,8 +219,8 @@ class _CheckEmployeeState extends State<CheckEmployee> {
                       );
                     }
                     else {
-                      ///Navigator.pushNamed(context, '/ResetPasswordQuestion'); /// 질문 답변 인증 페이지로 이동
-                      showMessageBox(context, "Alert", "Question Reset!!!");
+                      Navigator.pushNamed(context, '/ResetPasswordQuestion'); /// 질문 답변 인증 페이지로 이동
+                      ///showMessageBox(context, "Alert", "Question Reset 2!!!");
                     }
                   }
                 });
@@ -237,7 +229,6 @@ class _CheckEmployeeState extends State<CheckEmployee> {
                 showMessageBox(context, "Alert", "Not Exists Reset Question Data");
               }
             }
-            print(response.body);
           }
           else{
             print("check Employee Error : " + response.statusCode.toString());
@@ -286,10 +277,7 @@ class _CheckEmployeeState extends State<CheckEmployee> {
         print("reset Password Error : " + e.toString());
         return false;
       }
-
-      return false;
     }
-
     return false;
   }
 }
