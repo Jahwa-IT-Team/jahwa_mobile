@@ -276,3 +276,17 @@ Future<void> addUserSharedPreferences(var user) async {
   }
   catch (e) { print(e.toString()); }
 }
+
+/// Password Validation Check
+bool isPasswordCompliant(String password, [int minLength = 6, int maxLength = 21]) {
+  if (password == null || password.isEmpty) { return false; } /// Password Null Check
+
+  bool hasUppercase = password.contains(new RegExp(r'[A-Z]')); /// Upper Case Character Check
+  bool hasLowercase = password.contains(new RegExp(r'[a-z]')); /// Lower Case Character Check
+  bool hasDigits = password.contains(new RegExp(r'[0-9]')); /// Number Check
+  bool hasSpecialCharacters = password.contains(new RegExp(r'[!@#<>/?":_`~;[\]{}\\|=+)(*&^%\s-]')); /// Special Character Check, 특수문자 제한관련 확인 필요
+  bool hasMinLength = password.length > minLength; /// Min Over 6
+  bool hasMaxLength = password.length < maxLength; /// Max Under 21
+
+  return hasDigits & (hasUppercase || hasLowercase) & hasSpecialCharacters & hasMinLength & hasMaxLength;
+}

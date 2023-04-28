@@ -33,7 +33,7 @@ class _ResetPasswordQuestionState extends State<ResetPasswordQuestion> {
 
   void initState() {
     super.initState();
-    print("open Reset Password with Question Page : " + DateTime.now().toString());
+    print("open Reset Password using Question Page : " + DateTime.now().toString());
   }
 
   @override
@@ -59,9 +59,9 @@ class _ResetPasswordQuestionState extends State<ResetPasswordQuestion> {
           elevation: 0.0,
           title:Row(
             children: <Widget> [
-              Icon(FontAwesomeIcons.userCheck, size: bSize, color: Colors.lightGreen),
+              Icon(FontAwesomeIcons.solidCircleQuestion, size: bSize, color: Colors.lightGreen),
               Container(padding: EdgeInsets.only(left: 10.0),),
-              Text('Reset with Question', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.white)),
+              Text('Reset Password using Question', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.white)),
             ],
           ),
         ),
@@ -90,7 +90,7 @@ class _ResetPasswordQuestionState extends State<ResetPasswordQuestion> {
                           Container( /// Input Area
                             width: screenWidth,
                             alignment: Alignment.centerLeft,
-                            child: Text("1. " + ''/*resetpass['Table'][0]['question1']*/, style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black,)),
+                            child: Text("1. " + resetpass['question1'].toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black,)),
                           ),
                           SizedBox(height: 10,),
                           TextField(
@@ -109,7 +109,7 @@ class _ResetPasswordQuestionState extends State<ResetPasswordQuestion> {
                                   width: 1.0,
                                 ),
                               ),
-                              labelText: '답변 1',
+                              labelText: 'Answer 1',
                               contentPadding: EdgeInsets.all(10),
                             ),
                             textInputAction: TextInputAction.next,
@@ -118,7 +118,7 @@ class _ResetPasswordQuestionState extends State<ResetPasswordQuestion> {
                           Container( /// Input Area
                             width: screenWidth,
                             alignment: Alignment.centerLeft,
-                            child: Text("2. " + ''/*resetpass['Table'][0]['question2']*/, style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black,)),
+                            child: Text("2. " + resetpass['question2'].toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black,)),
                           ),
                           SizedBox(height: 10,),
                           TextField(
@@ -137,7 +137,7 @@ class _ResetPasswordQuestionState extends State<ResetPasswordQuestion> {
                                   width: 1.0,
                                 ),
                               ),
-                              labelText: '답변 2',
+                              labelText: 'Answer 2',
                               contentPadding: EdgeInsets.all(10),
                             ),
                             textInputAction: TextInputAction.next,
@@ -146,7 +146,7 @@ class _ResetPasswordQuestionState extends State<ResetPasswordQuestion> {
                           Container( /// Input Area
                             width: screenWidth,
                             alignment: Alignment.centerLeft,
-                            child: Text("변경 비밀번호", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black,)),
+                            child: Text("Password to change", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black,)),
                           ),
                           SizedBox(height: 10,),
                           TextField(
@@ -172,19 +172,20 @@ class _ResetPasswordQuestionState extends State<ResetPasswordQuestion> {
                             textInputAction: TextInputAction.done,
                           ),
                           SizedBox(height: 16,),
-                          ButtonTheme(
-                            minWidth: baseWidth,
-                            height: 50.0,
-                            child: /*RaisedButton(
-                              child:*/Text('Reset Password', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white,)),
-                              /*shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
-                              splashColor: Colors.grey,
-                              onPressed: () async {
-                                FocusScope.of(context).unfocus();
-                                await pr.show(); /// 3. Progress Dialog Show - Need Declaration, Setting, Style
-                                resetPassword(context, answer1Controller, answer2Controller, passwordController, pr);
-                              },
-                            ),*/
+                          ElevatedButton(
+                            child:Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(FontAwesomeIcons.userEdit, size: 16),
+                                SizedBox(height: 45, width: 20),
+                                Text('Reset Password', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white,)),
+                              ],
+                            ),
+                            style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
+                            onPressed: () async {
+                              FocusScope.of(context).unfocus();
+                              resetPassword(context, answer1Controller, answer2Controller, passwordController);
+                            },
                           ),
                         ],
                       ),
@@ -196,20 +197,6 @@ class _ResetPasswordQuestionState extends State<ResetPasswordQuestion> {
         ),
       ),
     );
-  }
-
-  /// Password Validation Check
-  bool isPasswordCompliant(String password, [int minLength = 6, int maxLength = 21]) {
-    if (password == null || password.isEmpty) { return false; } /// Password Null Check
-
-    bool hasUppercase = password.contains(new RegExp(r'[A-Z]')); /// Upper Case Character Check
-    bool hasLowercase = password.contains(new RegExp(r'[a-z]')); /// Lower Case Character Check
-    bool hasDigits = password.contains(new RegExp(r'[0-9]')); /// Number Check
-    bool hasSpecialCharacters = password.contains(new RegExp(r'[!@#<>/?":_`~;[\]{}\\|=+)(*&^%\s-]')); /// Special Character Check, 특수문자 제한관련 확인 필요
-    bool hasMinLength = password.length > minLength; /// Min Over 6
-    bool hasMaxLength = password.length < maxLength; /// Max Under 21
-
-    return hasDigits & (hasUppercase || hasLowercase) & hasSpecialCharacters & hasMinLength & hasMaxLength;
   }
 
   /// Reset Password Process
@@ -228,20 +215,22 @@ class _ResetPasswordQuestionState extends State<ResetPasswordQuestion> {
       try {
 
         // Login API Url
-        var url = 'https://jhapi.jahwa.co.kr/ResetPassword';
+        var url = 'https://jhapi.jahwa.co.kr/MResetPassword';
 
         // Send Parameter
         var data = {'Page': "ResetPassword", 'EmpCode': resetpass['empcode'].toString(), 'Name' : '', 'Password' : passwordController.text, 'Company' : resetpass['company'].toString(), 'Answer1' : answer1Controller.text, 'Answer2' : answer2Controller.text};
 
         return await http.post(Uri.parse(url), body: json.encode(data), headers: {"Content-Type": "application/json"}).timeout(const Duration(seconds: 15)).then<void>((http.Response response) {
-          if(response.statusCode != 200 || response.body == null || response.body == "{}" ){ return false; }
+          if(response.statusCode != 200 || response.body == null || response.body == "{}" ){
+            showMessageBox(context, "Alert", "Reset Password Error : " + response.body.toString());
+          }
           if(response.statusCode == 200) {
             if(response.body.toString().substring(0, 7) == "NOCOUNT") {
               var strArray = response.body.toString().split("_");
               if (strArray.length > 0) {
-                if (strArray[1] == "1") showMessageBox(context, "Alert", "답변 오류  : 1차");
-                else if (strArray[1] == "2") showMessageBox(context, "Alert", "답변 오류  : 2차");
-                else if (strArray[1] == "3") showMessageBox(context, "Alert", "답변 오류  : 3차");
+                if (strArray[1] == "1") showMessageBox(context, "Alert", "Answer Error  : 1차");
+                else if (strArray[1] == "2") showMessageBox(context, "Alert", "Answer Error  : 2차");
+                else if (strArray[1] == "3") showMessageBox(context, "Alert", "Answer Error  : 3차");
                 else showMessageBox(context, "Alert", response.body.toString());
               }
               else showMessageBox(context, "Alert", response.body.toString());
@@ -249,7 +238,7 @@ class _ResetPasswordQuestionState extends State<ResetPasswordQuestion> {
             else if (response.body.toString().substring(0, 4) == "LOCK") {
               var strArray = response.body.toString().split("_");
               if (strArray.length > 0) {
-                showMessageBox(context, "Locking", "3회이상의 답변 오류 발생으로 인해 계정이 잠겨있습니다. 10분뒤 다시 진행해 주시기 바랍니다.");
+                showMessageBox(context, "Locking", "Your account has been locked due to more than 3 response errors. Please proceed again in 10 minutes.");
               }
               else showMessageBox(context, "Alert", response.body.toString());
             }
@@ -261,12 +250,13 @@ class _ResetPasswordQuestionState extends State<ResetPasswordQuestion> {
             }
             else { showMessageBox(context, "Alert", "Password Not Available, Check Password Rule!!! Can Not Use id and More than 2 Letter of Name in Password!!!"); }
           }
-          else{ return false; }
+          else{
+            showMessageBox(context, "Alert", "Process Error!!! Please Check API Server!!!");
+          }
         });
       }
       catch (e) {
-        print("reset Password Error : " + e.toString());
-        ///return false;
+        showMessageBox(context, "Alert", "Reset Password Error : " + e.toString());
       }
     }
   }

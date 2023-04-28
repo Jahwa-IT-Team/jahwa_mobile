@@ -3,6 +3,7 @@ import 'dart:core';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -10,6 +11,7 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sn_progress_dialog/sn_progress_dialog.dart';
 
@@ -23,6 +25,13 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
 
+  final LocalAuthentication auth = LocalAuthentication();
+  _SupportState _supportState = _SupportState.unknown;
+  bool? _canCheckBiometrics;
+  List<BiometricType>? _availableBiometrics;
+  String _authorized = 'Not Authorized';
+  bool _isAuthenticating = false;
+
   TextEditingController empcodeController = new TextEditingController(); /// Employee Number Data Controller
   TextEditingController passwordController = new TextEditingController(); /// Password Data Controller
 
@@ -33,6 +42,120 @@ class _LoginState extends State<Login> {
     super.initState();
     print("open Login Page : " + DateTime.now().toString());
     setEmpCodeController(empcodeController); /// 세션을 이용한 사번 자동 세팅
+
+    auth.isDeviceSupported().then(
+          (bool isSupported) => setState(() => _supportState = isSupported
+          ? _SupportState.supported
+          : _SupportState.unsupported),
+    );
+  }
+
+  Future<void> _checkBiometrics() async {
+    late bool canCheckBiometrics;
+    try {
+      canCheckBiometrics = await auth.canCheckBiometrics;
+    } on PlatformException catch (e) {
+      canCheckBiometrics = false;
+      print(e);
+    }
+    if (!mounted) {
+      return;
+    }
+
+    setState(() {
+      _canCheckBiometrics = canCheckBiometrics;
+    });
+  }
+
+  Future<void> _getAvailableBiometrics() async {
+    late List<BiometricType> availableBiometrics;
+    try {
+      availableBiometrics = await auth.getAvailableBiometrics();
+    } on PlatformException catch (e) {
+      availableBiometrics = <BiometricType>[];
+      print(e);
+    }
+    if (!mounted) {
+      return;
+    }
+
+    setState(() {
+      _availableBiometrics = availableBiometrics;
+    });
+  }
+
+  Future<void> _authenticate() async {
+    bool authenticated = false;
+    try {
+      setState(() {
+        _isAuthenticating = true;
+        _authorized = 'Authenticating';
+      });
+      authenticated = await auth.authenticate(
+        localizedReason: 'Let OS determine authentication method',
+        options: const AuthenticationOptions(
+          stickyAuth: true,
+        ),
+      );
+      setState(() {
+        _isAuthenticating = false;
+      });
+    } on PlatformException catch (e) {
+      print(e);
+      setState(() {
+        _isAuthenticating = false;
+        _authorized = 'Error - ${e.message}';
+      });
+      return;
+    }
+    if (!mounted) {
+      return;
+    }
+
+    setState(
+            () => _authorized = authenticated ? 'Authorized' : 'Not Authorized');
+  }
+
+  Future<void> _authenticateWithBiometrics() async {
+    bool authenticated = false;
+    try {
+      setState(() {
+        _isAuthenticating = true;
+        _authorized = 'Authenticating';
+      });
+      authenticated = await auth.authenticate(
+        localizedReason:
+        'Scan your fingerprint (or face or whatever) to authenticate',
+        options: const AuthenticationOptions(
+          stickyAuth: true,
+          biometricOnly: true,
+        ),
+      );
+      setState(() {
+        _isAuthenticating = false;
+        _authorized = 'Authenticating';
+      });
+    } on PlatformException catch (e) {
+      print(e);
+      setState(() {
+        _isAuthenticating = false;
+        _authorized = 'Error - ${e.message}';
+      });
+      return;
+    }
+    if (!mounted) {
+      return;
+    }
+
+    final String message = authenticated ? 'Authorized' : 'Not Authorized';
+    setState(() {
+      _authorized = message;
+    });
+  }
+
+  Future<void> _cancelAuthentication() async {
+    await auth.stopAuthentication();
+    setState(() => _isAuthenticating = false);
   }
 
   @override
@@ -66,7 +189,69 @@ class _LoginState extends State<Login> {
               color: Color.fromARGB(0xFF, 0xFF, 0xFF, 0xFF),
               child: Column(
                 children: <Widget>[
-                  SizedBox( height: statusBarHeight, ), /// Status Bar
+                  if (_supportState == _SupportState.unknown)
+                    const CircularProgressIndicator()
+                  else if (_supportState == _SupportState.supported)
+                    const Text('This device is supported')
+                  else
+                    const Text('This device is not supported'),
+                  const Divider(height: 100),
+                  Text('Can check biometrics: $_canCheckBiometrics\n'),
+                  ElevatedButton(
+                    onPressed: _checkBiometrics,
+                    child: const Text('Check biometrics'),
+                  ),
+                  const Divider(height: 100),
+                  Text('Available biometrics: $_availableBiometrics\n'),
+                  ElevatedButton(
+                    onPressed: _getAvailableBiometrics,
+                    child: const Text('Get available biometrics'),
+                  ),
+                  const Divider(height: 100),
+                  Text('Current State: $_authorized\n'),
+                  if (_isAuthenticating)
+                    ElevatedButton(
+                      onPressed: _cancelAuthentication,
+                      // TODO(goderbauer): Make this const when this package requires Flutter 3.8 or later.
+                      // ignore: prefer_const_constructors
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: const <Widget>[
+                          Text('Cancel Authentication'),
+                          Icon(Icons.cancel),
+                        ],
+                      ),
+                    )
+                  else
+                    Column(
+                      children: <Widget>[
+                        ElevatedButton(
+                          onPressed: _authenticate,
+                          // TODO(goderbauer): Make this const when this package requires Flutter 3.8 or later.
+                          // ignore: prefer_const_constructors
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: const <Widget>[
+                              Text('Authenticate'),
+                              Icon(Icons.perm_device_information),
+                            ],
+                          ),
+                        ),
+                        ElevatedButton(
+                          onPressed: _authenticateWithBiometrics,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Text(_isAuthenticating
+                                  ? 'Cancel'
+                                  : 'Authenticate: biometrics only'),
+                              const Icon(Icons.fingerprint),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  /*SizedBox( height: statusBarHeight, ), /// Status Bar
                   Container( /// Jahwa Mark
                       width: screenWidth,
                       height: (screenHeight - statusBarHeight) * 0.45,
@@ -163,27 +348,13 @@ class _LoginState extends State<Login> {
                         },
                       ),
                     ),
-                  ),
+                  ),*/
                 ],
               ),
             )
         ),
       ),
     );
-  }
-
-  /// Password Validation Check
-  bool isPasswordCompliant(String password, [int minLength = 6, int maxLength = 21]) {
-    if (password == null || password.isEmpty) { return false; } /// Password Null Check
-
-    bool hasUppercase = password.contains(new RegExp(r'[A-Z]')); /// Upper Case Character Check
-    bool hasLowercase = password.contains(new RegExp(r'[a-z]')); /// Lower Case Character Check
-    bool hasDigits = password.contains(new RegExp(r'[0-9]')); /// Number Check
-    bool hasSpecialCharacters = password.contains(new RegExp(r'[!@#<>/?":_`~;[\]{}\\|=+)(*&^%\s-]')); /// Special Character Check, 특수문자 제한관련 확인 필요
-    bool hasMinLength = password.length > minLength; /// Min Over 6
-    bool hasMaxLength = password.length < maxLength; /// Max Under 21
-
-    return hasDigits & (hasUppercase || hasLowercase) & hasSpecialCharacters & hasMinLength & hasMaxLength;
   }
 
   /// Login Process
@@ -256,4 +427,10 @@ class _LoginState extends State<Login> {
       return false;
     }
   }
+}
+
+enum _SupportState {
+  unknown,
+  supported,
+  unsupported,
 }

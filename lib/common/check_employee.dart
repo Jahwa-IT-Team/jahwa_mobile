@@ -136,7 +136,7 @@ class _CheckEmployeeState extends State<CheckEmployee> {
                           child:Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(FontAwesomeIcons.solidUser, size: 16),
+                              Icon(FontAwesomeIcons.userCheck, size: 16),
                               SizedBox(height: 45, width: 20),
                               Text('Check Employee', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white,)),
                             ],
@@ -171,29 +171,31 @@ class _CheckEmployeeState extends State<CheckEmployee> {
         var data = {'Company': Company, 'EmpCode': empcodeController.text, 'Name' : nameController.text};
 
         return await http.post(Uri.parse(url), body: json.encode(data), headers: {"Content-Type": "application/json"}).timeout(const Duration(seconds: 15)).then<void>((http.Response response) {
-          if(response.statusCode != 200 || response.body == null || response.body == "{}" ){ print("check Employee Error : " + response.body.toString()); }
+          if(response.statusCode != 200 || response.body == null || response.body == "{}" ){
+            showMessageBox(context, "Alert", "Check Employee Error : " + response.body.toString());
+          }
           if(response.statusCode == 200){
             if (response.body == "User does not exist." || response.body == "User Name is incorrect." || response.body == "Error") showMessageBox(context, "Alert", response.body);
             else if (response.body == "A/D Not Use.") {
+              resetpass['empcode'] = empcodeController.text;
               Navigator.pushNamed(context, '/ResetPasswordResNo'); ///주민등록번호를 이용한 비밀번호 초기화로 이동
-              ///showMessageBox(context, "Alert", "본 앱에서는 A/D사용자만 사용이 가능합니다.");
             }
             else {
               if(jsonDecode(response.body)['DATA'].length != 0) {
                 jsonDecode(response.body)['DATA'].forEach((element) {
-                  if (element['Question1'].toString() == "" || element['Question2'].toString() == "") { showMessageBox(context, "Alert", "Not Exists Reset Question Data"); }
+
+                  resetpass['company'] = element['Company'].toString();
+                  resetpass['empcode'] = empcodeController.text;
+                  resetpass['name'] = nameController.text;
+                  resetpass['question1'] = element['Question1'].toString();
+                  resetpass['question2'] = element['Question2'].toString();
+                  Company = element['Company'].toString();
+
+                  if (element['Question1'].toString() == "" || element['Question2'].toString() == "") {
+                    Navigator.pushNamed(context, '/ResetPasswordResNo'); ///주민등록번호를 이용한 비밀번호 초기화로 이동
+                  }
                   else {
-                    if (element['Dispatch'].toString() == "1" && (Company == 'KO532' || Company == 'KO536')) {
-                      Navigator.pushNamed(context, '/ResetPasswordQuestion'); /// 질문 답변 인증 페이지로 이동
-                      ///showMessageBox(context, "Alert", "Question Reset 1!!!");
-                    }
-                    else if (Company == 'KO532' || Company == 'KO536')
-                    {
-                      resetpass['company'] = Company.toString();
-                      resetpass['empcode'] = empcodeController.text;
-                      resetpass['name'] = nameController.text;
-                      resetpass['question1'] = element['Question1'].toString();
-                      resetpass['question2'] = element['Question2'].toString();
+                    if (element['Dispatch'].toString() == "0" && (Company == 'KO532' || Company == 'KO536')) {
                       showDialog(
                         context: context,
                         barrierDismissible: true,
@@ -203,7 +205,7 @@ class _CheckEmployeeState extends State<CheckEmployee> {
                             children: [
                               SimpleDialogOption(
                                 onPressed: () async {
-                                  await checkPhone(context, empcodeController, nameController);
+                                  await checkPhone(context, empcodeController, nameController); /// 본사와 나노의 경우 모바일을 이용한 초기화 진행가능
                                 },
                                 child: Text('Mobile Authentication',),
                               ),
@@ -218,15 +220,15 @@ class _CheckEmployeeState extends State<CheckEmployee> {
                         },
                       );
                     }
-                    else {
+                    else
+                    {
                       Navigator.pushNamed(context, '/ResetPasswordQuestion'); /// 질문 답변 인증 페이지로 이동
-                      ///showMessageBox(context, "Alert", "Question Reset 2!!!");
                     }
                   }
                 });
               }
               else{
-                showMessageBox(context, "Alert", "Not Exists Reset Question Data");
+                showMessageBox(context, "Alert", "Not Exists User Data!!!");
               }
             }
           }

@@ -405,7 +405,7 @@ class _IndexState extends State<Index> {
         child: FittedBox(
           child: FloatingActionButton(
             backgroundColor: Colors.green,
-            onPressed: () { Navigator.pushNamed(context, '/Favorite'); },
+            onPressed: () { Navigator.pushNamed(context, '/ResetPassword'); },
             child: Icon(FontAwesomeIcons.solidStar, size: 15, color: const Color(0xFFC8DEFF),),
           ),
         ),

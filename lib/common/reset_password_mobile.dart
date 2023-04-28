@@ -157,19 +157,20 @@ class _ResetPasswordMobileState extends State<ResetPasswordMobile> {
                             textInputAction: TextInputAction.done,
                           ),
                           SizedBox(height: 16,),
-                          ButtonTheme(
-                            minWidth: baseWidth,
-                            height: 50.0,
-                            child: /*RaisedButton(
-                              child:*/Text('Reset Password', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white,)),
-                              /*shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
-                              splashColor: Colors.grey,
-                              onPressed: () async {
-                                FocusScope.of(context).unfocus();
-                                await pr.show(); /// 3. Progress Dialog Show - Need Declaration, Setting, Style
-                                resetPassword(context, answer1Controller, passwordController, pr);
-                              },
-                            ),*/
+                          ElevatedButton(
+                            child:Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(FontAwesomeIcons.userEdit, size: 16),
+                                SizedBox(height: 45, width: 20),
+                                Text('Reset Password', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white,)),
+                              ],
+                            ),
+                            style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
+                            onPressed: () async {
+                              FocusScope.of(context).unfocus();
+                              resetPassword(context, answer1Controller, passwordController);
+                            },
                           ),
                         ],
                       ),
@@ -183,27 +184,8 @@ class _ResetPasswordMobileState extends State<ResetPasswordMobile> {
     );
   }
 
-  /// Password Validation Check
-  bool isPasswordCompliant(String password, [int minLength = 6, int maxLength = 21]) {
-    if (password == null || password.isEmpty) { return false; } /// Password Null Check
-
-    bool hasUppercase = password.contains(new RegExp(r'[A-Z]')); /// Upper Case Character Check
-    bool hasLowercase = password.contains(new RegExp(r'[a-z]')); /// Lower Case Character Check
-    bool hasDigits = password.contains(new RegExp(r'[0-9]')); /// Number Check
-    bool hasSpecialCharacters = password.contains(new RegExp(r'[!@#<>/?":_`~;[\]{}\\|=+)(*&^%\s-]')); /// Special Character Check, 특수문자 제한관련 확인 필요
-    bool hasMinLength = password.length > minLength; /// Min Over 6
-    bool hasMaxLength = password.length < maxLength; /// Max Under 21
-
-    return hasDigits & (hasUppercase || hasLowercase) & hasSpecialCharacters & hasMinLength & hasMaxLength;
-  }
-
   /// Reset Password Process
   Future<void> resetPassword(BuildContext context, TextEditingController answer1Controller, TextEditingController passwordController) async {
-
-    FocusScopeNode currentFocus = FocusScope.of(context);
-    /*if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
-      FocusManager.instance.primaryFocus.unfocus();
-    }*/
 
     if(remain == 0)  { showMessageBox(context, 'Alert', 'The authentication time has expired.'); }
     else if(answer1Controller.text.isEmpty) { showMessageBox(context, 'Alert', 'Answer Not Exists !!!'); }
@@ -214,13 +196,15 @@ class _ResetPasswordMobileState extends State<ResetPasswordMobile> {
       try {
 
         // Login API Url
-        var url = 'https://jhapi.jahwa.co.kr/ResetPassword';
+        var url = 'https://jhapi.jahwa.co.kr/MResetPassword';
 
         // Send Parameter
         var data = {'Page': "ResetPassword3", 'EmpCode': resetpass['empcode'].toString(), 'Name' : '', 'Password' : passwordController.text, 'Company' : resetpass['company'].toString(), 'Answer1' : '', 'Answer2' : ''};
 
         return await http.post(Uri.parse(url), body: json.encode(data), headers: {"Content-Type": "application/json"}).timeout(const Duration(seconds: 15)).then<void>((http.Response response) {
-          if(response.statusCode != 200 || response.body == null || response.body == "{}" ){ return false; }
+          if(response.statusCode != 200 || response.body == null || response.body == "{}" ){
+            showMessageBox(context, "Alert", "Reset Password Error : " + response.body.toString());
+          }
           if(response.statusCode == 200) {
             if (response.body.toString().substring(0, 4) == "LOCK") {
               var strArray = response.body.toString().split("_");
@@ -240,7 +224,9 @@ class _ResetPasswordMobileState extends State<ResetPasswordMobile> {
             }
             else { showMessageBox(context, "Alert", "Password Not Available, Check Password Rule!!! Can Not Use id and More than 2 Letter of Name in Password!!!"); }
           }
-          else{ return false; }
+          else{
+            showMessageBox(context, "Alert", "Process Error!!! Please Check API Server!!!");
+          }
         });
       }
       catch (e) {
