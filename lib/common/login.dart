@@ -189,6 +189,7 @@ class _LoginState extends State<Login> {
               color: Color.fromARGB(0xFF, 0xFF, 0xFF, 0xFF),
               child: Column(
                 children: <Widget>[
+                  /*
                   if (_supportState == _SupportState.unknown)
                     const CircularProgressIndicator()
                   else if (_supportState == _SupportState.supported)
@@ -250,8 +251,8 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                       ],
-                    ),
-                  /*SizedBox( height: statusBarHeight, ), /// Status Bar
+                    ),*/
+                  SizedBox( height: statusBarHeight, ), /// Status Bar
                   Container( /// Jahwa Mark
                       width: screenWidth,
                       height: (screenHeight - statusBarHeight) * 0.45,
@@ -348,7 +349,7 @@ class _LoginState extends State<Login> {
                         },
                       ),
                     ),
-                  ),*/
+                  ),
                 ],
               ),
             )
