@@ -253,9 +253,20 @@ class _LoginState extends State<Login> {
                       ],
                     ),*/
                   SizedBox( height: statusBarHeight, ), /// Status Bar
+                  Container(
+                    width: screenWidth - 100,
+                    height: (screenHeight - statusBarHeight) * 0.1,
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () async {
+                        showLanaguageBox(context);
+                      },
+                      child: Icon(FontAwesomeIcons.earthAsia, size:30, color: Colors.black38),
+                    ),
+                  ),
                   Container( /// Jahwa Mark
                       width: screenWidth,
-                      height: (screenHeight - statusBarHeight) * 0.45,
+                      height: (screenHeight - statusBarHeight) * 0.35,
                       alignment: Alignment.center,
                       child: SizedBox(
                         width: baseWidth,
@@ -379,7 +390,7 @@ class _LoginState extends State<Login> {
   /// 세션을 이용한 사번 자동 세팅
   Future<void> setEmpCodeController(TextEditingController empcodeController) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    empcodeController.text = (prefs.getString('EmpCode') ?? '');
+    empcodeController.text = (prefs.getString('OrgEmpCode') ?? '');
   }
 
   /// Login Check Process

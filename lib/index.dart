@@ -15,6 +15,8 @@ class Index extends StatefulWidget {
 
 class _IndexState extends State<Index> {
 
+  var empcode = '';
+
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -37,58 +39,8 @@ class _IndexState extends State<Index> {
                 icon: const Icon(FontAwesomeIcons.home),
                 tooltip: 'Index.Logout',
                 onPressed:  () async {
-                  SharedPreferences prefs = await SharedPreferences.getInstance(); /// Cookie 대용
-
-                  try {
-                    prefs.setString('EntCode', '');
-                    prefs.setString('EntName', '');
-                    prefs.setString('DeptCode', '');
-                    prefs.setString('DeptName', '');
-                    prefs.setString('EmpCode', '');
-                    prefs.setString('Name', '');
-                    prefs.setString('RollPstn', '');
-                    prefs.setString('Position', '');
-                    prefs.setString('Role', '');
-                    prefs.setString('Title', '');
-                    prefs.setString('PayGrade', '');
-                    prefs.setString('Level', '');
-                    prefs.setString('Email', '');
-                    prefs.setString('Photo', '');
-                    prefs.setInt('Auth', 0);
-                    prefs.setString('EntGroup', '');
-                    prefs.setString('OfficeTel', '');
-                    prefs.setString('Mobile', '');
-                    prefs.setString('DueDate', '');
-                    ///prefs.setString('Language', language);
-                    prefs.setString('Token', '');
-                    prefs.setString('Route', '');
-
-                    /// common.dart에 정의된 session 정보
-                    session['EntCode'] =  '';
-                    session['EntName'] = '';
-                    session['DeptCode'] = '';
-                    session['DeptName'] = '';
-                    session['EmpCode'] = '';
-                    session['Name'] = '';
-                    session['RollPstn'] = '';
-                    session['Position'] = '';
-                    session['Role'] = '';
-                    session['Title'] = '';
-                    session['PayGrade'] = '';
-                    session['Level'] = '';
-                    session['Email'] = '';
-                    session['Photo'] = '';
-                    session['Auth'] = '';
-                    session['EntGroup'] = '';
-                    session['OfficeTel'] = '';
-                    session['Mobile'] = '';
-                    session['DueDate'] = '';
-                    session['Token'] = '';
-                    session['Route'] = '';
-
-                    Navigator.pushReplacementNamed(context, '/');
-                  }
-                  catch (e) { print(e.toString()); }
+                  await removeUserSharedPreferences();
+                  Navigator.pushReplacementNamed(context, '/');
                 }
               ),
               Flexible(child: Text( session['EntName'].toString() + ' ' + session['DeptName'].toString() + ' ' + session['Name'].toString() + ' ' + session['Position'].toString(), softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: mSize, fontWeight: FontWeight.bold, color: Colors.white))),

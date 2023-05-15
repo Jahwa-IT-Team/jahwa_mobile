@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:jahwa_mobile/common/bubble_bottom_bar.dart';
@@ -42,7 +43,17 @@ class _ProfileState extends State<Profile> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-
+                Container(padding: EdgeInsets.all(50.0),),
+                Text('Personal Information', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black38)),
+                Text('Change Language', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black38)),
+                Text('Additional Information', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black38)),
+                TextButton(
+                  child: Text('English'.tr(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey, fontSize: 14, )),
+                  onPressed:  () {
+                    showAdditionalBox(context);
+                  },
+                ),
+                Text('Password Reset', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black38)),
               ],
             ),
           ),
