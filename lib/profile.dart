@@ -48,9 +48,9 @@ class _ProfileState extends State<Profile> {
                 Text('Change Language', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black38)),
                 Text('Additional Information', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black38)),
                 TextButton(
-                  child: Text('English'.tr(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey, fontSize: 14, )),
-                  onPressed:  () {
-                    showAdditionalBox(context);
+                  child: Text('Select Additional Information'.tr(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey, fontSize: 14, )),
+                  onPressed:  () async {
+                    await showAdditionalBox(context);
                   },
                 ),
                 Text('Password Reset', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black38)),
