@@ -96,6 +96,9 @@ class _CheckState extends State<Check> {
       Navigator.pushNamedAndRemoveUntil(context, '/Login', (route) => false);
     }
     else {
+      session['OrgEntCode'] = prefs.getString('OrgEntCode') ?? '';
+      session['OrgDeptCode'] = prefs.getString('OrgDeptCode') ?? '';
+      session['OrgEmpCode'] = prefs.getString('OrgEmpCode') ?? '';
       session['EntCode'] = prefs.getString('EntCode') ?? '';
       session['EntName'] = prefs.getString('EntName') ?? '';
       session['DeptCode'] = prefs.getString('DeptCode') ?? '';
@@ -130,7 +133,8 @@ class _CheckState extends State<Check> {
   Future<bool> checkLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    var EmpCode = prefs.getString('EmpCode');
+    /// Check시에는 OrgEmpCode를 사용하여 원래로 돌아온다.
+    var EmpCode = prefs.getString('OrgEmpCode');
     var Token = prefs.getString('Token');
 
     /// Send to Token and check valuable.
@@ -150,7 +154,7 @@ class _CheckState extends State<Check> {
             Map userMap = table['Table'][0];
             var user = User.fromJson(userMap); /// globals.dart에 정의된 User를 이용해 정보를 Mapping하는 것
             addUserSharedPreferences(user); /// 사용자 정보 세션 생성
-            ///addPasswordSharedPreferences(password); /// 비밀번호 관련 세션 생성
+            ///addPasswordSharedPreferences(password); /// 비밀번호 관련 세션 생성  -- 확인 필요
             return false;
           }
           else { return true; }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:jahwa_mobile/common/bubble_bottom_bar.dart';
 import 'package:jahwa_mobile/common/common.dart';
@@ -51,6 +52,13 @@ class _ProfileState extends State<Profile> {
                   child: Text('Select Additional Information'.tr(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey, fontSize: 14, )),
                   onPressed:  () async {
                     await showAdditionalBox(context);
+                  },
+                ),
+                TextButton(
+                  child: Text('Restore Original Information'.tr(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey, fontSize: 14, )),
+                  onPressed:  () async {
+                    SharedPreferences prefs = await SharedPreferences.getInstance(); /// Cookie 대용
+                    await setUser(context, (prefs.getString('OrgEntCode') ?? ''), (prefs.getString('OrgDeptCode') ?? ''), (prefs.getString('OrgEmpCode') ?? ''), (prefs.getString('OrgEmpCode') ?? ''), (prefs.getString('Token') ?? ''));
                   },
                 ),
                 Text('Password Reset', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black38)),

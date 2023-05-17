@@ -396,7 +396,7 @@ Future<void> showAdditionalBox(BuildContext context) async {
               ),
             ),
             onPressed:  () async {
-              await setUser(context, element['EntCode'].toString(), element['DeptCode'].toString(), element['EmpCoded'].toString(), session['OrgEmpCode'].toString(), session['Token'].toString());
+              await setUser(context, element['EntCode'].toString(), element['DeptCode'].toString(), element['EmpCode'].toString(), session['OrgEmpCode'].toString(), session['Token'].toString());
               Navigator.of(context).pop();
             },
           );
