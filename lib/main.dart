@@ -25,6 +25,7 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
+      debugShowCheckedModeBanner: false,
       locale: context.locale,
       title: 'Jahwa Mobile',
       theme: ThemeData(

@@ -524,3 +524,44 @@ Future<void> setUser(BuildContext context, String entcode, String deptcode, Stri
     pd.close();
   }
 }
+
+void showDialogWithFields(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Scaffold(
+        backgroundColor: Colors.transparent,
+        body:InkWell(
+          onTap: () {
+            Navigator.of(context).pop();
+          }, // Handle your callback
+          child: Container(
+            width: screenWidth,
+            height: screenHeight,
+            decoration: const BoxDecoration(color: Colors.transparent),
+            alignment: Alignment.center,
+            child: InkWell(
+              onTap: () {
+                ///Navigator.of(context).pop();
+                showAdditionalBox(context);
+              },
+              child: Container(
+                width: 200,
+                height: 200,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(20))
+                ),
+                child: Text('Select Additional Information'.tr(),
+                  style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 12,),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    },
+  );
+}
