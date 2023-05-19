@@ -409,7 +409,7 @@ Future<void> showAdditionalBox(BuildContext context) async {
 
   /// set up the AlertDialog
   AlertDialog alert = AlertDialog(
-    title: Text('Select User'.tr()),
+    title: Text('Select Additional Information'.tr()),
     titlePadding: const EdgeInsets.only(top:50, left: 50, bottom: 30,),
     titleTextStyle: TextStyle(fontFamily: "Malgun", color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20,),
     ///contentTextStyle: TextStyle(fontFamily: "Malgun", color: Colors.black,),
@@ -553,7 +553,7 @@ void showDialogWithFields(BuildContext context) {
                     color: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(20))
                 ),
-                child: Text('Select Additional Information'.tr(),
+                child: Text('Change Additional Information'.tr(),
                   style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 12,),
                   textAlign: TextAlign.center,
                 ),
@@ -564,4 +564,29 @@ void showDialogWithFields(BuildContext context) {
       );
     },
   );
+}
+
+/// Get DB Data
+Future<String> getDBData(String div) async {
+
+  var jsondata = '';
+  var empcode = session['EmpCode'].toString();
+
+  try {
+    var url = 'https://jhapi.jahwa.co.kr/' + div;
+    var data = {'EmpCode': empcode};
+
+    await http.post(Uri.parse(url), body: json.encode(data),
+        headers: {"Content-Type": "application/json"}).timeout(
+        const Duration(seconds: 15)).then<void>((http.Response response) {
+      if (response.statusCode != 200 || response.body == null || response.body == "{}") { ; }
+      else if (response.statusCode == 200) {
+        jsondata = response.body.toString();
+      }
+    });
+  } catch (e) {
+    print("set Information Error : " + e.toString());
+  }
+
+  return jsondata;
 }
