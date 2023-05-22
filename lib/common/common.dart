@@ -570,11 +570,13 @@ void showDialogWithFields(BuildContext context) {
 Future<String> getDBData(String div) async {
 
   var jsondata = '';
-  var empcode = session['EmpCode'].toString();
+  var url = '';
+  var data = {};
 
   try {
-    var url = 'https://jhapi.jahwa.co.kr/' + div;
-    var data = {'EmpCode': empcode};
+    url = 'https://jhapi.jahwa.co.kr/' + div;
+    if(div == 'MPersonInformation') data = {'EmpCode': session['EmpCode'].toString()};
+    else if(div == 'MPortalQuery') data = {'EntCode': session['EntCode'].toString(), 'DeptCode': session['DeptCode'].toString(), 'EmpCode': session['EmpCode'].toString(), 'Language': session['Languange'].toString()};
 
     await http.post(Uri.parse(url), body: json.encode(data),
         headers: {"Content-Type": "application/json"}).timeout(

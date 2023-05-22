@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'package:easy_localization/easy_localization.dart';
@@ -47,309 +48,377 @@ class _IndexState extends State<Index> {
             ],
           ),
         ),
-        body: Container(
-          child : SingleChildScrollView ( // this will make your body scrollable
-            child: Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.all(10.0),
-                    margin: EdgeInsets.only(left: 15, right: 15, top: 20, bottom: 0),
+        body:
+        FutureBuilder(
+            future: getDBData('MPortalQuery'),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+
+              var sttime = '08:00';
+              var edtime = '17:00';
+              var addtime = '0:00';
+              var addtimelimit = '80:00';
+              var annualleaveall = '0.00';
+              var annualleaveuse = '0.00';
+
+              var preapproval = '0';
+              var unapproved = '0';
+              var ongoing = '0';
+              var deptreceived = '0';
+              var circulation = '0';
+              var cooperation = '0';
+
+              var cnt = 5;
+
+              List<Widget> postsList = [];
+              Widget posts = new InkWell();
+              List<Widget> vehicleList = [];
+              Widget vehicle = new Container();
+              String string = '';
+
+              if (snapshot.hasData == false) {
+                return Padding(padding: const EdgeInsets.all(100.0), child: CircularProgressIndicator(),);
+              }
+              else if (snapshot.hasError) {
+                return Padding(padding: const EdgeInsets.all(100), child: Text('Error: ${snapshot.error}', style: TextStyle(fontSize: 15),),);
+              }
+              else {
+                if (snapshot.data != '') {
+                  if (jsonDecode(snapshot.data)['Table'].length != 0) {
+                    jsonDecode(snapshot.data)['Table'].forEach((element) {
+                      if(cnt >= 0) {
+                        string = element['Subject'].toString();
+                        posts = InkWell(
+                          onTap: () { print("Click event on : " + element['Code'].toString() + '/' + element['Num'].toString()); }, // Handle your callback
+                          child: Container(
+                            height: 30,
+                            child: Row(
+                              children: <Widget> [
+                                Icon(Icons.circle, size: 8, color: Colors.black54),
+                                SizedBox(width: 5),
+                                Flexible(child: Text(string, softWrap: false, overflow: TextOverflow.ellipsis)),
+                              ],
+                            ),
+                          ),
+                        );
+
+                        postsList.add(posts);
+                        cnt --;
+                      }
+                      else {
+                        ;
+                      }
+                    });
+                  }
+                  else { /// No Data
+                    ;
+                  }
+
+                  if (jsonDecode(snapshot.data)['Table1'].length != 0) {
+                    jsonDecode(snapshot.data)['Table1'].forEach((element) {
+                      sttime = element['StTime'].toString();
+                      edtime = element['EdTime'].toString();
+                      addtime = element['AddTime'].toString();
+                      addtimelimit = element['AddTimeLimit'].toString();
+                      annualleaveall = element['AnnualLeaveAll'].toString();
+                      annualleaveuse = element['AnnualLeaveUse'].toString();
+                      ;
+                    });
+                  }
+                  else { /// No Data
+                    ;
+                  }
+
+                  if (jsonDecode(snapshot.data)['Table2'].length != 0) {
+                    jsonDecode(snapshot.data)['Table2'].forEach((element) {
+                      preapproval = element['PreApproval'].toString();
+                      unapproved = element['UnApproved'].toString();
+                      ongoing = element['OnGoing'].toString();
+                      deptreceived = element['DeptReceived'].toString();
+                      circulation = element['Circulation'].toString();
+                      cooperation = element['Cooperation'].toString();
+                      ;
+                    });
+                  }
+                  else { /// No Data
+                    ;
+                  }
+                }
+                else { /// jsondata == ''
+                  ;
+                }
+
+                return Container(
+                  child: SingleChildScrollView( // this will make your body scrollable
                     child: Center(
                       child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Container(
-                            padding: EdgeInsets.all(5.0),
-                            child: Column(
-                              children: <Widget> [
-                                Row(
-                                  children: <Widget> [
-                                    Icon(FontAwesomeIcons.listUl, size: bSize, color: const Color(0xFF729ee2)),
-                                    SizedBox(width: 10),
-                                    Text('Recent Posts', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black54)),
-                                  ],
-                                ),
-                                Container(
-                                  padding: EdgeInsets.all(10.0),
-                                  margin: EdgeInsets.only(top: 10),
-                                  child: Center(
-                                    child: Column(
-                                      children: <Widget>[
-                                        InkWell(
-                                          child: Container(
-                                            height: 30,
-                                            child: Row(
-                                              children: <Widget> [
-                                                Icon(Icons.circle, size: 8, color: Colors.black54),
-                                                SizedBox(width: 5),
-                                                Flexible(child: Text('Posts 1 가나다라마바사아자차가타파하거너더러머버서어저처커터퍼허고노도로모보소오조초코토포호구누두루무부수우주추쿠투푸후', softWrap: false, overflow: TextOverflow.ellipsis)),
-                                              ],
+                            child : SingleChildScrollView ( // this will make your body scrollable
+                              child: Center(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    /// Recent Posts
+                                    Container(
+                                      padding: EdgeInsets.all(10.0),
+                                      margin: EdgeInsets.only(left: 15, right: 15, top: 20, bottom: 0),
+                                      decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: const Color(0xFFC8DEFF)),
+                                      child: Center(
+                                        child: Column(
+                                          children: <Widget>[
+                                            Container(
+                                              padding: EdgeInsets.all(5.0),
+                                              child: Column(
+                                                children: <Widget>[
+                                                  Row(
+                                                    children: <Widget>[
+                                                      Icon(FontAwesomeIcons.listUl, size: bSize, color: const Color(0xFF729ee2)),
+                                                      SizedBox(width: 10),
+                                                      Text('Recent Posts'.tr(), style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black54)),
+                                                    ],
+                                                  ),
+                                                  Container(
+                                                    padding: EdgeInsets.all(10.0),
+                                                    margin: EdgeInsets.only(top: 10),
+                                                    decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: Colors.white),
+                                                    child: Center(
+                                                      child: Column(
+                                                        children: <Widget>[
+                                                          for(var posts in postsList ) posts
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                          onTap: () { print("Click event on Container 1"); }, // Handle your callback
+                                          ],
                                         ),
-                                        InkWell(
-                                          child: Container(
-                                            height: 30,
-                                            child: Row(
-                                              children: <Widget> [
-                                                Icon(Icons.circle, size: 8, color: Colors.black54),
-                                                SizedBox(width: 5),
-                                                Flexible(child: Text('Posts 2 ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz', softWrap: false, overflow: TextOverflow.ellipsis)),
-                                              ],
-                                            ),
-                                          ),
-                                          onTap: () { print("Click event on Container 2"); },
-                                        ),
-                                        InkWell(
-                                          child: Container(
-                                            height: 30,
-                                            child: Row(
-                                              children: <Widget> [
-                                                Icon(Icons.circle, size: 8, color: Colors.black54),
-                                                SizedBox(width: 5),
-                                                Flexible(child: Text('Posts 3 abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ', softWrap: false, overflow: TextOverflow.ellipsis)),
-                                              ],
-                                            ),
-                                          ),
-                                          onTap: () { print("Click event on Container 3"); },
-                                        ),
-                                        InkWell(
-                                          child: Container(
-                                            height: 30,
-                                            child: Row(
-                                              children: <Widget> [
-                                                Icon(Icons.circle, size: 8, color: Colors.black54),
-                                                SizedBox(width: 5),
-                                                Flexible(child: Text('Posts 4 123456789 0123456789 0123456789 01234567890', softWrap: false, overflow: TextOverflow.ellipsis)),
-                                              ],
-                                            ),
-                                          ),
-                                          onTap: () { print("Click event on Container 4"); },
-                                        ),
-                                        InkWell(
-                                          child: Container(
-                                            height: 30,
-                                            child: Row(
-                                              children: <Widget> [
-                                                Icon(Icons.circle, size: 8, color: Colors.black54),
-                                                SizedBox(width: 5),
-                                                Flexible(child: Text('Posts 5 ~!@#%^&*()-=_+[]}|;:",./<>?~!@#%^&*()-=_+[]}|;:",./<>?~!@#%^&*()-=_+[]}|;:",./<>?', softWrap: false, overflow: TextOverflow.ellipsis)),
-                                              ],
-                                            ),
-                                          ),
-                                          onTap: () { print("Click event on Container 5"); },
-                                        ),
-                                      ],
+                                      ),
                                     ),
-                                  ),
-                                  decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: Colors.white),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: const Color(0xFFC8DEFF)),
-                  ),
-                  /// My Working Time
-                  Container(
-                    padding: EdgeInsets.all(10.0),
-                    margin: EdgeInsets.only(left: 15, right: 15, top: 20, bottom: 0),
-                    child: Center(
-                      child: Column(
-                        children: <Widget>[
-                          Container(
-                            padding: EdgeInsets.all(5.0),
-                            child: Column(
-                              children: <Widget> [
-                                Row(
-                                  children: <Widget> [
-                                    Icon(FontAwesomeIcons.userClock, size: bSize, color: const Color(0xFF729ee2)),
-                                    SizedBox(width: 10),
-                                    Text('My Working Time', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black54)),
-                                  ],
-                                ),
-                                Container(
-                                  padding: EdgeInsets.all(15.0),
-                                  margin: EdgeInsets.only(top: 10),
-                                  child: Center(
-                                    child: Row(
-                                      children: <Widget>[
-                                        Expanded(
-                                          flex: 4,
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            children: <Widget>[
-                                              Text('출퇴근(예정)시간', softWrap: false, overflow: TextOverflow.ellipsis),
-                                              SizedBox(height: 10),
-                                              Container(
-                                                alignment: Alignment.center,
-                                                child:Row(
-                                                  mainAxisSize: MainAxisSize.min,
-                                                  children: <Widget>[
-                                                    Text('08:15', style: TextStyle(fontSize: mSize, fontWeight: FontWeight.bold, color: Colors.black)),
-                                                    Text(' / 16:55'),
-                                                  ],
-                                                ),
+                                    /// My Working Time
+                                    Container(
+                                      padding: EdgeInsets.all(10.0),
+                                      margin: EdgeInsets.only(left: 15, right: 15, top: 20, bottom: 0),
+                                      child: Center(
+                                        child: Column(
+                                          children: <Widget>[
+                                            Container(
+                                              padding: EdgeInsets.all(5.0),
+                                              child: Column(
+                                                children: <Widget> [
+                                                  Row(
+                                                    children: <Widget> [
+                                                      Icon(FontAwesomeIcons.userClock, size: bSize, color: const Color(0xFF729ee2)),
+                                                      SizedBox(width: 10),
+                                                      Text('My Working Time', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black54)),
+                                                    ],
+                                                  ),
+                                                  Container(
+                                                    padding: EdgeInsets.all(15.0),
+                                                    margin: EdgeInsets.only(top: 10),
+                                                    child: Center(
+                                                      child: Row(
+                                                        children: <Widget>[
+                                                          Expanded(
+                                                            flex: 4,
+                                                            child: Column(
+                                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                                              children: <Widget>[
+                                                                Text('Working Time', softWrap: false, overflow: TextOverflow.ellipsis),
+                                                                SizedBox(height: 10),
+                                                                Container(
+                                                                  alignment: Alignment.center,
+                                                                  child:Row(
+                                                                    mainAxisSize: MainAxisSize.min,
+                                                                    children: <Widget>[
+                                                                      Text(sttime + ' / ' + edtime),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          SizedBox(width: 10),
+                                                          Expanded(
+                                                            flex: 3,
+                                                            child: Column(
+                                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                                              children: <Widget>[
+                                                                Text('Over Time', softWrap: false, overflow: TextOverflow.ellipsis),
+                                                                SizedBox(height: 10),
+                                                                Container(
+                                                                  alignment: Alignment.center,
+                                                                  child:Row(
+                                                                    mainAxisSize: MainAxisSize.min,
+                                                                    children: <Widget>[
+                                                                      Text(addtime, style: TextStyle(fontWeight: FontWeight.bold)),
+                                                                      Text(' / ' + addtimelimit),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          SizedBox(width: 10),
+                                                          Expanded(
+                                                            flex: 3,
+                                                            child: Column(
+                                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                                              children: <Widget>[
+                                                                Text('Annual Leave', softWrap: false, overflow: TextOverflow.ellipsis),
+                                                                SizedBox(height: 10),
+                                                                Container(
+                                                                  alignment: Alignment.center,
+                                                                  child:Row(
+                                                                    mainAxisSize: MainAxisSize.min,
+                                                                    children: <Widget>[
+                                                                      Text(annualleaveuse, style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
+                                                                      Text(' / ' + annualleaveall),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: const Color(0xFFFFFFFF)),
+                                                  ),
+                                                ],
                                               ),
-                                            ],
-                                          ),
+                                            ),
+                                          ],
                                         ),
-                                        SizedBox(width: 15),
-                                        Expanded(
-                                          flex: 3,
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            children: <Widget>[
-                                              Text('잔업현황', softWrap: false, overflow: TextOverflow.ellipsis),
-                                              SizedBox(height: 10),
-                                              Container(
-                                                alignment: Alignment.center,
-                                                child:Row(
-                                                  mainAxisSize: MainAxisSize.min,
-                                                  children: <Widget>[
-                                                    Text('28.6', style: TextStyle(fontSize: mSize, fontWeight: FontWeight.bold)),
-                                                    Text(' / 52'),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        SizedBox(width: 15),
-                                        Expanded(
-                                          flex: 3,
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            children: <Widget>[
-                                              Text('연차현황', softWrap: false, overflow: TextOverflow.ellipsis),
-                                              SizedBox(height: 10),
-                                              Container(
-                                                alignment: Alignment.center,
-                                                child:Row(
-                                                  mainAxisSize: MainAxisSize.min,
-                                                  children: <Widget>[
-                                                    Text('17.5', style: TextStyle(fontSize: mSize, fontWeight: FontWeight.bold, color: Colors.black)),
-                                                    Text(' / 22'),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
+                                      ),
+                                      decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: const Color(0xFFC8DEFF)),
                                     ),
-                                  ),
-                                  decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: const Color(0xFFFFFFFF)),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: const Color(0xFFC8DEFF)),
-                  ),
-                  /// Worklist
-                  Container(
-                    padding: EdgeInsets.all(10.0),
-                    margin: EdgeInsets.only(left: 15, right: 15, top: 20, bottom: 20),
-                    child: Center(
-                      child: Column(
-                        children: <Widget>[
-                          Container(
-                            padding: EdgeInsets.all(5.0),
-                            child: Column(
-                              children: <Widget> [
-                                Row(
-                                  children: <Widget> [
-                                    Icon(FontAwesomeIcons.listAlt, size: bSize, color: const Color(0xFF729ee2)),
-                                    SizedBox(width: 10),
-                                    Text('Worklist', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black54)),
+                                    /// Worklist
+                                    Container(
+                                      padding: EdgeInsets.all(10.0),
+                                      margin: EdgeInsets.only(left: 15, right: 15, top: 20, bottom: 20),
+                                      child: Center(
+                                        child: Column(
+                                          children: <Widget>[
+                                            Container(
+                                              padding: EdgeInsets.all(5.0),
+                                              child: Column(
+                                                children: <Widget> [
+                                                  Row(
+                                                    children: <Widget> [
+                                                      Icon(FontAwesomeIcons.listAlt, size: bSize, color: const Color(0xFF729ee2)),
+                                                      SizedBox(width: 10),
+                                                      Text('Worklist', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black54)),
+                                                    ],
+                                                  ),
+                                                  Container(
+                                                    padding: EdgeInsets.all(10.0),
+                                                    margin: EdgeInsets.only(top: 10),
+                                                    child: IntrinsicGridView.vertical(
+                                                      columnCount: 2,
+                                                      verticalSpace: 15,
+                                                      horizontalSpace: 15,
+                                                      children: [
+                                                        InkWell(
+                                                          onTap: () { print("Click event on : Forenotice Tray"); }, // Handle your callback
+                                                          child: Container(
+                                                            child: Row(
+                                                              children: <Widget> [
+                                                                Icon(Icons.circle, size: 8, color: Colors.black54),
+                                                                SizedBox(width: 5),
+                                                                Flexible(child: Text('Forenotice Tray : ' + preapproval, softWrap: false, overflow: TextOverflow.ellipsis)),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        InkWell(
+                                                          onTap: () { print("Click event on : In Tray"); }, // Handle your callback
+                                                          child: Container(
+                                                            child: Row(
+                                                              children: <Widget> [
+                                                                Icon(Icons.circle, size: 8, color: Colors.deepOrange),
+                                                                SizedBox(width: 5),
+                                                                Flexible(child: Text('In Tray : ' + unapproved, softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: mSize, fontWeight: FontWeight.bold, color: Colors.deepOrange))),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        InkWell(
+                                                          onTap: () { print("Click event on : Progress Tray"); }, // Handle your callback
+                                                          child: Container(
+                                                            child: Row(
+                                                              children: <Widget> [
+                                                                Icon(Icons.circle, size: 8, color: Colors.black54),
+                                                                SizedBox(width: 5),
+                                                                Flexible(child: Text('Progress Tray : ' + ongoing, softWrap: false, overflow: TextOverflow.ellipsis)),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        InkWell(
+                                                          onTap: () { print("Click event on : Received Tray"); }, // Handle your callback
+                                                          child: Container(
+                                                            child: Row(
+                                                              children: <Widget> [
+                                                                Icon(Icons.circle, size: 8, color: Colors.black54),
+                                                                SizedBox(width: 5),
+                                                                Flexible(child: Text('Received Tray : ' + deptreceived, softWrap: false, overflow: TextOverflow.ellipsis)),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        InkWell(
+                                                          onTap: () { print("Click event on : Reference & Circulation Tray"); }, // Handle your callback
+                                                          child: Container(
+                                                            child: Row(
+                                                              children: <Widget> [
+                                                                Icon(Icons.circle, size: 8, color: Colors.black54),
+                                                                SizedBox(width: 5),
+                                                                Flexible(child: Text('Reference. Tray : ' + circulation, softWrap: false, overflow: TextOverflow.ellipsis)),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        InkWell(
+                                                          onTap: () { print("Click event on : Cooperation Progress Tray"); }, // Handle your callback
+                                                          child: Container(
+                                                            child: Row(
+                                                              children: <Widget> [
+                                                                Icon(Icons.circle, size: 8, color: Colors.black54),
+                                                                SizedBox(width: 5),
+                                                                Flexible(child: Text('Cooperation. Tray : ' + cooperation, softWrap: false, overflow: TextOverflow.ellipsis)),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ), //
+                                                    decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: const Color(0xFFFFFFFF)),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: const Color(0xFFC8DEFF)),
+                                    ),
                                   ],
                                 ),
-                                Container(
-                                  padding: EdgeInsets.all(10.0),
-                                  margin: EdgeInsets.only(top: 10),
-                                  child: IntrinsicGridView.vertical(
-                                      columnCount: 2,
-                                      verticalSpace: 15,
-                                      horizontalSpace: 15,
-                                      children: [
-                                        Container(
-                                          child: Row(
-                                            children: <Widget> [
-                                              Icon(Icons.circle, size: 8, color: Colors.black54),
-                                              SizedBox(width: 5),
-                                              Flexible(child: Text('예고함 : 5', softWrap: false, overflow: TextOverflow.ellipsis)),
-                                            ],
-                                          ),
-                                        ),
-                                        Container(
-                                          child: Row(
-                                            children: <Widget> [
-                                              Icon(Icons.circle, size: 8, color: Colors.deepOrange),
-                                              SizedBox(width: 5),
-                                              Flexible(child: Text('미결함 : 5', softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: mSize, fontWeight: FontWeight.bold, color: Colors.deepOrange))),
-                                            ],
-                                          ),
-                                        ),
-                                        Container(
-                                          child: Row(
-                                            children: <Widget> [
-                                              Icon(Icons.circle, size: 8, color: Colors.black54),
-                                              SizedBox(width: 5),
-                                              Flexible(child: Text('진행함 : 5', softWrap: false, overflow: TextOverflow.ellipsis)),
-                                            ],
-                                          ),
-                                        ),
-                                        Container(
-                                          child: Row(
-                                            children: <Widget> [
-                                              Icon(Icons.circle, size: 8, color: Colors.black54),
-                                              SizedBox(width: 5),
-                                              Flexible(child: Text('수신함 : 5', softWrap: false, overflow: TextOverflow.ellipsis)),
-                                            ],
-                                          ),
-                                        ),
-                                        Container(
-                                          child: Row(
-                                            children: <Widget> [
-                                              Icon(Icons.circle, size: 8, color: Colors.black54),
-                                              SizedBox(width: 5),
-                                              Flexible(child: Text('참조/회람함 : 952', softWrap: false, overflow: TextOverflow.ellipsis)),
-                                            ],
-                                          ),
-                                        ),
-                                        Container(
-                                          child: Row(
-                                            children: <Widget> [
-                                              Icon(Icons.circle, size: 8, color: Colors.black54),
-                                              SizedBox(width: 5),
-                                              Flexible(child: Text('협조진행함 : 0', softWrap: false, overflow: TextOverflow.ellipsis)),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                  ), //
-                                  decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: const Color(0xFFFFFFFF)),
-                                ),
-                              ],
+                              ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: const Color(0xFFC8DEFF)),
                   ),
-                ],
-              ),
-            ),
-          ),
+                );
+              }
+            }
         ),
       floatingActionButton: Container(
         height: 45.0,
@@ -366,6 +435,4 @@ class _IndexState extends State<Index> {
       bottomNavigationBar: setBottomNavigator(context),
     );
   }
-
-
 }
