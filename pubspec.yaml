@@ -38,6 +38,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   easy_localization: ^3.0.1 # Multi Language
   encrypt: ^5.0.1 # Encrypt
+  flutter_html: ^3.0.0-beta.1 # HTML Viewer
   font_awesome_flutter: ^10.3.0 # Icon
   http: ^0.13.5 # API Call
   intl: ^0.17.0 # DateFormat ETC

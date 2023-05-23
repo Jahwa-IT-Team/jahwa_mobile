@@ -68,10 +68,26 @@ class _ProfileState extends State<Profile> {
             String string = '';
 
             if (snapshot.hasData == false) {
-              return Padding(padding: const EdgeInsets.all(100.0), child: CircularProgressIndicator(),);
+              return Center(
+                child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      CircularProgressIndicator(),
+                    ]
+                ),
+              );
             }
             else if (snapshot.hasError) {
-              return Padding(padding: const EdgeInsets.all(100), child: Text('Error: ${snapshot.error}', style: TextStyle(fontSize: 15),),);
+              return Center(
+                child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text('Error: ${snapshot.error}', style: TextStyle(fontSize: 15),)
+                    ]
+                ),
+              );
             }
             else {
               if (snapshot.data != '') {

@@ -117,6 +117,7 @@ class _CheckState extends State<Check> {
       session['EntGroup'] = prefs.getString('EntGroup') ?? '';
       session['OfficeTel'] = prefs.getString('OfficeTel') ?? '';
       session['Mobile'] = prefs.getString('Mobile') ?? '';
+      session['Language'] = prefs.getString('Language') ?? 'ko-KR';
       session['DueDate'] = prefs.getString('DueDate') ?? '';
       session['Token'] = prefs.getString('Token') ?? '';
       session['Route'] = prefs.getString('Route') ?? '';

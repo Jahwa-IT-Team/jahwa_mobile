@@ -10,6 +10,7 @@ import 'package:flutter/widgets.dart';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
+import 'package:flutter_html/flutter_html.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -49,9 +50,9 @@ Future<void> addUserSharedPreferences(var user) async {
     prefs.setString('OfficeTel', user.OfficeTel);
     prefs.setString('Mobile', user.Mobile);
     prefs.setString('DueDate', DateFormat('yyyy-MM-dd').format(oneWeekFromNow));
-    ///prefs.setString('Language', 'ko-KR');
     prefs.setString('Token', user.Token);
     prefs.setString('Route', user.Route);
+    prefs.setString('Language', user.Language);
 
     /// common.dart에 정의된 session 정보
     session['OrgEntCode'] =  user.EntCode;
@@ -76,9 +77,9 @@ Future<void> addUserSharedPreferences(var user) async {
     session['OfficeTel'] = user.OfficeTel;
     session['Mobile'] = user.Mobile;
     session['DueDate'] = DateFormat('yyyy-MM-dd').format(oneWeekFromNow);
-    ///session['Language'] = 'ko-KR';
     session['Token'] = user.Token;
     session['Route'] = user.Route;
+    session['Language'] = user.Language;
   }
   catch (e) { print(e.toString()); }
 }
@@ -110,9 +111,9 @@ Future<void> removeUserSharedPreferences() async {
     prefs.setString('OfficeTel', '');
     prefs.setString('Mobile', '');
     prefs.setString('DueDate', '');
-    ///prefs.setString('Language', 'ko-KR');
     prefs.setString('Token', '');
     prefs.setString('Route', '');
+    ///prefs.setString('Language', ''); /// Language do not need reset
 
     session.clear();
   }
@@ -478,7 +479,7 @@ Future<void> setUser(BuildContext context, String entcode, String deptcode, Stri
           prefs.setString('OfficeTel', user.OfficeTel);
           prefs.setString('Mobile', user.Mobile);
           prefs.setString('DueDate', DateFormat('yyyy-MM-dd').format(oneWeekFromNow));
-          ///prefs.setString('Language', 'ko-KR');
+          prefs.setString('Language', user.Language);
           ///prefs.setString('Token', user.Token);
           prefs.setString('Route', user.Route);
 
@@ -505,7 +506,7 @@ Future<void> setUser(BuildContext context, String entcode, String deptcode, Stri
           session['OfficeTel'] = user.OfficeTel;
           session['Mobile'] = user.Mobile;
           session['DueDate'] = DateFormat('yyyy-MM-dd').format(oneWeekFromNow);
-          ///session['Language'] = 'ko-KR';
+          session['Language'] = user.Language;
           ///session['Token'] = user.Token;
           session['Route'] = user.Route;
         }
@@ -591,4 +592,118 @@ Future<String> getDBData(String div) async {
   }
 
   return jsondata;
+}
+
+/// View BBS Data
+Future<void> viewBBSData(BuildContext context, String div, String num) async {
+
+  var subject = '';
+  var contents = '';
+  var name = '';
+  var insdate = '';
+
+  var rauth = 'N';
+  var type = 'Basic';
+
+  var url = 'https://jhapi.jahwa.co.kr/MBBSView';
+  var data = {'NUm': num, 'Div': div, 'Language': session['Language'].toString(), 'EmpCode': session['EmpCode'].toString()};
+
+  try {
+    await http.post(Uri.parse(url), body: json.encode(data),
+        headers: {"Content-Type": "application/json"}).timeout(
+        const Duration(seconds: 15)).then<void>((http.Response response) {
+      if (response.statusCode != 200 || response.body == null || response.body == "{}") { ; }
+      else if (response.statusCode == 200) {
+        if (jsonDecode(response.body)['Table'].length != 0) {
+          jsonDecode(response.body)['Table'].forEach((element) {
+            subject = element['Subject'].toString();
+            if(div == 'Special') contents = element['Content'].toString();
+            else contents = element['Contents'].toString();
+            name = element['Name'].toString();
+            insdate = element['InsDate'].toString();
+          });
+        }
+        if(div != 'Special') {
+          if (jsonDecode(response.body)['Table4'].length != 0) {
+            jsonDecode(response.body)['Table4'].forEach((element) {
+              rauth = element['RAuth'].toString();
+              type = element['Type'].toString();
+            });
+          }
+        }
+
+        List<Widget> photoList = [];
+        Widget photo = new InkWell();
+
+        if(type == 'Image') {
+          if (jsonDecode(response.body)['Table3'].length != 0) {
+            jsonDecode(response.body)['Table3'].forEach((element) {
+              photo = Image.network('https://gw.jahwa.co.kr/Pics/Board/' + element['Code'].toString() + '/' + element['FileCode'].toString() + element['FileExt'].toString());
+              photoList.add(photo);
+            });
+          }
+        }
+
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return Scaffold(
+              backgroundColor: Colors.transparent,
+              body:InkWell(
+                onTap: () {
+                  Navigator.of(context).pop();
+                }, // Handle your callback
+                child: Container(
+                  width: screenWidth,
+                  height: screenHeight,
+                  decoration: const BoxDecoration(color: Colors.transparent),
+                  alignment: Alignment.center,
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Container(
+                      width: screenWidth - 50,
+                      height: screenHeight - 200,
+                      alignment: Alignment.topCenter,
+                      padding: EdgeInsets.all(20.0),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(20))
+                      ),
+                      child: SingleChildScrollView( // this will make your body scrollable
+                        scrollDirection: Axis.vertical,
+                        child: Column (
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget> [
+                            SizedBox(height: 10),
+                            Text(subject, style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: mSize,), textAlign: TextAlign.start,),
+                            SizedBox(height: 15),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: <Widget> [
+                                Text(name + ' [ ' + insdate + ' ]', style: TextStyle(color: Colors.black, fontSize: mSize,), textAlign: TextAlign.center,),
+                              ]
+                            ),
+                            SizedBox(height: 15),
+                            for(var photo in photoList ) photo,
+                            Html(data: contents,),
+                            SizedBox(height: 10),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      }
+    });
+  } catch (e) {
+    print("set Information Error : " + e.toString());
+  }
 }

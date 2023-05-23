@@ -40,8 +40,9 @@ class User {
   final int Auth; final String EntGroup;
   final String OfficeTel; final String Mobile;
   final String Token; final String Route;
+  final String Language;
 
-  User(this.EntCode, this.EntName, this.DeptCode, this.DeptName, this.EmpCode, this.Name, this.RollPstn, this.Position, this.Role, this.Title, this.PayGrade, this.Level, this.Email, this.Photo, this.Auth, this.EntGroup, this.OfficeTel, this.Mobile, this.Token, this.Route);
+  User(this.EntCode, this.EntName, this.DeptCode, this.DeptName, this.EmpCode, this.Name, this.RollPstn, this.Position, this.Role, this.Title, this.PayGrade, this.Level, this.Email, this.Photo, this.Auth, this.EntGroup, this.OfficeTel, this.Mobile, this.Token, this.Route, this.Language);
 
   User.fromJson(Map<dynamic, dynamic> json)
 
@@ -54,7 +55,8 @@ class User {
         Email = json['Email'], Photo = json['Photo'],
         Auth = json['Auth'], EntGroup = json['EntGroup'],
         OfficeTel = json['OfficeTel'], Mobile = json['Mobile'],
-        Token = json['Token'], Route = json['Route'];
+        Token = json['Token'], Route = json['Route'],
+        Language = json['Language'];
 
   Map<dynamic, dynamic> toJson() =>
       {
@@ -68,6 +70,7 @@ class User {
         'Auth' : Auth, 'EntGroup' : EntGroup,
         'OfficeTel' : OfficeTel, 'Mobile' : Mobile,
         'Token' : Token, 'Route' : Route,
+        'Language' : Language,
       };
 }
 

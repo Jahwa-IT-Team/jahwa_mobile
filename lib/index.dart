@@ -71,15 +71,29 @@ class _IndexState extends State<Index> {
 
               List<Widget> postsList = [];
               Widget posts = new InkWell();
-              List<Widget> vehicleList = [];
-              Widget vehicle = new Container();
               String string = '';
 
               if (snapshot.hasData == false) {
-                return Padding(padding: const EdgeInsets.all(100.0), child: CircularProgressIndicator(),);
+                return Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      CircularProgressIndicator(),
+                    ]
+                  ),
+                );
               }
               else if (snapshot.hasError) {
-                return Padding(padding: const EdgeInsets.all(100), child: Text('Error: ${snapshot.error}', style: TextStyle(fontSize: 15),),);
+                return Center(
+                  child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text('Error: ${snapshot.error}', style: TextStyle(fontSize: 15),)
+                      ]
+                  ),
+                );
               }
               else {
                 if (snapshot.data != '') {
@@ -88,7 +102,10 @@ class _IndexState extends State<Index> {
                       if(cnt >= 0) {
                         string = element['Subject'].toString();
                         posts = InkWell(
-                          onTap: () { print("Click event on : " + element['Code'].toString() + '/' + element['Num'].toString()); }, // Handle your callback
+                          onTap: () async {
+                            print("Click event on : " + element['Code'].toString() + '/' + element['Num'].toString());
+                            viewBBSData(context, element['Div'].toString(), element['Num'].toString());
+                          }, // Handle your callback
                           child: Container(
                             height: 30,
                             child: Row(
