@@ -578,6 +578,7 @@ Future<String> getDBData(String div) async {
     url = 'https://jhapi.jahwa.co.kr/' + div;
     if(div == 'MPersonInformation') data = {'EmpCode': session['EmpCode'].toString()};
     else if(div == 'MPortalQuery') data = {'EntCode': session['EntCode'].toString(), 'DeptCode': session['DeptCode'].toString(), 'EmpCode': session['EmpCode'].toString(), 'Language': session['Languange'].toString()};
+    else if(div == 'MMenu') data = {'EntCode': session['EntCode'].toString(), 'Auth': session['Auth'].toString(), 'EmpCode': session['EmpCode'].toString()};
 
     await http.post(Uri.parse(url), body: json.encode(data),
         headers: {"Content-Type": "application/json"}).timeout(
@@ -706,4 +707,18 @@ Future<void> viewBBSData(BuildContext context, String div, String num) async {
   } catch (e) {
     print("set Information Error : " + e.toString());
   }
+}
+
+IconData fontAwesomeIconFromString(String name) {
+  IconData iconData = const IconDataBrands(0xf2bb);
+  switch (name) {
+    case 'solidUser': { iconData = FontAwesomeIcons.solidUser; } break;
+    case 'solidCalendarDays': { iconData = FontAwesomeIcons.solidCalendarDays; } break;
+    case 'moneyBill1Wave': { iconData = FontAwesomeIcons.moneyBill1Wave; } break;
+    case 'fileSignature': { iconData = FontAwesomeIcons.fileSignature; } break;
+    case 'solidEnvelope': { iconData = FontAwesomeIcons.solidEnvelope; } break;
+    default: { iconData = FontAwesomeIcons.clipboard; } break;
+
+  }
+  return iconData;
 }

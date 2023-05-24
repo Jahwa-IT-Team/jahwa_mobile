@@ -42,12 +42,9 @@ class _SearchState extends State<Search> {
         elevation: 0.0,
         title: Row(
           children: <Widget>[
-            Icon(FontAwesomeIcons.search, size: bSize,
-                color: Colors.lightGreen),
+            Icon(FontAwesomeIcons.search, size: bSize, color: Colors.lightGreen),
             Container(padding: EdgeInsets.only(left: 10.0),),
-            Text('Search', style: TextStyle(fontSize: bSize,
-                fontWeight: FontWeight.bold,
-                color: Colors.white)),
+            Text('Search', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.white)),
           ],
         ),
       ),

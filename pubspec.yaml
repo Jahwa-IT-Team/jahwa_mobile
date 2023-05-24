@@ -36,12 +36,12 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  easy_localization: ^3.0.1 # Multi Language
+  easy_localization: ^3.0.2 # Multi Language
   encrypt: ^5.0.1 # Encrypt
   flutter_html: ^3.0.0-beta.1 # HTML Viewer
   font_awesome_flutter: ^10.3.0 # Icon
   http: ^0.13.5 # API Call
-  intl: ^0.17.0 # DateFormat ETC
+  intl: ^0.18.0 # DateFormat ETC
   intrinsic_grid_view: ^0.0.2 # Grid View - Index Worklist
   local_auth: ^2.1.6 # Authentification
   package_info_plus: ^3.1.0 # Version Info

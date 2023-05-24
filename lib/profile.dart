@@ -34,12 +34,9 @@ class _ProfileState extends State<Profile> {
         elevation: 0.0,
         title: Row(
           children: <Widget>[
-            Icon(FontAwesomeIcons.solidUser, size: bSize,
-                color: Colors.lightGreen),
+            Icon(FontAwesomeIcons.solidUser, size: bSize, color: Colors.lightGreen),
             Container(padding: EdgeInsets.only(left: 10.0),),
-            Text('Profile', style: TextStyle(fontSize: bSize,
-                fontWeight: FontWeight.bold,
-                color: Colors.white)),
+            Text('Profile', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.white)),
           ],
         ),
       ),
