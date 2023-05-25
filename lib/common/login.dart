@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
@@ -261,7 +260,7 @@ class _LoginState extends State<Login> {
                       onPressed: () async {
                         showLanaguageBox(context);
                       },
-                      child: Icon(FontAwesomeIcons.earthAsia, size:30, color: Colors.black38),
+                      child: Icon(Icons.g_translate, size:35, color: Colors.black38),
                     ),
                   ),
                   Container( /// Jahwa Mark
@@ -349,7 +348,7 @@ class _LoginState extends State<Login> {
                         child:Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(FontAwesomeIcons.solidUser, size: 16),
+                            Icon(Icons.person, size: 24),
                             SizedBox(height: 45, width: 20),
                             Text('Login.Login'.tr(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white,)),
                           ],

@@ -38,8 +38,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   easy_localization: ^3.0.2 # Multi Language
   encrypt: ^5.0.1 # Encrypt
-  flutter_html: ^3.0.0-beta.1 # HTML Viewer
-  font_awesome_flutter: ^10.3.0 # Icon
+  flutter_html: ^3.0.0-beta.1 # HTML Viewerf
   http: ^0.13.5 # API Call
   intl: ^0.18.0 # DateFormat ETC
   intrinsic_grid_view: ^0.0.2 # Grid View - Index Worklist
@@ -103,9 +102,6 @@ flutter:
       - family: ShinYB
         fonts:
           - asset: assets/fonts/ShinYB.ttf
-      - family: MaterialIcons
-        fonts:
-          - asset: assets/fonts/MaterialIcons-Regul.otf
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

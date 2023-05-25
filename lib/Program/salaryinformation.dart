@@ -1,10 +1,4 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-
-import 'package:easy_localization/easy_localization.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:intrinsic_grid_view/intrinsic_grid_view.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:jahwa_mobile/common/common.dart';
 import 'package:jahwa_mobile/common/variable.dart';
@@ -32,7 +26,7 @@ class _SalaryInformationState extends State<SalaryInformation> {
         elevation: 0.0,
         title: Row(
           children: <Widget>[
-            Icon(FontAwesomeIcons.moneyBill1Wave, size: 20, color: Colors.lightGreen),
+            Icon(Icons.paid, size: 20, color: Colors.lightGreen),
             Container(padding: EdgeInsets.only(left: 10.0),),
             Text('Salary Information', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.white)),
           ],
@@ -74,7 +68,7 @@ class _SalaryInformationState extends State<SalaryInformation> {
                                                     height: 25,
                                                     child: Row(
                                                       children: <Widget>[
-                                                        Icon(FontAwesomeIcons.userPlus, size: sSize, color: const Color(0xFF729ee2)),
+                                                        Icon(Icons.person_add, size: 18, color: const Color(0xFF729ee2)),
                                                         SizedBox(width: 10),
                                                         Flexible(child: Text('Text', softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: sSize, color: Colors.black))),
                                                       ],
@@ -107,8 +101,8 @@ class _SalaryInformationState extends State<SalaryInformation> {
         child: FittedBox(
           child: FloatingActionButton(
             backgroundColor: Colors.green,
-            onPressed: () { Navigator.pushNamed(context, '/ResetPassword'); },
-            child: Icon(FontAwesomeIcons.solidStar, size: 15, color: const Color(0xFFC8DEFF),),
+            onPressed: () { Navigator.pushNamed(context, '/'); },
+            child: Icon(Icons.star, size: 25, color: Colors.white,),
           ),
         ),
       ),

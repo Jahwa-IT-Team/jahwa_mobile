@@ -1,13 +1,9 @@
-import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'package:easy_localization/easy_localization.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:jahwa_mobile/common/bubble_bottom_bar.dart';
 import 'package:jahwa_mobile/common/common.dart';
 import 'package:jahwa_mobile/common/variable.dart';
 
@@ -34,7 +30,7 @@ class _ProfileState extends State<Profile> {
         elevation: 0.0,
         title: Row(
           children: <Widget>[
-            Icon(FontAwesomeIcons.solidUser, size: bSize, color: Colors.lightGreen),
+            Icon(Icons.person, size: 20, color: Colors.lightGreen),
             Container(padding: EdgeInsets.only(left: 10.0),),
             Text('Profile', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.white)),
           ],
@@ -118,7 +114,7 @@ class _ProfileState extends State<Profile> {
                           height: 25,
                           child: Row(
                             children: <Widget>[
-                              Icon(FontAwesomeIcons.solidUser, size: sSize, color: const Color(0xFF729ee2)),
+                              Icon(Icons.person, size: 15, color: const Color(0xFF729ee2)),
                               SizedBox(width: 10),
                               Flexible(child: Text(string, softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: sSize, color: Colors.black))),
                             ],
@@ -130,7 +126,7 @@ class _ProfileState extends State<Profile> {
                           height: 25,
                           child: Row(
                             children: <Widget>[
-                              Icon(FontAwesomeIcons.userPlus, size: sSize, color: const Color(0xFF729ee2)),
+                              Icon(Icons.person_add, size: 15, color: const Color(0xFF729ee2)),
                               SizedBox(width: 10),
                               Flexible(child: Text(string, softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: sSize, color: Colors.black))),
                             ],
@@ -151,7 +147,7 @@ class _ProfileState extends State<Profile> {
                         height: 25,
                         child: Row(
                           children: <Widget>[
-                            Icon(FontAwesomeIcons.car, size: sSize, color: const Color(0xFF729ee2)),
+                            Icon(Icons.directions_car, size: 15, color: const Color(0xFF729ee2)),
                             SizedBox(width: 10),
                             Flexible(child: Text(string, softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: sSize, color: Colors.black))),
                           ],
@@ -188,7 +184,7 @@ class _ProfileState extends State<Profile> {
                                     children: <Widget>[
                                       Row(
                                         children: <Widget>[
-                                          Icon(FontAwesomeIcons.solidAddressCard, size: bSize, color: const Color(0xFF729ee2)),
+                                          Icon(Icons.contact_emergency, size: 20, color: const Color(0xFF729ee2)),
                                           SizedBox(width: 10),
                                           Text('Basic Information'.tr(), style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black54)),
                                         ],
@@ -220,7 +216,7 @@ class _ProfileState extends State<Profile> {
                                                         alignment: Alignment.centerLeft,
                                                         child: Row(
                                                           children: <Widget>[
-                                                            Icon(FontAwesomeIcons.building, size: bSize, color: const Color(0xFF729ee2)),
+                                                            Icon(Icons.business, size: 18, color: const Color(0xFF729ee2)),
                                                             SizedBox(width: 10),
                                                             Text(company, style: TextStyle(fontSize: sSize, fontWeight: FontWeight.bold, color: Colors.black)),
                                                           ],
@@ -230,7 +226,7 @@ class _ProfileState extends State<Profile> {
                                                       Container(
                                                         child: Row(
                                                           children: <Widget>[
-                                                            Icon(FontAwesomeIcons.networkWired, size: bSize, color: const Color(0xFF729ee2)),
+                                                            Icon(Icons.hub, size: 18, color: const Color(0xFF729ee2)),
                                                             SizedBox(width: 10),
                                                             Text(department, style: TextStyle(fontSize: sSize, fontWeight: FontWeight.bold, color: Colors.black)),
                                                           ],
@@ -240,7 +236,7 @@ class _ProfileState extends State<Profile> {
                                                       Container(
                                                         child: Row(
                                                           children: <Widget>[
-                                                            Icon(FontAwesomeIcons.idCard, size: bSize, color: const Color(0xFF729ee2)),
+                                                            Icon(Icons.portrait, size: 18, color: const Color(0xFF729ee2)),
                                                             SizedBox(width: 10),
                                                             Text(name, style: TextStyle(fontSize: sSize, fontWeight: FontWeight.bold, color: Colors.black)),
                                                           ],
@@ -250,7 +246,7 @@ class _ProfileState extends State<Profile> {
                                                       Container(
                                                         child: Row(
                                                           children: <Widget>[
-                                                            Icon(FontAwesomeIcons.sitemap, size: bSize, color: const Color(0xFF729ee2)),
+                                                            Icon(Icons.spoke, size: 18, color: const Color(0xFF729ee2)),
                                                             SizedBox(width: 10),
                                                             Text(position, style: TextStyle(fontSize: sSize, fontWeight: FontWeight.bold, color: Colors.black)),
                                                           ],
@@ -284,7 +280,7 @@ class _ProfileState extends State<Profile> {
                                     children: <Widget>[
                                       Row(
                                         children: <Widget>[
-                                          Icon(FontAwesomeIcons.addressCard, size: bSize, color: const Color(0xFF729ee2)),
+                                          Icon(Icons.contact_emergency, size: 20, color: const Color(0xFF729ee2)),
                                           SizedBox(width: 10),
                                           Text('Other Information'.tr(), style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black54)),
                                         ],
@@ -309,7 +305,7 @@ class _ProfileState extends State<Profile> {
                                                           alignment: Alignment.centerLeft,
                                                           child: Row(
                                                             children: <Widget>[
-                                                              Icon(FontAwesomeIcons.solidBuilding, size: bSize, color: const Color(0xFF729ee2)),
+                                                              Icon(Icons.work_history, size: 18, color: const Color(0xFF729ee2)),
                                                               SizedBox(width: 10),
                                                               Text(enterdate, style: TextStyle(fontSize: sSize, color: Colors.black)),
                                                             ],
@@ -319,7 +315,7 @@ class _ProfileState extends State<Profile> {
                                                         Container(
                                                           child: Row(
                                                             children: <Widget>[
-                                                              Icon(FontAwesomeIcons.mobileScreen, size: bSize, color: const Color(0xFF729ee2)),
+                                                              Icon(Icons.stay_current_portrait, size: 18, color: const Color(0xFF729ee2)),
                                                               SizedBox(width: 10),
                                                               Text(mobilephone, style: TextStyle(fontSize: sSize, color: Colors.black)),
                                                             ],
@@ -329,7 +325,7 @@ class _ProfileState extends State<Profile> {
                                                         Container(
                                                           child: Row(
                                                             children: <Widget>[
-                                                              Icon(FontAwesomeIcons.at, size: bSize, color: const Color(0xFF729ee2)),
+                                                              Icon(Icons.alternate_email, size: 18, color: const Color(0xFF729ee2)),
                                                               SizedBox(width: 10),
                                                               Text(email, style: TextStyle(fontSize: sSize, color: Colors.black)),
                                                             ],
@@ -352,7 +348,7 @@ class _ProfileState extends State<Profile> {
                                                           alignment: Alignment.centerLeft,
                                                           child: Row(
                                                             children: <Widget>[
-                                                              Icon(FontAwesomeIcons.birthdayCake, size: bSize, color: const Color(0xFF729ee2)),
+                                                              Icon(Icons.cake, size: 18, color: const Color(0xFF729ee2)),
                                                               SizedBox(width: 10),
                                                               Text(birthday, style: TextStyle(fontSize: sSize, color: Colors.black)),
                                                             ],
@@ -362,7 +358,7 @@ class _ProfileState extends State<Profile> {
                                                         Container(
                                                           child: Row(
                                                             children: <Widget>[
-                                                              Icon(FontAwesomeIcons.phone, size: bSize, color: const Color(0xFF729ee2)),
+                                                              Icon(Icons.phone, size: 18, color: const Color(0xFF729ee2)),
                                                               SizedBox(width: 10),
                                                               Text(officephone, style: TextStyle(fontSize: sSize, color: Colors.black)),
                                                             ],
@@ -397,7 +393,7 @@ class _ProfileState extends State<Profile> {
                                     children: <Widget>[
                                       Row(
                                         children: <Widget>[
-                                          Icon(FontAwesomeIcons.users, size: bSize, color: const Color(0xFF729ee2)),
+                                          Icon(Icons.people, size: 20, color: const Color(0xFF729ee2)),
                                           SizedBox(width: 10),
                                           Text('Dispatch & Additional Information'.tr(), style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black54)),
                                         ],
@@ -434,7 +430,7 @@ class _ProfileState extends State<Profile> {
                                     children: <Widget>[
                                       Row(
                                         children: <Widget>[
-                                          Icon(FontAwesomeIcons.car, size: bSize, color: const Color(0xFF729ee2)),
+                                          Icon(Icons.garage, size: 20, color: const Color(0xFF729ee2)),
                                           SizedBox(width: 10),
                                           Text('Vehicle Information'.tr(), style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black54)),
                                         ],
@@ -471,7 +467,7 @@ class _ProfileState extends State<Profile> {
                                     children: <Widget>[
                                       Row(
                                         children: <Widget>[
-                                          Icon(FontAwesomeIcons.tools, size: bSize, color: const Color(0xFF729ee2)),
+                                          Icon(Icons.handyman, size: 20, color: const Color(0xFF729ee2)),
                                           SizedBox(width: 10),
                                           Text('Utility'.tr(), style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black54)),
                                         ],
@@ -491,7 +487,7 @@ class _ProfileState extends State<Profile> {
                                                     alignment: Alignment.centerLeft,
                                                     child: Row(
                                                       children: <Widget>[
-                                                        Icon(FontAwesomeIcons.language, size: mSize, color: const Color(0xFF729ee2)),
+                                                        Icon(Icons.translate, size: 18, color: const Color(0xFF729ee2)),
                                                         SizedBox(width: 10),
                                                     SizedBox(
                                                       height: mSize + 15,
@@ -509,7 +505,7 @@ class _ProfileState extends State<Profile> {
                                                   Container(
                                                     child: Row(
                                                       children: <Widget>[
-                                                        Icon(FontAwesomeIcons.users, size: mSize, color: const Color(0xFF729ee2)),
+                                                        Icon(Icons.people, size: 18, color: const Color(0xFF729ee2)),
                                                         SizedBox(width: 10),
                                                         SizedBox(
                                                           height: mSize + 15,
@@ -528,7 +524,7 @@ class _ProfileState extends State<Profile> {
                                                   Container(
                                                     child: Row(
                                                       children: <Widget>[
-                                                        Icon(FontAwesomeIcons.redo, size: mSize, color: const Color(0xFF729ee2)),
+                                                        Icon(Icons.settings_backup_restore, size: 18, color: const Color(0xFF729ee2)),
                                                         SizedBox(width: 10),
                                                         SizedBox(
                                                           height: mSize + 15,
@@ -550,7 +546,7 @@ class _ProfileState extends State<Profile> {
                                                   Container(
                                                     child: Row(
                                                       children: <Widget>[
-                                                        Icon(FontAwesomeIcons.unlock, size: mSize, color: const Color(0xFF729ee2)),
+                                                        Icon(Icons.lock_reset, size: 18, color: const Color(0xFF729ee2)),
                                                         SizedBox(width: 10),
                                                         SizedBox(
                                                           height: mSize + 15,
@@ -569,7 +565,7 @@ class _ProfileState extends State<Profile> {
                                                   Container(
                                                     child: Row(
                                                       children: <Widget>[
-                                                        Icon(FontAwesomeIcons.solidWindowRestore, size: mSize, color: const Color(0xFF729ee2)),
+                                                        Icon(Icons.layers, size: 18, color: const Color(0xFF729ee2)),
                                                         SizedBox(width: 10),
                                                         SizedBox(
                                                           height: mSize + 15,
@@ -610,11 +606,9 @@ class _ProfileState extends State<Profile> {
         width: 45.0,
         child: FittedBox(
           child: FloatingActionButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/Favorite');
-            },
-            child: Icon(FontAwesomeIcons.solidStar, size: 15, color: const Color(0xFFC8DEFF),),
             backgroundColor: Colors.green,
+            onPressed: () { Navigator.pushNamed(context, '/'); },
+            child: Icon(Icons.star, size: 25, color: Colors.white,),
           ),
         ),
       ),

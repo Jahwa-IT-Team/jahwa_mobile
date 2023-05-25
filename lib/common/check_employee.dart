@@ -5,13 +5,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
-
-import 'package:easy_localization/easy_localization.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sn_progress_dialog/sn_progress_dialog.dart';
 
 import 'package:jahwa_mobile/common/common.dart';
 import 'package:jahwa_mobile/common/variable.dart';
@@ -59,7 +53,7 @@ class _CheckEmployeeState extends State<CheckEmployee> {
           elevation: 0.0,
           title:Row(
             children: <Widget> [
-              Icon(FontAwesomeIcons.userCheck, size: bSize, color: Colors.lightGreen),
+              Icon(Icons.how_to_reg, size: 20, color: Colors.lightGreen),
               Container(padding: EdgeInsets.only(left: 10.0),),
               Text('Check Employee', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.white)),
             ],
@@ -136,7 +130,7 @@ class _CheckEmployeeState extends State<CheckEmployee> {
                           child:Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(FontAwesomeIcons.userCheck, size: 16),
+                              Icon(Icons.how_to_reg, size: 20),
                               SizedBox(height: 45, width: 20),
                               Text('Check Employee', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white,)),
                             ],

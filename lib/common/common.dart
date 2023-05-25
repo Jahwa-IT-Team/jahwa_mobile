@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
 import 'dart:ui';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,7 +10,6 @@ import 'package:flutter/widgets.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:flutter_html/flutter_html.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -709,15 +707,15 @@ Future<void> viewBBSData(BuildContext context, String div, String num) async {
   }
 }
 
-IconData fontAwesomeIconFromString(String name) {
-  IconData iconData = const IconDataBrands(0xf2bb);
+IconData iconFromString(String name) {
+  IconData iconData;
   switch (name) {
-    case 'solidUser': { iconData = FontAwesomeIcons.solidUser; } break;
-    case 'solidCalendarDays': { iconData = FontAwesomeIcons.solidCalendarDays; } break;
-    case 'moneyBill1Wave': { iconData = FontAwesomeIcons.moneyBill1Wave; } break;
-    case 'fileSignature': { iconData = FontAwesomeIcons.fileSignature; } break;
-    case 'solidEnvelope': { iconData = FontAwesomeIcons.solidEnvelope; } break;
-    default: { iconData = FontAwesomeIcons.clipboard; } break;
+    case 'person': { iconData = Icons.person; } break;
+    case 'calendar_month': { iconData = Icons.calendar_month; } break;
+    case 'paid': { iconData = Icons.paid; } break;
+    case 'approval': { iconData =Icons.approval; } break;
+    case 'mail': { iconData = Icons.mail; } break;
+    default: { iconData = Icons.ads_click; } break;
 
   }
   return iconData;

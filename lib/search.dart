@@ -5,11 +5,8 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 
 import 'package:easy_localization/easy_localization.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:jahwa_mobile/common/bubble_bottom_bar.dart';
 import 'package:jahwa_mobile/common/common.dart';
 import 'package:jahwa_mobile/common/variable.dart';
 
@@ -42,7 +39,7 @@ class _SearchState extends State<Search> {
         elevation: 0.0,
         title: Row(
           children: <Widget>[
-            Icon(FontAwesomeIcons.search, size: bSize, color: Colors.lightGreen),
+            Icon(Icons.search, size: 20, color: Colors.lightGreen),
             Container(padding: EdgeInsets.only(left: 10.0),),
             Text('Search', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.white)),
           ],
@@ -138,7 +135,7 @@ class _SearchState extends State<Search> {
                                     children: <Widget>[
                                       Row(
                                         children: <Widget>[
-                                          Icon(FontAwesomeIcons.solidAddressCard, size: bSize, color: const Color(0xFF729ee2)),
+                                          Icon(Icons.contact_emergency, size: 20, color: const Color(0xFF729ee2)),
                                           SizedBox(width: 10),
                                           Text('Information'.tr(), style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black54)),
                                         ],
@@ -170,7 +167,7 @@ class _SearchState extends State<Search> {
                                                         alignment: Alignment.centerLeft,
                                                         child: Row(
                                                           children: <Widget>[
-                                                            Icon(FontAwesomeIcons.building, size: bSize, color: const Color(0xFF729ee2)),
+                                                            Icon(Icons.business, size: 18, color: const Color(0xFF729ee2)),
                                                             SizedBox(width: 10),
                                                             Text(company, style: TextStyle(fontSize: sSize, fontWeight: FontWeight.bold, color: Colors.black)),
                                                           ],
@@ -180,7 +177,7 @@ class _SearchState extends State<Search> {
                                                       Container(
                                                         child: Row(
                                                           children: <Widget>[
-                                                            Icon(FontAwesomeIcons.networkWired, size: bSize, color: const Color(0xFF729ee2)),
+                                                            Icon(Icons.hub, size: 18, color: const Color(0xFF729ee2)),
                                                             SizedBox(width: 10),
                                                             Text(department, style: TextStyle(fontSize: sSize, fontWeight: FontWeight.bold, color: Colors.black)),
                                                           ],
@@ -190,7 +187,7 @@ class _SearchState extends State<Search> {
                                                       Container(
                                                         child: Row(
                                                           children: <Widget>[
-                                                            Icon(FontAwesomeIcons.idCard, size: bSize, color: const Color(0xFF729ee2)),
+                                                            Icon(Icons.portrait, size: 18, color: const Color(0xFF729ee2)),
                                                             SizedBox(width: 10),
                                                             Text(name, style: TextStyle(fontSize: sSize, fontWeight: FontWeight.bold, color: Colors.black)),
                                                           ],
@@ -200,7 +197,7 @@ class _SearchState extends State<Search> {
                                                       Container(
                                                         child: Row(
                                                           children: <Widget>[
-                                                            Icon(FontAwesomeIcons.sitemap, size: bSize, color: const Color(0xFF729ee2)),
+                                                            Icon(Icons.spoke, size: 18, color: const Color(0xFF729ee2)),
                                                             SizedBox(width: 10),
                                                             Text(position, style: TextStyle(fontSize: sSize, fontWeight: FontWeight.bold, color: Colors.black)),
                                                           ],
@@ -224,7 +221,7 @@ class _SearchState extends State<Search> {
                                                           alignment: Alignment.centerLeft,
                                                           child: Row(
                                                             children: <Widget>[
-                                                              Icon(FontAwesomeIcons.solidBuilding, size: bSize, color: const Color(0xFF729ee2)),
+                                                              Icon(Icons.work_history, size: 18, color: const Color(0xFF729ee2)),
                                                               SizedBox(width: 10),
                                                               Text(enterdate, style: TextStyle(fontSize: sSize, color: Colors.black)),
                                                             ],
@@ -234,7 +231,7 @@ class _SearchState extends State<Search> {
                                                         Container(
                                                           child: Row(
                                                             children: <Widget>[
-                                                              Icon(FontAwesomeIcons.mobileScreen, size: bSize, color: const Color(0xFF729ee2)),
+                                                              Icon(Icons.stay_current_portrait, size: 18, color: const Color(0xFF729ee2)),
                                                               SizedBox(width: 10),
                                                               Text(mobilephone, style: TextStyle(fontSize: sSize, color: Colors.black)),
                                                             ],
@@ -244,7 +241,7 @@ class _SearchState extends State<Search> {
                                                         Container(
                                                           child: Row(
                                                             children: <Widget>[
-                                                              Icon(FontAwesomeIcons.at, size: bSize, color: const Color(0xFF729ee2)),
+                                                              Icon(Icons.alternate_email, size: 18, color: const Color(0xFF729ee2)),
                                                               SizedBox(width: 10),
                                                               Text(email, style: TextStyle(fontSize: sSize, color: Colors.black)),
                                                             ],
@@ -267,7 +264,7 @@ class _SearchState extends State<Search> {
                                                           alignment: Alignment.centerLeft,
                                                           child: Row(
                                                             children: <Widget>[
-                                                              Icon(FontAwesomeIcons.birthdayCake, size: bSize, color: const Color(0xFF729ee2)),
+                                                              Icon(Icons.cake, size: 18, color: const Color(0xFF729ee2)),
                                                               SizedBox(width: 10),
                                                               Text(birthday, style: TextStyle(fontSize: sSize, color: Colors.black)),
                                                             ],
@@ -277,7 +274,7 @@ class _SearchState extends State<Search> {
                                                         Container(
                                                           child: Row(
                                                             children: <Widget>[
-                                                              Icon(FontAwesomeIcons.phone, size: bSize, color: const Color(0xFF729ee2)),
+                                                              Icon(Icons.phone, size: 18, color: const Color(0xFF729ee2)),
                                                               SizedBox(width: 10),
                                                               Text(officephone, style: TextStyle(fontSize: sSize, color: Colors.black)),
                                                             ],
@@ -357,7 +354,7 @@ class _SearchState extends State<Search> {
                                                             child:Row(
                                                               mainAxisAlignment: MainAxisAlignment.center,
                                                               children: [
-                                                                Icon(FontAwesomeIcons.search, size: 16),
+                                                                Icon(Icons.search, size: 20),
                                                               ],
                                                             ),
                                                             style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
@@ -399,11 +396,9 @@ class _SearchState extends State<Search> {
         width: 45.0,
         child: FittedBox(
           child: FloatingActionButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/Favorite');
-            },
-            child: Icon(FontAwesomeIcons.solidStar, size: 15, color: const Color(0xFFC8DEFF),),
             backgroundColor: Colors.green,
+            onPressed: () { Navigator.pushNamed(context, '/'); },
+            child: Icon(Icons.star, size: 25, color: Colors.white,),
           ),
         ),
       ),
@@ -436,7 +431,7 @@ class _SearchState extends State<Search> {
                   height: 25,
                   child: Row(
                     children: <Widget>[
-                      Icon(FontAwesomeIcons.solidUser, size: sSize, color: const Color(0xFF729ee2)),
+                      Icon(Icons.person, size: 18, color: const Color(0xFF729ee2)),
                       SizedBox(width: 10),
                       Flexible(child: Text(element['DName'].toString() + ' ' + element['Position'].toString() + ' [ ' + element['ShortName'].toString() + ' - ' + element['DeptName'].toString() + ' ]', softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: sSize, color: Colors.black))),
                     ],

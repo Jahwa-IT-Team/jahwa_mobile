@@ -1,11 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 
-import 'package:easy_localization/easy_localization.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:intrinsic_grid_view/intrinsic_grid_view.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:jahwa_mobile/common/common.dart';
 import 'package:jahwa_mobile/common/variable.dart';
 
@@ -86,7 +81,7 @@ class _MenuState extends State<Menu> {
                         height: 40,
                         child: Row(
                           children: <Widget> [
-                            Container(width: 40, alignment: Alignment.center, child: FaIcon(fontAwesomeIconFromString(element['Icon'].toString()), size: 25, color: Colors.black54),),
+                            Container(width: 40, alignment: Alignment.center, child: Icon(iconFromString(element['Icon'].toString()), size: 30, color: Colors.black54),),
                             SizedBox(width: 15),
                             Flexible(child: Text(string, softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: mSize,))),
                           ],
@@ -168,8 +163,8 @@ class _MenuState extends State<Menu> {
         child: FittedBox(
           child: FloatingActionButton(
             backgroundColor: Colors.green,
-            onPressed: () { Navigator.pushNamed(context, '/ResetPassword'); },
-            child: Icon(FontAwesomeIcons.solidStar, size: 15, color: const Color(0xFFC8DEFF),),
+            onPressed: () { Navigator.pushNamed(context, '/'); },
+            child: Icon(Icons.star, size: 25, color: Colors.white,),
           ),
         ),
       ),

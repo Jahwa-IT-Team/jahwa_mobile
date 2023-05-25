@@ -2,9 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'package:easy_localization/easy_localization.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intrinsic_grid_view/intrinsic_grid_view.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:jahwa_mobile/common/common.dart';
 import 'package:jahwa_mobile/common/variable.dart';
@@ -37,7 +35,7 @@ class _IndexState extends State<Index> {
               IconButton(
                 iconSize: bSize,
                 color: Colors.lightGreen,
-                icon: const Icon(FontAwesomeIcons.home),
+                icon: const Icon(Icons.home, size: 20),
                 tooltip: 'Index.Logout',
                 onPressed:  () async {
                   await removeUserSharedPreferences();
@@ -192,7 +190,7 @@ class _IndexState extends State<Index> {
                                                 children: <Widget>[
                                                   Row(
                                                     children: <Widget>[
-                                                      Icon(FontAwesomeIcons.listUl, size: bSize, color: const Color(0xFF729ee2)),
+                                                      Icon(Icons.list, size: 20, color: const Color(0xFF729ee2)),
                                                       SizedBox(width: 10),
                                                       Text('Recent Posts'.tr(), style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black54)),
                                                     ],
@@ -229,7 +227,7 @@ class _IndexState extends State<Index> {
                                                 children: <Widget> [
                                                   Row(
                                                     children: <Widget> [
-                                                      Icon(FontAwesomeIcons.userClock, size: bSize, color: const Color(0xFF729ee2)),
+                                                      Icon(Icons.work_history, size: 20, color: const Color(0xFF729ee2)),
                                                       SizedBox(width: 10),
                                                       Text('My Working Time', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black54)),
                                                     ],
@@ -327,7 +325,7 @@ class _IndexState extends State<Index> {
                                                 children: <Widget> [
                                                   Row(
                                                     children: <Widget> [
-                                                      Icon(FontAwesomeIcons.listAlt, size: bSize, color: const Color(0xFF729ee2)),
+                                                      Icon(Icons.list_alt, size: 20, color: const Color(0xFF729ee2)),
                                                       SizedBox(width: 10),
                                                       Text('Worklist', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black54)),
                                                     ],
@@ -443,8 +441,8 @@ class _IndexState extends State<Index> {
         child: FittedBox(
           child: FloatingActionButton(
             backgroundColor: Colors.green,
-            onPressed: () { Navigator.pushNamed(context, '/ResetPassword'); },
-            child: Icon(FontAwesomeIcons.solidStar, size: 15, color: const Color(0xFFC8DEFF),),
+            onPressed: () { Navigator.pushNamed(context, '/'); },
+            child: Icon(Icons.star, size: 25, color: Colors.white,),
           ),
         ),
       ),

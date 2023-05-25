@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 import 'package:jahwa_mobile/common/variable.dart';
 
 class Favorite extends StatefulWidget {
@@ -26,7 +24,7 @@ class _FavoriteState extends State<Favorite> {
         elevation: 0.0,
         title:Row(
           children: <Widget> [
-            Icon(FontAwesomeIcons.solidStar, size: bSize, color: Colors.lightGreen),
+            Icon(Icons.star, size: 20, color: Colors.lightGreen),
             Container(padding: EdgeInsets.only(left: 10.0),),
             Text('Favorite', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.white)),
           ],
