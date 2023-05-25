@@ -19,6 +19,7 @@ class _IndexState extends State<Index> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    currentIndex = 0;
   }
 
   @override
@@ -239,7 +240,7 @@ class _IndexState extends State<Index> {
                                                       child: Row(
                                                         children: <Widget>[
                                                           Expanded(
-                                                            flex: 4,
+                                                            ///flex: 4,
                                                             child: Column(
                                                               crossAxisAlignment: CrossAxisAlignment.center,
                                                               children: <Widget>[
@@ -259,7 +260,7 @@ class _IndexState extends State<Index> {
                                                           ),
                                                           SizedBox(width: 10),
                                                           Expanded(
-                                                            flex: 3,
+                                                            ///flex: 3,
                                                             child: Column(
                                                               crossAxisAlignment: CrossAxisAlignment.center,
                                                               children: <Widget>[
@@ -280,7 +281,7 @@ class _IndexState extends State<Index> {
                                                           ),
                                                           SizedBox(width: 10),
                                                           Expanded(
-                                                            flex: 3,
+                                                            ///flex: 3,
                                                             child: Column(
                                                               crossAxisAlignment: CrossAxisAlignment.center,
                                                               children: <Widget>[
