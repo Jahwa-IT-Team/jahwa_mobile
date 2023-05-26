@@ -5,7 +5,6 @@ import 'dart:math' as math;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
-///import 'package:jahwa_mobile/Common/badges.dart';
 
 const double _kActiveFontSize = 14.0;
 const double _kBottomMargin = 0.0;

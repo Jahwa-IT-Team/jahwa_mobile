@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:jahwa_mobile/common/common.dart';
 import 'package:jahwa_mobile/common/variable.dart';
 
-class WebMail extends StatefulWidget {
+class AnnualLeaveInformation extends StatefulWidget {
   @override
-  _WebMailState createState() => _WebMailState();
+  _AnnualLeaveInformationState createState() => _AnnualLeaveInformationState();
 }
 
-class _WebMailState extends State<WebMail> {
+class _AnnualLeaveInformationState extends State<AnnualLeaveInformation> {
 
   void initState() {
     // TODO: implement initState
@@ -26,9 +26,9 @@ class _WebMailState extends State<WebMail> {
         elevation: 0.0,
         title: Row(
           children: <Widget>[
-            Icon(Icons.mail, size: 20, color: Colors.lightGreen),
+            Icon(Icons.sailing, size: 20, color: Colors.lightGreen),
             Container(padding: EdgeInsets.only(left: 10.0),),
-            Text('Web Mail', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.white)),
+            Text('Annual Leave Information', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.white)),
           ],
         ),
       ),

@@ -51,6 +51,7 @@ class _ResetPasswordState extends State<ResetPassword> {
         if (!currentFocus.hasPrimaryFocus) { currentFocus.unfocus(); }
       },
       child: Scaffold(
+        backgroundColor: const Color(0xFFb9d2ff),
         appBar: AppBar(
           centerTitle: true,
           toolbarHeight: 45,
@@ -68,7 +69,7 @@ class _ResetPasswordState extends State<ResetPassword> {
           child: Container(
             height: screenHeight,
             width: screenWidth,
-            color: Color.fromARGB(0xFF, 0xFF, 0xFF, 0xFF),
+            ///color: Color.fromARGB(0xFF, 0xFF, 0xFF, 0xFF),
             child: Column(
               children: <Widget>[
                 Container( /// Jahwa Mark

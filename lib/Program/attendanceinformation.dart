@@ -95,19 +95,6 @@ class _AttendanceInformationState extends State<AttendanceInformation> {
           ),
         ),
       ),
-      floatingActionButton: Container(
-        height: 45.0,
-        width: 45.0,
-        child: FittedBox(
-          child: FloatingActionButton(
-            backgroundColor: Colors.green,
-            onPressed: () { Navigator.pushNamed(context, '/'); },
-            child: Icon(Icons.star, size: 25, color: Colors.white,),
-          ),
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      bottomNavigationBar: setBottomNavigator(context),
     );
   }
 }

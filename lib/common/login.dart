@@ -181,11 +181,12 @@ class _LoginState extends State<Login> {
         if (!currentFocus.hasPrimaryFocus) { currentFocus.unfocus(); }
       },
       child: Scaffold(
+        backgroundColor: const Color(0xFFb9d2ff),
         body: SingleChildScrollView ( /// Scroll이 생기도록 하는 Object
             child: Container(
               height: screenHeight,
               width: screenWidth,
-              color: Color.fromARGB(0xFF, 0xFF, 0xFF, 0xFF),
+              ///color: Color.fromARGB(0xFF, 0xFF, 0xFF, 0xFF),
               child: Column(
                 children: <Widget>[
                   /*

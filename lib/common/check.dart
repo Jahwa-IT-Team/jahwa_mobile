@@ -40,6 +40,7 @@ class _CheckState extends State<Check> {
     if(baseWidth > 280) baseWidth = 280;
 
     return Scaffold(
+      backgroundColor: const Color(0xFFb9d2ff),
       body: SingleChildScrollView ( // this will make your body scrollable
         child: Container( /// 회사 마크
           width: screenWidth,

@@ -577,6 +577,7 @@ Future<String> getDBData(String div) async {
     if(div == 'MPersonInformation') data = {'EmpCode': session['EmpCode'].toString()};
     else if(div == 'MPortalQuery') data = {'EntCode': session['EntCode'].toString(), 'DeptCode': session['DeptCode'].toString(), 'EmpCode': session['EmpCode'].toString(), 'Language': session['Languange'].toString()};
     else if(div == 'MMenu') data = {'EntCode': session['EntCode'].toString(), 'Auth': session['Auth'].toString(), 'EmpCode': session['EmpCode'].toString()};
+    else if(div == 'MPersonalInformationERP') data = {'EntCode': session['EntCode'].toString(), 'EmpCode': session['EmpCode'].toString()};
 
     await http.post(Uri.parse(url), body: json.encode(data),
         headers: {"Content-Type": "application/json"}).timeout(
@@ -731,6 +732,7 @@ IconData iconFromString(String name) {
     case 'approval': { iconData =Icons.approval; } break;
     case 'mail': { iconData = Icons.mail; } break;
     case 'lock': { iconData = Icons.lock; } break;
+    case 'sailing': { iconData = Icons.sailing; } break;
     default: { iconData = Icons.ads_click; } break;
 
   }
