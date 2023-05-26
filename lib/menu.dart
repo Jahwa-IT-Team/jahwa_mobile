@@ -163,7 +163,7 @@ class _MenuState extends State<Menu> {
         child: FittedBox(
           child: FloatingActionButton(
             backgroundColor: Colors.green,
-            onPressed: () { Navigator.pushNamed(context, '/'); },
+            onPressed: () { Navigator.pushNamed(context, '/SalaryInformation'); },
             child: Icon(Icons.star, size: 25, color: Colors.white,),
           ),
         ),

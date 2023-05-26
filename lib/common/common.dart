@@ -581,7 +581,7 @@ Future<String> getDBData(String div) async {
     await http.post(Uri.parse(url), body: json.encode(data),
         headers: {"Content-Type": "application/json"}).timeout(
         const Duration(seconds: 15)).then<void>((http.Response response) {
-      if (response.statusCode != 200 || response.body == null || response.body == "{}") { ; }
+      if (response.statusCode != 200 || response.body == null || response.body == "{}") {;}
       else if (response.statusCode == 200) {
         jsondata = response.body.toString();
       }
@@ -637,7 +637,22 @@ Future<void> viewBBSData(BuildContext context, String div, String num) async {
         if(type == 'Image') {
           if (jsonDecode(response.body)['Table3'].length != 0) {
             jsonDecode(response.body)['Table3'].forEach((element) {
-              photo = Image.network('https://gw.jahwa.co.kr/Pics/Board/' + element['Code'].toString() + '/' + element['FileCode'].toString() + element['FileExt'].toString());
+              ///photo = Image.network('https://gw.jahwa.co.kr/Pics/Board/' + element['Code'].toString() + '/' + element['FileCode'].toString() + element['FileExt'].toString());
+              photo = Image.network('https://gw.jahwa.co.kr/Pics/Board/' + element['Code'].toString() + '/' + element['FileCode'].toString() + element['FileExt'].toString(),
+                fit: BoxFit.fill,
+                loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Container(
+                    padding: EdgeInsets.all(50),
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        value: loadingProgress.expectedTotalBytes != null ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes! : null,
+                      ),
+                    ),
+                  );
+                },
+              );
+
               photoList.add(photo);
             });
           }
@@ -715,6 +730,7 @@ IconData iconFromString(String name) {
     case 'paid': { iconData = Icons.paid; } break;
     case 'approval': { iconData =Icons.approval; } break;
     case 'mail': { iconData = Icons.mail; } break;
+    case 'lock': { iconData = Icons.lock; } break;
     default: { iconData = Icons.ads_click; } break;
 
   }

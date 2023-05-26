@@ -256,42 +256,7 @@ class _ProfileState extends State<Profile> {
                                                   ),
                                                 ],
                                               ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.all(10.0),
-                          margin: EdgeInsets.only(left: 15, right: 15, top: 20, bottom: 0),
-                          decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: const Color(0xFFC8DEFF)),
-                          child: Center(
-                            child: Column(
-                              children: <Widget>[
-                                Container(
-                                  padding: EdgeInsets.all(5.0),
-                                  child: Column(
-                                    children: <Widget>[
-                                      Row(
-                                        children: <Widget>[
-                                          Icon(Icons.contact_emergency, size: 20, color: const Color(0xFF729ee2)),
-                                          SizedBox(width: 10),
-                                          Text('Other Information'.tr(), style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black54)),
-                                        ],
-                                      ),
-                                      Container(
-                                        padding: EdgeInsets.all(10.0),
-                                        margin: EdgeInsets.only(top: 10),
-                                        decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: Colors.white),
-                                        child: Center(
-                                          child: Column(
-                                            children: <Widget>[
+                                              SizedBox(height: 15),
                                               Row(
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: <Widget>[
@@ -554,13 +519,34 @@ class _ProfileState extends State<Profile> {
                                                             child: Text('Password Reset'.tr(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey, fontSize: mSize,)),
                                                             style: TextButton.styleFrom(padding: EdgeInsets.zero,),
                                                             onPressed: () {
-                                                              showDialogWithFields(context);
+                                                              Navigator.pushNamed(context, '/CheckEmployee');
                                                             },
                                                           ),
                                                         ),
                                                       ],
                                                     ),
                                                   ),
+                                                  SizedBox(height: 5),
+                                                  Container(
+                                                    child: Row(
+                                                      children: <Widget>[
+                                                        Icon(Icons.logout, size: 18, color: const Color(0xFF729ee2)),
+                                                        SizedBox(width: 10),
+                                                        SizedBox(
+                                                          height: mSize + 15,
+                                                          child: TextButton(
+                                                            child: Text('Log Out'.tr(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey, fontSize: mSize,)),
+                                                            style: TextButton.styleFrom(padding: EdgeInsets.zero,),
+                                                            onPressed: () async {
+                                                              await removeUserSharedPreferences();
+                                                              Navigator.pushReplacementNamed(context, '/');
+                                                            },
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  /*
                                                   SizedBox(height: 5),
                                                   Container(
                                                     child: Row(
@@ -580,6 +566,7 @@ class _ProfileState extends State<Profile> {
                                                       ],
                                                     ),
                                                   ),
+                                                   */
                                                 ],
                                               ),
                                             ],
@@ -607,7 +594,7 @@ class _ProfileState extends State<Profile> {
         child: FittedBox(
           child: FloatingActionButton(
             backgroundColor: Colors.green,
-            onPressed: () { Navigator.pushNamed(context, '/'); },
+            onPressed: () { Navigator.pushNamed(context, '/SalaryInformation'); },
             child: Icon(Icons.star, size: 25, color: Colors.white,),
           ),
         ),

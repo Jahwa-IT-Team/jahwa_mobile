@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:http/http.dart' as http;
+import 'package:sn_progress_dialog/sn_progress_dialog.dart';
 
 import 'package:jahwa_mobile/common/common.dart';
 import 'package:jahwa_mobile/common/variable.dart';
@@ -405,7 +406,7 @@ class _SearchState extends State<Search> {
         child: FittedBox(
           child: FloatingActionButton(
             backgroundColor: Colors.green,
-            onPressed: () { Navigator.pushNamed(context, '/'); },
+            onPressed: () { Navigator.pushNamed(context, '/SalaryInformation'); },
             child: Icon(Icons.star, size: 25, color: Colors.white,),
           ),
         ),
@@ -422,6 +423,14 @@ class _SearchState extends State<Search> {
 
     empList.clear();
 
+    ProgressDialog pd = ProgressDialog(context: context);
+    pd.show(
+      barrierDismissible: true,
+      progressBgColor: Colors.transparent,
+      msg: "Search Workmate...",
+      hideValue: true,
+    );
+
     var url = 'https://jhapi.jahwa.co.kr/MFindWorkmate';
     var data = {'Name': textController.text, 'EmpCode': session['EmpCode'].toString()};
 
@@ -430,7 +439,7 @@ class _SearchState extends State<Search> {
       await http.post(Uri.parse(url), body: json.encode(data),
           headers: {"Content-Type": "application/json"}).timeout(
           const Duration(seconds: 15)).then<void>((http.Response response) {
-        if (response.statusCode != 200 || response.body == null || response.body == "{}") { ; }
+        if (response.statusCode != 200 || response.body == null || response.body == "{}") { pd.close(); }
         else if (response.statusCode == 200) {
           if (jsonDecode(response.body)['Table'].length != 0) {
             jsonDecode(response.body)['Table'].forEach((element) {
@@ -457,11 +466,12 @@ class _SearchState extends State<Search> {
       });
     } catch (e) {
       print("set Information Error : " + e.toString());
+      pd.close();
     }
 
     textFocusNode.unfocus();
     setState(() {
-      ;
+      pd.close();
     });
   }
 
@@ -489,7 +499,9 @@ class _SearchState extends State<Search> {
       await http.post(Uri.parse(url), body: json.encode(data),
           headers: {"Content-Type": "application/json"}).timeout(
           const Duration(seconds: 15)).then<void>((http.Response response) {
-        if (response.statusCode != 200 || response.body == null || response.body == "{}") { ; }
+        if (response.statusCode != 200 || response.body == null || response.body == "{}") {
+          ;
+        }
         else if (response.statusCode == 200) {
           setState(() {
             if (jsonDecode(response.body)['Table2'].length != 0) {
