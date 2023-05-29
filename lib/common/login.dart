@@ -402,6 +402,9 @@ class _LoginState extends State<Login> {
       progressBgColor: Colors.transparent,
       msg: "Check User Information...",
       hideValue: true,
+      backgroundColor: Color(0xFFC8DEFF),
+      progressValueColor: Colors.blue,
+      msgColor: Colors.grey,
     );
 
     try {

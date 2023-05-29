@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 
+import 'package:easy_localization/easy_localization.dart';
+
 import 'package:jahwa_mobile/common/common.dart';
 import 'package:jahwa_mobile/common/variable.dart';
 
@@ -14,7 +16,6 @@ class _MenuState extends State<Menu> {
   var empcode = '';
 
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -31,7 +32,7 @@ class _MenuState extends State<Menu> {
           children: <Widget>[
             Icon(Icons.apps, size: 20, color: Colors.lightGreen),
             Container(padding: EdgeInsets.only(left: 10.0),),
-            Text('Menu', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.white)),
+            Text('Menu.Menu'.tr(), style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.white)),
           ],
         ),
       ),
@@ -72,7 +73,7 @@ class _MenuState extends State<Menu> {
               if (snapshot.data != '') {
                 if (jsonDecode(snapshot.data)['Table'].length != 0) {
                   jsonDecode(snapshot.data)['Table'].forEach((element) {
-                    string = element['Title'].toString();
+                    string = 'Menu.' + element['Title'].toString();
                     posts = InkWell(
                       onTap: () async {
                         Navigator.pushNamed(context, element['Url'].toString());
@@ -83,7 +84,7 @@ class _MenuState extends State<Menu> {
                           children: <Widget> [
                             Container(width: 40, alignment: Alignment.center, child: Icon(iconFromString(element['Icon'].toString()), size: 30, color: Colors.black54),),
                             SizedBox(width: 15),
-                            Flexible(child: Text(string, softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: mSize,))),
+                            Flexible(child: Text(string.tr(), softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: mSize,))),
                           ],
                         ),
                       ),
@@ -114,7 +115,6 @@ class _MenuState extends State<Menu> {
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  /// Recent Posts
                                   Container(
                                     padding: EdgeInsets.all(10.0),
                                     margin: EdgeInsets.only(left: 15, right: 15, top: 20, bottom: 0),

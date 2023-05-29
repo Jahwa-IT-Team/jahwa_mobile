@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:jahwa_mobile/common/common.dart';
@@ -63,7 +64,7 @@ class _ResetPasswordMobileState extends State<ResetPasswordMobile> {
             children: <Widget> [
               Icon(Icons.how_to_reg, size: 20, color: Colors.lightGreen),
               Container(padding: EdgeInsets.only(left: 10.0),),
-              Text('Reset with Mobile', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.white)),
+              Text('Reset Password.Reset with Mobile'.tr(), style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.white)),
             ],
           ),
         ),
@@ -78,7 +79,7 @@ class _ResetPasswordMobileState extends State<ResetPasswordMobile> {
                     width: screenWidth,
                     height: (screenHeight - statusBarHeight) * 0.15,
                     alignment: Alignment.center,
-                    child: Text('Reset Password', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30, color: Colors.black,)),
+                    child: Text('Reset Password.Reset Password'.tr(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30, color: Colors.black,)),
                   ),
                   Container( /// Input Area
                     width: screenWidth,
@@ -146,7 +147,7 @@ class _ResetPasswordMobileState extends State<ResetPasswordMobile> {
                                   width: 1.0,
                                 ),
                               ),
-                              labelText: 'Password',
+                              labelText: 'Reset Password.Password'.tr(),
                               contentPadding: EdgeInsets.all(10),
                             ),
                             textInputAction: TextInputAction.done,
@@ -158,7 +159,7 @@ class _ResetPasswordMobileState extends State<ResetPasswordMobile> {
                               children: [
                                 Icon(Icons.drive_file_rename_outline, size: 20),
                                 SizedBox(height: 45, width: 20),
-                                Text('Reset Password', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white,)),
+                                Text('Reset Password.Reset Password'.tr(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white,)),
                               ],
                             ),
                             style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
@@ -182,11 +183,11 @@ class _ResetPasswordMobileState extends State<ResetPasswordMobile> {
   /// Reset Password Process
   Future<void> resetPassword(BuildContext context, TextEditingController answer1Controller, TextEditingController passwordController) async {
 
-    if(remain == 0)  { showMessageBox(context, 'Alert', 'The authentication time has expired.'); }
-    else if(answer1Controller.text.isEmpty) { showMessageBox(context, 'Alert', 'Answer Not Exists !!!'); }
-    else if(messagenum != answer1Controller.text) { showMessageBox(context, 'Alert', 'The authentication number does not match.'); }
-    else if(passwordController.text.isEmpty) { showMessageBox(context, 'Alert', 'Password Not Exists !!!'); } /// Password Empty Check
-    else if(!isPasswordCompliant(passwordController.text)) { showMessageBox(context, 'Alert', 'Password invalid !!!'); } /// Password Validation Check
+    if(remain == 0)  { showMessageBox(context, 'Message.Alert'.tr(), 'Message.The authentication time has expired'.tr()); }
+    else if(answer1Controller.text.isEmpty) { showMessageBox(context, 'Message.Alert'.tr(), 'Message.Answer Not Exists !!!'.tr()); }
+    else if(messagenum != answer1Controller.text) { showMessageBox(context, 'Message.Alert'.tr(), 'Message.The authentication number does not match'.tr()); }
+    else if(passwordController.text.isEmpty) { showMessageBox(context, 'Message.Alert'.tr(), 'Message.Password Not Exists !!!'.tr()); } /// Password Empty Check
+    else if(!isPasswordCompliant(passwordController.text)) { showMessageBox(context, 'Message.Alert'.tr(), 'Message.Password invalid !!!'.tr()); } /// Password Validation Check
     else {
       try {
 
@@ -198,29 +199,29 @@ class _ResetPasswordMobileState extends State<ResetPasswordMobile> {
 
         return await http.post(Uri.parse(url), body: json.encode(data), headers: {"Content-Type": "application/json"}).timeout(const Duration(seconds: 15)).then<void>((http.Response response) {
           if(response.statusCode != 200 || response.body == null || response.body == "{}" ){
-            showMessageBox(context, "Alert", "Reset Password Error : " + response.body.toString());
+            showMessageBox(context, "Message.Alert".tr(), "Message.Reset Password Error".tr() + " : " + response.body.toString());
           }
           if(response.statusCode == 200) {
             if (response.body.toString().substring(0, 4) == "LOCK") {
               var strArray = response.body.toString().split("_");
               if (strArray.length > 0) {
-                showMessageBox(context, "Locking", "3회이상의 답변 오류 발생으로 인해 계정이 잠겨있습니다. 10분뒤 다시 진행해 주시기 바랍니다.");
+                showMessageBox(context, "Message.Locking".tr(), "3회이상의 답변 오류 발생으로 인해 계정이 잠겨있습니다. 10분뒤 다시 진행해 주시기 바랍니다.");
               }
-              else showMessageBox(context, "Alert", response.body.toString());
+              else showMessageBox(context, "Message.Alert".tr(), response.body.toString());
             }
             else if (response.body.toString() == "Work Completed") {
-              showMessageBox(context, "Alert", response.body.toString());
+              showMessageBox(context, "Alert", "Work Conpleted".tr());
               Future.delayed(Duration(seconds: 3), () {
                 Navigator.pushNamedAndRemoveUntil(context, '/Login', (route) => false);  /// Direct Move to Login
               });
             }
             else if (response.body.toString() == "Use Wrong Text") {
-              showMessageBox(context, "Alert", "문제를 발생시킬 문자를 사용하였습니다. 확인후 올바른 문자를 사용하시기 바랍니다.");
+              showMessageBox(context, "Message.Alert", "문제를 발생시킬 문자를 사용하였습니다. 확인후 올바른 문자를 사용하시기 바랍니다.");
             }
-            else { showMessageBox(context, "Alert", "Password Not Available, Check Password Rule!!! Can Not Use id and More than 2 Letter of Name in Password!!!"); }
+            else { showMessageBox(context, "Message.Alert", "Message.Password Not Available, Check Password Rule!!! Can Not Use id and More than 2 Letter of Name in Password!!!".tr()); }
           }
           else{
-            showMessageBox(context, "Alert", "Process Error!!! Please Check API Server!!!");
+            showMessageBox(context, "Message.Alert", "Message.Process Error!!! Please Check API Server!!!".tr());
           }
         });
       }

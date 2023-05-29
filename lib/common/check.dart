@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sn_progress_dialog/sn_progress_dialog.dart';
 import 'package:update_checker/update_checker.dart';
@@ -42,7 +41,7 @@ class _CheckState extends State<Check> {
     return Scaffold(
       backgroundColor: const Color(0xFFb9d2ff),
       body: SingleChildScrollView ( // this will make your body scrollable
-        child: Container( /// 회사 마크
+        child: Container( /// Company Mark
           width: screenWidth,
           height: (screenHeight - statusBarHeight) * 0.65,
           alignment: Alignment.center,
@@ -62,10 +61,13 @@ class _CheckState extends State<Check> {
       progressBgColor: Colors.transparent,
       msg: "Check Upgrade...",
       hideValue: true,
+      backgroundColor: Color(0xFFC8DEFF),
+      progressValueColor: Colors.blue,
+      msgColor: Colors.grey,
     );
 
     /// 0. Update Check
-    var checker = UpdateChecker(); // create an object from UpdateChecker
+    var checker = UpdateChecker();
 
     /*
     if (Platform.isIOS) {
@@ -93,7 +95,6 @@ class _CheckState extends State<Check> {
       await Future.delayed(Duration(milliseconds: 500));
       pd.close();
 
-      print("Go to Login");
       Navigator.pushNamedAndRemoveUntil(context, '/Login', (route) => false);
     }
     else {
@@ -126,7 +127,6 @@ class _CheckState extends State<Check> {
       await Future.delayed(Duration(milliseconds: 500));
       pd.close();
 
-      print("Go to Index");
       Navigator.pushReplacementNamed(context, '/Index'); /// Move to First Page
     }
   }
@@ -146,8 +146,8 @@ class _CheckState extends State<Check> {
     else {
       try {
 
-        var url = 'https://jhapi.jahwa.co.kr/MLoginCheck';  /// API Url
-        var data = {'EmpCode': EmpCode, 'Token' : Token}; /// Send Parameter
+        var url = 'https://jhapi.jahwa.co.kr/MLoginCheck';
+        var data = {'EmpCode': EmpCode, 'Token' : Token};
 
         return await http.post(Uri.parse(url), body: json.encode(data), headers: {"Content-Type": "application/json"}).timeout(const Duration(seconds: 15)).then<bool>((http.Response response) {
           if(response.statusCode != 200 || response.body == null || response.body == "{}" || response.body == "{\"Table\":[]}" ) { return true; }
@@ -156,7 +156,6 @@ class _CheckState extends State<Check> {
             Map userMap = table['Table'][0];
             var user = User.fromJson(userMap); /// globals.dart에 정의된 User를 이용해 정보를 Mapping하는 것
             addUserSharedPreferences(user); /// 사용자 정보 세션 생성
-            ///addPasswordSharedPreferences(password); /// 비밀번호 관련 세션 생성  -- 확인 필요
             return false;
           }
           else { return true; }
@@ -168,6 +167,4 @@ class _CheckState extends State<Check> {
       return false;
     }
   }
-
-
 }

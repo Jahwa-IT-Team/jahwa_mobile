@@ -16,7 +16,6 @@ void main() async {
           child: MainApp()
       ),
   );
-  print("open Main App : " + DateTime.now().toString());
 }
 
 class MainApp extends StatelessWidget {
@@ -35,7 +34,7 @@ class MainApp extends StatelessWidget {
           fontSizeDelta: 1.0,
         ),
       ),
-      routes: routes, /// program_list.dart에 정의된 주소를 기반으로 이동을 진행함
+      routes: routes, /// Refer to common/program_list.dart
     );
   }
 }

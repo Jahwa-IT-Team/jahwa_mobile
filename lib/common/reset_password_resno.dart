@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:jahwa_mobile/common/common.dart';
@@ -55,7 +56,7 @@ class _ResetPasswordResNoState extends State<ResetPasswordResNo> {
             children: <Widget> [
               Icon(Icons.how_to_reg, size: 20, color: Colors.lightGreen),
               Container(padding: EdgeInsets.only(left: 10.0),),
-              Text('Reset Password using Regist. No', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.white)),
+              Text('Reset Password.Reset Password using Regist Number'.tr(), style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.white)),
             ],
           ),
         ),
@@ -70,7 +71,7 @@ class _ResetPasswordResNoState extends State<ResetPasswordResNo> {
                     width: screenWidth,
                     height: (screenHeight - statusBarHeight) * 0.15,
                     alignment: Alignment.center,
-                    child: Text('Reset Password', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30, color: Colors.black,)),
+                    child: Text('Reset Password.Reset Password'.tr(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30, color: Colors.black,)),
                   ),
                   Container( /// Input Area
                     width: screenWidth,
@@ -97,7 +98,7 @@ class _ResetPasswordResNoState extends State<ResetPasswordResNo> {
                                   width: 1.0,
                                 ),
                               ),
-                              labelText: 'Registration Number',
+                              labelText: 'Reset Password.Registration Number'.tr(),
                               contentPadding: EdgeInsets.all(10),
                             ),
                             textInputAction: TextInputAction.next,
@@ -119,7 +120,7 @@ class _ResetPasswordResNoState extends State<ResetPasswordResNo> {
                                   width: 1.0,
                                 ),
                               ),
-                              labelText: 'New Password',
+                              labelText: 'Reset Password.New Password'.tr(),
                               contentPadding: EdgeInsets.all(10),
                             ),
                             textInputAction: TextInputAction.done,
@@ -131,7 +132,7 @@ class _ResetPasswordResNoState extends State<ResetPasswordResNo> {
                               children: [
                                 Icon(Icons.drive_file_rename_outline, size: 20),
                                 SizedBox(height: 45, width: 20),
-                                Text('Reset Password', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white,)),
+                                Text('Reset Password.Reset Password'.tr(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white,)),
                               ],
                             ),
                             style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
@@ -155,7 +156,7 @@ class _ResetPasswordResNoState extends State<ResetPasswordResNo> {
   /// Reset Password Process
   Future<void> resetPassword(BuildContext context, TextEditingController resnoController, TextEditingController passwordController) async {
 
-    if(resetpass['empcode'].toString().isEmpty || resnoController.text.isEmpty) { showMessageBox(context, 'Alert', 'Employee Number or Name Not Exists !!!'); } /// Employee Number and Name Empty Check
+    if(resetpass['empcode'].toString().isEmpty || resnoController.text.isEmpty) { showMessageBox(context, 'Message.Alert'.tr(), 'Message.Employee Number or Name Not Exists !!!'.tr()); } /// Employee Number and Name Empty Check
     else {
       try {
 
@@ -167,7 +168,7 @@ class _ResetPasswordResNoState extends State<ResetPasswordResNo> {
 
         return await http.post(Uri.parse(url), body: json.encode(data), headers: {"Content-Type": "application/json"}).timeout(const Duration(seconds: 15)).then<void>((http.Response response) {
           if(response.statusCode != 200 || response.body == null || response.body == "{}" ){
-            showMessageBox(context, "Alert", "Reset Password Error : " + response.body.toString());
+            showMessageBox(context, "Message.Alert".tr(), "Message.Reset Password Error".tr() + " : " + response.body.toString());
           }
           if(response.statusCode == 200) {
             showMessageBox(context, "", response.body.toString());
@@ -176,7 +177,7 @@ class _ResetPasswordResNoState extends State<ResetPasswordResNo> {
             });
           }
           else{
-            showMessageBox(context, "Alert", "Process Error!!! Please Check API Server!!!");
+            showMessageBox(context, "Message.Alert".tr(), "Message.Process Error!!! Please Check API Server!!!".tr());
           }
         });
       }

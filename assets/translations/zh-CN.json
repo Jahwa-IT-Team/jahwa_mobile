@@ -1,9 +1,91 @@
 {
-  "Login": {
-    "Employee Number" : "Employee Number(CN)",
-    "Forgot Password?" : "Forgot Password?(CN)",
-    "Login" : "Login(CN)",
-    "Password" : "Password(CN)"
+  "Check Employee" : {
+    "Check Employee" : "Check Employee",
+    "Employee Number" : "Employee Number",
+    "Mobile Authentication" : "Mobile Authentication",
+    "Name" : "Name",
+    "Question & Answer Authentication" : "Question & Answer Authentication",
+    "Select Reset Method !!!" : "Select Reset Method !!!"
   },
-  "Title": "Title(CN)"
+  "Login" : {
+    "Employee Number" : "Employee Number",
+    "Forgot Password?" : "Have you forgotten your password?",
+    "Login" : "Login",
+    "Password" : "Password"
+  },
+  "Menu" : {
+    "Annual Leave Information" : "Annual Leave Information",
+    "Attendance Information" : "Attendance Information",
+    "Electronic Approval" : "Electronic Approval",
+    "Menu" : "Menu",
+    "Personal Information (ERP)" : "Personal Information (ERP)",
+    "Reset Password" : "Reset Password",
+    "Salary Information" : "Salary Information",
+    "Web Mail" : "Web Mail"
+  },
+  "Message" : {
+    "A/D Not Use" : "A/D Not Use",
+    "Alert" : "Alert",
+    "Answer 1 Not Exists !!!" : "Answer 1 Not Exists !!!",
+    "Answer 2 Not Exists !!!" : "Answer 2 Not Exists !!!",
+    "Answer Error  : On Time" : "Answer Error  : First Time",
+    "Answer Error  : Second Times" : "Answer Error  : Second Times",
+    "Answer Error  : Third Times" : "Answer Error  : Third Times",
+    "Answer Not Exists !!!" : "Answer Not Exists !!!",
+    "Check Employee Error" : "Check Employee Error",
+    "Employee Number Or Name Not Exists !!!" : "Employee Number Or Name Not Exists !!!",
+    "Error" : "Error",
+    "Locking" : "Locking",
+    "Not Exists User Data!!!" : "Not Exists User Data!!!",
+    "Password invalid !!!" : "Password invalid !!!",
+    "Password Not Available, Check Password Rule!!! Can Not Use id and More than 2 Letter of Name in Password!!!" : "Password Not Available, Check Password Rule!!! Can Not Use id and More than 2 Letter of Name in Password!!!",
+    "Password Not Exists !!!" : "Password Not Exists !!!",
+    "Process Error!!! Please Check API Server!!!" : "Process Error!!! Please Check API Server!!!",
+    "Reset Password Error" : "Reset Password Error",
+    "The authentication number does not match" : "The authentication number does not match",
+    "The authentication time has expired" : "The authentication time has expired",
+    "Unauthorized Access" : "Unauthorized Access",
+    "User does not exist" : "User does not exist",
+    "User Name is incorrect" : "User Name is incorrect",
+    "Work Conpleted" : "Work Conpleted"
+  },
+  "PersonalInformationERP" : {
+    "Company" :  "Company",
+    "Department" :  "Department",
+    "Employee No" :  "Employee No",
+    "Name" :  "Name",
+    "Chinese Name" :  "Chinese Name",
+    "English Name" :  "English Name",
+    "Position" :  "Position",
+    "Title" :  "Title",
+    "Occupation Type" :  "Occupation Type",
+    "Work Type" :  "Work Type",
+    "Enter Type" :  "Enter Type",
+    "Group Enter Date" :  "Group Enter Date",
+    "Enter Date" :  "Enter Date",
+    "Probationary Expiration Date" :  "Probationary Expiration Date",
+    "Retire Date" :  "Retire Date",
+    "Sex" :  "Sex",
+    "Zip Code" :  "Zip Code",
+    "Address" :  "Address",
+    "Current Zip Code" :  "Current Zip Code",
+    "Current Address" :  "Current Address",
+    "Telephone" :  "Telephone",
+    "Office Phone" :  "Office Phone",
+    "Email" :  "Email",
+    "Mobile" :  "Mobile"
+  },
+  "Reset Password" : {
+    "Answer 1" : "Answer 1",
+    "Answer 2" : "Answer 2",
+    "New Password" : "New Password",
+    "Password" : "Password",
+    "Password to change" : "Password to change",
+    "Registration Number" : "Registration Number",
+    "Reset Password" : "Reset Password",
+    "Reset Password using Question" : "Reset Password using Question",
+    "Reset Password using Regist Number" : "Reset Password using Regist Number",
+    "Reset with Mobile" : "Reset with Mobile"
+  },
+  "Title" : "Title(CN)"
 }

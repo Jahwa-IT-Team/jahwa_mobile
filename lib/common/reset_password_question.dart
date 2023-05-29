@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:jahwa_mobile/common/common.dart';
@@ -56,7 +57,7 @@ class _ResetPasswordQuestionState extends State<ResetPasswordQuestion> {
             children: <Widget> [
               Icon(Icons.help, size: 20, color: Colors.lightGreen),
               Container(padding: EdgeInsets.only(left: 10.0),),
-              Text('Reset Password using Question', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.white)),
+              Text('Reset Password.Reset Password using Question'.tr(), style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.white)),
             ],
           ),
         ),
@@ -71,7 +72,7 @@ class _ResetPasswordQuestionState extends State<ResetPasswordQuestion> {
                     width: screenWidth,
                     height: (screenHeight - statusBarHeight) * 0.15,
                     alignment: Alignment.center,
-                    child: Text('Reset Password', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30, color: Colors.black,)),
+                    child: Text('Reset Password.Reset Password'.tr(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30, color: Colors.black,)),
                   ),
                   Container( /// Input Area
                     width: screenWidth,
@@ -104,7 +105,7 @@ class _ResetPasswordQuestionState extends State<ResetPasswordQuestion> {
                                   width: 1.0,
                                 ),
                               ),
-                              labelText: 'Answer 1',
+                              labelText: 'Reset Password.Answer 1'.tr(),
                               contentPadding: EdgeInsets.all(10),
                             ),
                             textInputAction: TextInputAction.next,
@@ -132,7 +133,7 @@ class _ResetPasswordQuestionState extends State<ResetPasswordQuestion> {
                                   width: 1.0,
                                 ),
                               ),
-                              labelText: 'Answer 2',
+                              labelText: 'Reset Password.Answer 2'.tr(),
                               contentPadding: EdgeInsets.all(10),
                             ),
                             textInputAction: TextInputAction.next,
@@ -141,7 +142,7 @@ class _ResetPasswordQuestionState extends State<ResetPasswordQuestion> {
                           Container( /// Input Area
                             width: screenWidth,
                             alignment: Alignment.centerLeft,
-                            child: Text("Password to change", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black,)),
+                            child: Text("Reset Password.Password to change".tr(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black,)),
                           ),
                           SizedBox(height: 10,),
                           TextField(
@@ -161,7 +162,7 @@ class _ResetPasswordQuestionState extends State<ResetPasswordQuestion> {
                                   width: 1.0,
                                 ),
                               ),
-                              labelText: 'Password',
+                              labelText: 'Reset Password.Password'.tr(),
                               contentPadding: EdgeInsets.all(10),
                             ),
                             textInputAction: TextInputAction.done,
@@ -173,7 +174,7 @@ class _ResetPasswordQuestionState extends State<ResetPasswordQuestion> {
                               children: [
                                 Icon(Icons.drive_file_rename_outline, size: 20),
                                 SizedBox(height: 45, width: 20),
-                                Text('Reset Password', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white,)),
+                                Text('Reset Password.Reset Password'.tr(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white,)),
                               ],
                             ),
                             style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
@@ -202,10 +203,10 @@ class _ResetPasswordQuestionState extends State<ResetPasswordQuestion> {
       FocusManager.instance.primaryFocus.unfocus();
     }*/
 
-    if(answer1Controller.text.isEmpty) { showMessageBox(context, 'Alert', 'Answer 1 Not Exists !!!'); }
-    else if(answer2Controller.text.isEmpty) { showMessageBox(context, 'Alert', 'Answer 2 Not Exists !!!'); }
-    else if(passwordController.text.isEmpty) { showMessageBox(context, 'Alert', 'Password Not Exists !!!'); } /// Password Empty Check
-    else if(!isPasswordCompliant(passwordController.text)) { showMessageBox(context, 'Alert', 'Password invalid !!!'); } /// Password Validation Check
+    if(answer1Controller.text.isEmpty) { showMessageBox(context, 'Message.Alert'.tr(), 'Message.Answer 1 Not Exists !!!'.tr()); }
+    else if(answer2Controller.text.isEmpty) { showMessageBox(context, 'Message.Alert'.tr(), 'Message.Answer 2 Not Exists !!!'.tr()); }
+    else if(passwordController.text.isEmpty) { showMessageBox(context, 'Message.Alert'.tr(), 'Message.Password Not Exists !!!'.tr()); } /// Password Empty Check
+    else if(!isPasswordCompliant(passwordController.text)) { showMessageBox(context, 'Message.Alert'.tr(), 'Message.Password invalid !!!'.tr()); } /// Password Validation Check
     else {
       try {
 
@@ -217,41 +218,41 @@ class _ResetPasswordQuestionState extends State<ResetPasswordQuestion> {
 
         return await http.post(Uri.parse(url), body: json.encode(data), headers: {"Content-Type": "application/json"}).timeout(const Duration(seconds: 15)).then<void>((http.Response response) {
           if(response.statusCode != 200 || response.body == null || response.body == "{}" ){
-            showMessageBox(context, "Alert", "Reset Password Error : " + response.body.toString());
+            showMessageBox(context, "Message.Alert".tr(), "Message.Reset Password Error".tr() + " : " + response.body.toString());
           }
           if(response.statusCode == 200) {
             if(response.body.toString().substring(0, 7) == "NOCOUNT") {
               var strArray = response.body.toString().split("_");
               if (strArray.length > 0) {
-                if (strArray[1] == "1") showMessageBox(context, "Alert", "Answer Error  : 1차");
-                else if (strArray[1] == "2") showMessageBox(context, "Alert", "Answer Error  : 2차");
-                else if (strArray[1] == "3") showMessageBox(context, "Alert", "Answer Error  : 3차");
-                else showMessageBox(context, "Alert", response.body.toString());
+                if (strArray[1] == "1") showMessageBox(context, "Message.Alert".tr(), "Message.Answer Error  : First Time".tr());
+                else if (strArray[1] == "2") showMessageBox(context, "Message.Alert".tr(), "Message.Answer Error  : Second Times".tr());
+                else if (strArray[1] == "3") showMessageBox(context, "Message.Alert".tr(), "Message.Answer Error  : Third Times".tr());
+                else showMessageBox(context, "Message.Alert".tr(), response.body.toString());
               }
-              else showMessageBox(context, "Alert", response.body.toString());
+              else showMessageBox(context, "Message.Alert".tr(), response.body.toString());
             }
             else if (response.body.toString().substring(0, 4) == "LOCK") {
               var strArray = response.body.toString().split("_");
               if (strArray.length > 0) {
-                showMessageBox(context, "Locking", "Your account has been locked due to more than 3 response errors. Please proceed again in 10 minutes.");
+                showMessageBox(context, "Message.Locking".tr(), "Message.Your account has been locked due to more than 3 response errors, Please proceed again in 10 minutes".tr());
               }
-              else showMessageBox(context, "Alert", response.body.toString());
+              else showMessageBox(context, "Message.Alert".tr(), response.body.toString());
             }
             else if (response.body.toString() == "Work Completed") {
-              showMessageBox(context, "Alert", response.body.toString());
+              showMessageBox(context, "Message.Alert".tr(), 'Message.Work Completed'.tr());
               Future.delayed(Duration(seconds: 3), () {
                 Navigator.pushNamedAndRemoveUntil(context, '/Login', (route) => false);  /// Direct Move to Login
               });
             }
-            else { showMessageBox(context, "Alert", "Password Not Available, Check Password Rule!!! Can Not Use id and More than 2 Letter of Name in Password!!!"); }
+            else { showMessageBox(context, "Message.Alert".tr(), "Message.Password Not Available, Check Password Rule!!! Can Not Use id and More than 2 Letter of Name in Password!!!".tr()); }
           }
           else{
-            showMessageBox(context, "Alert", "Process Error!!! Please Check API Server!!!");
+            showMessageBox(context, "Message.Alert".tr(), "Message.Process Error!!! Please Check API Server!!!".tr());
           }
         });
       }
       catch (e) {
-        showMessageBox(context, "Alert", "Reset Password Error : " + e.toString());
+        showMessageBox(context, "Message.Alert".tr(), "Message.Reset Password Error".tr() + " : " + e.toString());
       }
     }
   }
