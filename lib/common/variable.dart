@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:ui' as ui;
-
 int currentIndex = 0;
 
 const double bSize = 15;

@@ -31,43 +31,42 @@ class _PersonalInformationERPState extends State<PersonalInformationERP> {
           children: <Widget>[
             Icon(Icons.person, size: 20, color: Colors.lightGreen),
             Container(padding: EdgeInsets.only(left: 10.0),),
-            Text('Personal Information (ERP)'.tr(), style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.white)),
+            Text('Menu.Personal Information (ERP)'.tr(), style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.white)),
           ],
         ),
       ),
       body:
-      FutureBuilder(
+        FutureBuilder(
           future: getDBData('MPersonalInformationERP'),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
 
-            var company = 'Company'.tr();
-            var empno = 'Employee No.'.tr();
-            var name = 'Name'.tr();
-            var hanjaname = 'HanJa Name'.tr();
-            var engname = 'English Name'.tr();
-            var deptnm = 'Department'.tr();
+            var company = 'Company';
+            var empno = 'Employee No.';
+            var name = 'Name';
+            var hanjaname = 'HanJa Name';
+            var engname = 'English Name';
+            var deptnm = 'Department';
 
-            var rollpstnnm = 'Position'.tr();
-            var rolecdnm = 'Title'.tr();
-            var ocpttypenm = 'Occupation Type'.tr();
-            var funccdnm = 'Work Type'.tr();
-            var entrcdnm = 'Enter Type'.tr();
+            var rollpstnnm = 'Position';
+            var rolecdnm = 'Title';
+            var ocpttypenm = 'Occupation Type';
+            var funccdnm = 'Work Type';
+            var entrcdnm = 'Enter Type';
 
-            var groupentrdt = 'Group Enter Date'.tr();
-            var entrdt = 'EnterDate'.tr();
-            var memodt = 'Probationary Expiration Date'.tr();
-            var retiredt = 'Retire Date'.tr();
+            var groupentrdt = 'Group Enter Date';
+            var entrdt = 'EnterDate';
+            var memodt = 'Probationary Expiration Date';
+            var retiredt = 'Retire Date';
 
-            var sex = 'Sex'.tr();
-            var zipcd = 'Zip Code of Resident Registration Address'.tr();
-            var addr = 'Resident Registration Address'.tr();
-            var currzipcd = 'Current Zip Code'.tr();
-            var curraddr = 'Current Address'.tr();
-            var telno = 'Sex'.tr();
-            var emtelno = 'Sex'.tr();
-            var emailaddr = 'Email'.tr();
-            var handtelno = 'Mobile'.tr();
-
+            var sex = 'Sex';
+            var zipcd = 'Zip Code of Resident Registration Address';
+            var addr = 'Resident Registration Address';
+            var currzipcd = 'Current Zip Code';
+            var curraddr = 'Current Address';
+            var telno = 'Telephone';
+            var emtelno = 'Office Phone';
+            var emailaddr = 'Email';
+            var handtelno = 'Mobile Phone';
 
             if (snapshot.hasData == false) {
               return Center(

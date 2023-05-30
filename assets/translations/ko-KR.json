@@ -7,6 +7,21 @@
     "Question & Answer Authentication" : "질문 & 덥변 인증",
     "Select Reset Method !!!" : "초기화 방법 선택 !!!"
   },
+  "Index" : {
+    "Annual Leave" : "연차",
+    "Cooperation Progress Tray" : "협조진행함",
+    "Forenotice Tray" : "예고함",
+    "In Tray" : "미결함",
+    "Logout" : "로그아웃",
+    "My Working Time" : "내 작업시간",
+    "Over Time" : "잔업",
+    "Progress Tray" : "진행함",
+    "Received Tray" : "수신함",
+    "Recent Posts" : "최근게시",
+    "Reference & Circulation Tray" : "참조/회람함",
+    "Working Time" : "근무시간",
+    "Worklist" : "업무리스트"
+  },
   "Login" : {
     "Employee Number" : "사번",
     "Forgot Password?" : "비밀번호를 잊어 버리셨습니까?",
@@ -26,15 +41,16 @@
   "Message" : {
     "A/D Not Use" : "A/D 사용안함",
     "Alert" : "알림",
-    "Answer 1 Not Exists !!!" : "Answer 1 Not Exists !!!",
-    "Answer 2 Not Exists !!!" : "Answer 2 Not Exists !!!",
-    "Answer Error  : On Time" : "Answer Error  : First Time",
-    "Answer Error  : Second Times" : "Answer Error  : Second Times",
-    "Answer Error  : Third Times" : "Answer Error  : Third Times",
+    "Answer 1 Not Exists !!!" : "답변 1이 존재하지 않습니다 !!!",
+    "Answer 2 Not Exists !!!" : "답변 2가 존재하지 않습니다 !!!",
+    "Answer Error  : On Time" : "답변오류  : 1차",
+    "Answer Error  : Second Times" : "답변오류  : 2차",
+    "Answer Error  : Third Times" : "답변오류  : 3차",
     "Answer Not Exists !!!" : "답변이 존재하지 않습니다 !!!",
     "Check Employee Error" : "사원확인 오류",
     "Employee Number Or Name Not Exists !!!" : "사번이나 이름이 존재하지 않습니다!!!",
     "Error" : "오류",
+    "If you do not have permission, only your own information is retrieved" : "권한이 없는 경우 자신의 정보만 검색됩니다",
     "Locking" : "잠김",
     "Not Exists User Data!!!" : "사용자 정보가 존재하지 않습니다!!!",
     "Password invalid !!!" : "비밀번호가 규칙에 어긋납니다 !!!",
@@ -42,6 +58,8 @@
     "Password Not Exists !!!" : "비밀번호가 존재하지 않습니다. !!!",
     "Process Error!!! Please Check API Server!!!" : "프로세스 오류!!! API Server를 확인해 주세요!!!",
     "Reset Password Error" : "비밀번호 초기화 오류",
+    "Search results do not exist" : "검색된 내용이 존재하지 않습니다",
+    "Search Text Not Exists !!!" : "검색어가 존재하지 않습니다 !!!",
     "The authentication number does not match" : "인증번호가 바르지 않습니다",
     "The authentication time has expired" : "인증시간이 만료되었습니다",
     "Unauthorized Access" : "무단접근",
@@ -75,17 +93,41 @@
     "Email" :  "전자우편",
     "Mobile" :  "휴대전화"
   },
+  "Profile" : {
+    "Basic Information" : "기본정보",
+    "Change Additional Information" : "겸직변경",
+    "Change Language" : "언어변경",
+    "Dispatch & Additional Information" : "파견 및 겸직 정보",
+    "Log Out" : "로그아웃",
+    "Password Reset" : "비밀번호 초기화",
+    "Profile" : "프로파일",
+    "Restore Original Information" : "로그인데이터 원복",
+    "Utility" : "유틸리티",
+    "Vehicle Information" : "차량정보"
+  },
   "Reset Password" : {
-    "Answer 1" : "Answer 1",
-    "Answer 2" : "Answer 2",
+    "Answer 1" : "답변 1",
+    "Answer 2" : "답변 2",
     "New Password" : "신규 비밀번호",
     "Password" : "비밀번호",
-    "Password to change" : "Password to change",
+    "Password to change" : "변경 비밀번호",
     "Registration Number" : "주민등록번호",
     "Reset Password" : "비밀번호 초기화",
-    "Reset Password using Question" : "Reset Password using Question",
+    "Reset Password using Question" : "질문/답변 이용 초기화",
     "Reset Password using Regist Number" : "주민등록번호 이용 초기화",
     "Reset with Mobile" : "휴대폰 이용 초기화"
+  },
+  "Salary Information" : {
+    "Actual Salary" : "실지급액",
+    "Attendance Information" : "근태내역",
+    "Deduction Details" : "공제내약",
+    "Deduction Salary" : "공제금액",
+    "Payment Details" : "지급내역",
+    "Total Salary" : "급여합계"
+  },
+  "Search" : {
+    "Information" : "정보",
+    "Search" : "검색"
   },
   "Title" : "제목"
 }

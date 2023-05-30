@@ -41,8 +41,6 @@ class _MenuState extends State<Menu> {
           future: getDBData('MMenu'),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
 
-            var cnt = 5;
-
             List<Widget> postsList = [];
             Widget posts = new InkWell();
             String string = '';

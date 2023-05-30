@@ -7,6 +7,21 @@
     "Question & Answer Authentication" : "Question & Answer Authentication",
     "Select Reset Method !!!" : "Select Reset Method !!!"
   },
+  "Index" : {
+    "Annual Leave" : "Annual Leave",
+    "Cooperation Progress Tray" : "Cooperation. Tray",
+    "Forenotice Tray" : "Forenotice Tray",
+    "In Tray" : "In Tray",
+    "Logout" : "Logout",
+    "My Working Time" : "My Working Time",
+    "Over Time" : "Over Time",
+    "Progress Tray" : "Progress Tray",
+    "Received Tray" : "Received Tray",
+    "Recent Posts" : "Recent Posts",
+    "Reference & Circulation Tray" : "Reference. Tray",
+    "Working Time" : "Working Time",
+    "Worklist" : "Worklist"
+  },
   "Login" : {
     "Employee Number" : "Employee Number",
     "Forgot Password?" : "Have you forgotten your password?",
@@ -35,6 +50,7 @@
     "Check Employee Error" : "Check Employee Error",
     "Employee Number Or Name Not Exists !!!" : "Employee Number Or Name Not Exists !!!",
     "Error" : "Error",
+    "If you do not have permission, only your own information is retrieved" : "If you do not have permission, only your own information is retrieved",
     "Locking" : "Locking",
     "Not Exists User Data!!!" : "Not Exists User Data!!!",
     "Password invalid !!!" : "Password invalid !!!",
@@ -42,6 +58,8 @@
     "Password Not Exists !!!" : "Password Not Exists !!!",
     "Process Error!!! Please Check API Server!!!" : "Process Error!!! Please Check API Server!!!",
     "Reset Password Error" : "Reset Password Error",
+    "Search results do not exist" : "Search results do not exist",
+    "Search Text Not Exists !!!" : "Search Text Not Exists !!!",
     "The authentication number does not match" : "The authentication number does not match",
     "The authentication time has expired" : "The authentication time has expired",
     "Unauthorized Access" : "Unauthorized Access",
@@ -75,6 +93,18 @@
     "Email" :  "Email",
     "Mobile" :  "Mobile"
   },
+  "Profile" : {
+    "Basic Information" : "Basic Information",
+    "Change Additional Information" : "Change Additional Information",
+    "Change Language" : "Change Language",
+    "Dispatch & Additional Information" : "Dispatch & Additional Information",
+    "Log Out" : "Log Out",
+    "Password Reset" : "Password Reset",
+    "Profile" : "Profile",
+    "Restore Original Information" : "Restore Original Information",
+    "Utility" : "Utility",
+    "Vehicle Information" : "Vehicle Information"
+  },
   "Reset Password" : {
     "Answer 1" : "Answer 1",
     "Answer 2" : "Answer 2",
@@ -86,6 +116,18 @@
     "Reset Password using Question" : "Reset Password using Question",
     "Reset Password using Regist Number" : "Reset Password using Regist Number",
     "Reset with Mobile" : "Reset with Mobile"
+  },
+  "Salary Information" : {
+    "Actual Salary" : "Actual Salary",
+    "Attendance Information" : "Attendance Information",
+    "Deduction Details" : "Deduction Details",
+    "Deduction Salary" : "Deduction Salary",
+    "Payment Details" : "Payment Details",
+    "Total Salary" : "Total Salary"
+  },
+  "Search" : {
+    "Information" : "Information",
+    "Search" : "Search"
   },
   "Title" : "Title(EN)"
 }

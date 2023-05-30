@@ -165,7 +165,7 @@ class _CheckEmployeeState extends State<CheckEmployee> {
         var data = {'Company': '', 'EmpCode': empcodeController.text, 'Name' : nameController.text};
 
         return await http.post(Uri.parse(url), body: json.encode(data), headers: {"Content-Type": "application/json"}).timeout(const Duration(seconds: 15)).then<void>((http.Response response) {
-          if(response.statusCode != 200 || response.body == null || response.body == "{}" ){
+          if(response.statusCode != 200 || response.body == "{}" ){
             showMessageBox(context, "Message.Alert".tr(), "Message.Check Employee Error".tr() + " : " + response.body.toString());
           }
           if(response.statusCode == 200){
@@ -250,7 +250,7 @@ class _CheckEmployeeState extends State<CheckEmployee> {
         var data = {'EmpCode': empcodeController.text, 'Name' : nameController.text};
 
         return await http.post(Uri.parse(url), body: json.encode(data), headers: {"Content-Type": "application/json"}).timeout(const Duration(seconds: 15)).then<bool>((http.Response response) {
-          if(response.statusCode != 200 || response.body == null || response.body == "{}" ){ return false; }
+          if(response.statusCode != 200 || response.body == "{}" ){ return false; }
           if(response.statusCode == 200) {
             if (response.body.toString() == "하루 5회 전송 제한횟수를 초과했습니다.") {
               showMessageBox(context, "Message.Alert".tr(), response.body.toString());

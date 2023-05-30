@@ -198,10 +198,12 @@ class _ResetPasswordQuestionState extends State<ResetPasswordQuestion> {
   /// Reset Password Process
   Future<void> resetPassword(BuildContext context, TextEditingController answer1Controller, TextEditingController answer2Controller, TextEditingController passwordController) async {
 
+    /*
     FocusScopeNode currentFocus = FocusScope.of(context);
-    /*if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+    if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
       FocusManager.instance.primaryFocus.unfocus();
-    }*/
+    }
+    */
 
     if(answer1Controller.text.isEmpty) { showMessageBox(context, 'Message.Alert'.tr(), 'Message.Answer 1 Not Exists !!!'.tr()); }
     else if(answer2Controller.text.isEmpty) { showMessageBox(context, 'Message.Alert'.tr(), 'Message.Answer 2 Not Exists !!!'.tr()); }
@@ -217,7 +219,7 @@ class _ResetPasswordQuestionState extends State<ResetPasswordQuestion> {
         var data = {'Page': "ResetPassword", 'EmpCode': resetpass['empcode'].toString(), 'Name' : '', 'Password' : passwordController.text, 'Company' : resetpass['company'].toString(), 'Answer1' : answer1Controller.text, 'Answer2' : answer2Controller.text};
 
         return await http.post(Uri.parse(url), body: json.encode(data), headers: {"Content-Type": "application/json"}).timeout(const Duration(seconds: 15)).then<void>((http.Response response) {
-          if(response.statusCode != 200 || response.body == null || response.body == "{}" ){
+          if(response.statusCode != 200 || response.body == "{}" ){
             showMessageBox(context, "Message.Alert".tr(), "Message.Reset Password Error".tr() + " : " + response.body.toString());
           }
           if(response.statusCode == 200) {

@@ -167,7 +167,7 @@ class _ResetPasswordResNoState extends State<ResetPasswordResNo> {
         var data = {'Page' : "ResetPassword2", 'EmpCode': resetpass['empcode'].toString(), 'Name' : '', 'Password' : passwordController.text, 'Company' : '', 'Answer1' : resnoController.text, 'Answer2' : ''};
 
         return await http.post(Uri.parse(url), body: json.encode(data), headers: {"Content-Type": "application/json"}).timeout(const Duration(seconds: 15)).then<void>((http.Response response) {
-          if(response.statusCode != 200 || response.body == null || response.body == "{}" ){
+          if(response.statusCode != 200 || response.body == "{}" ){
             showMessageBox(context, "Message.Alert".tr(), "Message.Reset Password Error".tr() + " : " + response.body.toString());
           }
           if(response.statusCode == 200) {

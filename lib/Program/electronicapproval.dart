@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:jahwa_mobile/common/common.dart';
+import 'package:easy_localization/easy_localization.dart';
+
 import 'package:jahwa_mobile/common/variable.dart';
 
 class ElectronicApproval extends StatefulWidget {
@@ -28,7 +29,7 @@ class _ElectronicApprovalState extends State<ElectronicApproval> {
           children: <Widget>[
             Icon(Icons.approval, size: 20, color: Colors.lightGreen),
             Container(padding: EdgeInsets.only(left: 10.0),),
-            Text('Electronic Approval', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.white)),
+            Text('Menu.Electronic Approval'.tr(), style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.white)),
           ],
         ),
       ),

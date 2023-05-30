@@ -32,7 +32,7 @@ class _ProfileState extends State<Profile> {
           children: <Widget>[
             Icon(Icons.person, size: 20, color: Colors.lightGreen),
             Container(padding: EdgeInsets.only(left: 10.0),),
-            Text('Profile', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.white)),
+            Text('Profile.Profile'.tr(), style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.white)),
           ],
         ),
       ),
@@ -43,16 +43,16 @@ class _ProfileState extends State<Profile> {
           builder: (BuildContext context, AsyncSnapshot snapshot) {
 
             var photo = 'Common/Image/pics.gif';
-            var company = 'Company'.tr();
-            var department = 'Department'.tr();
-            var name = 'Name'.tr();
-            var position = 'Position'.tr();
+            var company = 'Company';
+            var department = 'Department';
+            var name = 'Name';
+            var position = 'Position';
 
-            var birthday = 'Birthday'.tr();
-            var mobilephone = 'Mobile Phone'.tr();
-            var officephone = 'Office Phone'.tr();
-            var enterdate = 'Enter Data'.tr();
-            var email = 'Email'.tr();
+            var birthday = 'Birthday';
+            var mobilephone = 'Mobile Phone';
+            var officephone = 'Office Phone';
+            var enterdate = 'Enter Data';
+            var email = 'Email';
 
             List<Widget> additionalList = [];
             Widget additional = new Container();
@@ -186,7 +186,7 @@ class _ProfileState extends State<Profile> {
                                         children: <Widget>[
                                           Icon(Icons.contact_emergency, size: 20, color: const Color(0xFF729ee2)),
                                           SizedBox(width: 10),
-                                          Text('Basic Information'.tr(), style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black54)),
+                                          Text('Profile.Basic Information'.tr(), style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black54)),
                                         ],
                                       ),
                                       Container(
@@ -360,7 +360,7 @@ class _ProfileState extends State<Profile> {
                                         children: <Widget>[
                                           Icon(Icons.people, size: 20, color: const Color(0xFF729ee2)),
                                           SizedBox(width: 10),
-                                          Text('Dispatch & Additional Information'.tr(), style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black54)),
+                                          Text('Profile.Dispatch & Additional Information'.tr(), style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black54)),
                                         ],
                                       ),
                                       Container(
@@ -397,7 +397,7 @@ class _ProfileState extends State<Profile> {
                                         children: <Widget>[
                                           Icon(Icons.garage, size: 20, color: const Color(0xFF729ee2)),
                                           SizedBox(width: 10),
-                                          Text('Vehicle Information'.tr(), style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black54)),
+                                          Text('Profile.Vehicle Information'.tr(), style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black54)),
                                         ],
                                       ),
                                       Container(
@@ -434,7 +434,7 @@ class _ProfileState extends State<Profile> {
                                         children: <Widget>[
                                           Icon(Icons.handyman, size: 20, color: const Color(0xFF729ee2)),
                                           SizedBox(width: 10),
-                                          Text('Utility'.tr(), style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black54)),
+                                          Text('Profile.Utility'.tr(), style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black54)),
                                         ],
                                       ),
                                       Container(
@@ -454,15 +454,16 @@ class _ProfileState extends State<Profile> {
                                                       children: <Widget>[
                                                         Icon(Icons.translate, size: 18, color: const Color(0xFF729ee2)),
                                                         SizedBox(width: 10),
-                                                    SizedBox(
-                                                      height: mSize + 15,
-                                                      child: TextButton(
-                                                          child: Text('Change Language'.tr(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey, fontSize: mSize,)),
-                                                          style: TextButton.styleFrom(padding: EdgeInsets.zero,),
-                                                          onPressed: () {
-                                                            showLanaguageBox(context);
-                                                          },
-                                                      ),),
+                                                        SizedBox(
+                                                          height: mSize + 15,
+                                                          child: TextButton(
+                                                              child: Text('Profile.Change Language'.tr(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey, fontSize: mSize,)),
+                                                              style: TextButton.styleFrom(padding: EdgeInsets.zero, alignment: Alignment.centerLeft),
+                                                              onPressed: () {
+                                                                showLanaguageBox(context);
+                                                              },
+                                                          ),
+                                                        ),
                                                       ],
                                                     ),
                                                   ),
@@ -475,8 +476,8 @@ class _ProfileState extends State<Profile> {
                                                         SizedBox(
                                                           height: mSize + 15,
                                                           child: TextButton(
-                                                            child: Text('Change Additional Information'.tr(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey, fontSize: mSize,)),
-                                                            style: TextButton.styleFrom(padding: EdgeInsets.zero,),
+                                                            child: Text('Profile.Change Additional Information'.tr(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey, fontSize: mSize,)),
+                                                            style: TextButton.styleFrom(padding: EdgeInsets.zero, alignment: Alignment.centerLeft),
                                                             onPressed: () async {
                                                               await showAdditionalBox(context);
                                                             },
@@ -494,8 +495,8 @@ class _ProfileState extends State<Profile> {
                                                         SizedBox(
                                                           height: mSize + 15,
                                                           child: TextButton(
-                                                            child: Text('Restore Original Information'.tr(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey, fontSize: mSize,)),
-                                                            style: TextButton.styleFrom(padding: EdgeInsets.zero,),
+                                                            child: Text('Profile.Restore Original Information'.tr(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey, fontSize: mSize,)),
+                                                            style: TextButton.styleFrom(padding: EdgeInsets.zero, alignment: Alignment.centerLeft),
                                                             onPressed: () async {
                                                               SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -516,8 +517,8 @@ class _ProfileState extends State<Profile> {
                                                         SizedBox(
                                                           height: mSize + 15,
                                                           child: TextButton(
-                                                            child: Text('Password Reset'.tr(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey, fontSize: mSize,)),
-                                                            style: TextButton.styleFrom(padding: EdgeInsets.zero,),
+                                                            child: Text('Profile.Password Reset'.tr(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey, fontSize: mSize,)),
+                                                            style: TextButton.styleFrom(padding: EdgeInsets.zero, alignment: Alignment.centerLeft),
                                                             onPressed: () {
                                                               Navigator.pushNamed(context, '/CheckEmployee');
                                                             },
@@ -535,8 +536,8 @@ class _ProfileState extends State<Profile> {
                                                         SizedBox(
                                                           height: mSize + 15,
                                                           child: TextButton(
-                                                            child: Text('Log Out'.tr(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey, fontSize: mSize,)),
-                                                            style: TextButton.styleFrom(padding: EdgeInsets.zero,),
+                                                            child: Text('Profile.Log Out'.tr(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey, fontSize: mSize,)),
+                                                            style: TextButton.styleFrom(padding: EdgeInsets.zero, alignment: Alignment.centerLeft),
                                                             onPressed: () async {
                                                               await removeUserSharedPreferences();
                                                               Navigator.pushReplacementNamed(context, '/');

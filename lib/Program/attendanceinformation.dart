@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:jahwa_mobile/common/common.dart';
+import 'package:easy_localization/easy_localization.dart';
+
 import 'package:jahwa_mobile/common/variable.dart';
 
 class AttendanceInformation extends StatefulWidget {
@@ -28,7 +29,7 @@ class _AttendanceInformationState extends State<AttendanceInformation> {
           children: <Widget>[
             Icon(Icons.calendar_month, size: 20, color: Colors.lightGreen),
             Container(padding: EdgeInsets.only(left: 10.0),),
-            Text('Attendance Information', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.white)),
+            Text('Menu.Attendance Information'.tr(), style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.white)),
           ],
         ),
       ),

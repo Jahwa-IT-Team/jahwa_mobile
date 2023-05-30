@@ -18,17 +18,19 @@ class Search extends StatefulWidget {
 
 class _SearchState extends State<Search> {
 
-  var photo = 'Common/Image/pics.gif';
-  var company = 'Company'.tr();
-  var department = 'Department'.tr();
-  var _name = 'Name'.tr();
-  var position = 'Position'.tr();
+  bool _isButtonDisabled = true;
 
-  var birthday = 'Birthday'.tr();
-  var mobilephone = 'Mobile Phone'.tr();
-  var officephone = 'Office Phone'.tr();
-  var enterdate = 'Enter Data'.tr();
-  var email = 'Email'.tr();
+  var photo = 'Common/Image/pics.gif';
+  var company = 'Company';
+  var department = 'Department';
+  var _name = 'Name';
+  var position = 'Position';
+
+  var birthday = 'Birthday';
+  var mobilephone = 'Mobile Phone';
+  var officephone = 'Office Phone';
+  var enterdate = 'Enter Data';
+  var email = 'Email';
 
   TextEditingController textController = new TextEditingController();
   FocusNode textFocusNode = FocusNode();
@@ -39,6 +41,9 @@ class _SearchState extends State<Search> {
   void initState() {
     super.initState();
     currentIndex = 2;
+
+    if(session['Email'].toString() == '') _isButtonDisabled = true;
+    else _isButtonDisabled = false;
 
     () async {
       await setWorkmate(context, session['EmpCode'].toString());
@@ -61,7 +66,7 @@ class _SearchState extends State<Search> {
           children: <Widget>[
             Icon(Icons.search, size: 20, color: Colors.lightGreen),
             Container(padding: EdgeInsets.only(left: 10.0),),
-            Text('Search', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.white)),
+            Text('Search.Search'.tr(), style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.white)),
           ],
         ),
       ),
@@ -87,7 +92,7 @@ class _SearchState extends State<Search> {
                                 children: <Widget>[
                                   Icon(Icons.contact_emergency, size: 20, color: const Color(0xFF729ee2)),
                                   SizedBox(width: 10),
-                                  Text('Information'.tr(), style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black54)),
+                                  Text('Search.Information'.tr(), style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black54)),
                                 ],
                               ),
                               Container(
@@ -308,7 +313,7 @@ class _SearchState extends State<Search> {
                                                     ],
                                                   ),
                                                   style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
-                                                  onPressed: () async {
+                                                  onPressed: _isButtonDisabled ? null : () async {
                                                     await findWorkmate(context, textController);
                                                   },
                                                 ),
@@ -339,67 +344,6 @@ class _SearchState extends State<Search> {
         ),
       ),
 
-      /*FutureBuilder(
-          future: getDBData('MPersonInformation'),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-
-            String string = '';
-
-            if (snapshot.hasData == false) {
-              return Center(
-                child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      CircularProgressIndicator(),
-                    ]
-                ),
-              );
-            }
-            else if (snapshot.hasError) {
-              return Center(
-                child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text('Error: ${snapshot.error}', style: TextStyle(fontSize: 15),)
-                    ]
-                ),
-              );
-            }
-            else {
-              if (snapshot.data != '') {
-                if (jsonDecode(snapshot.data)['Table2'].length != 0) {
-                  jsonDecode(snapshot.data)['Table2'].forEach((element) { photo = 'Photo/' + element['Photo'].toString(); });
-                }
-
-                if (jsonDecode(snapshot.data)['Table'].length != 0) {
-                  jsonDecode(snapshot.data)['Table'].forEach((element) {
-                    company = element['EntName'].toString();
-                    department = element['DeptName'].toString();
-                    _name = element['Name'].toString();
-                    position = element['Position'].toString();
-
-                    birthday = element['BirthDate'].toString();
-                    mobilephone = element['Mobile'].toString();
-                    officephone = element['OfficeTel'].toString();
-                    enterdate = element['EntrDate'].toString();
-                    email = element['Email'].toString();
-                  });
-                }
-                else { /// No Data
-                  ;
-                }
-              }
-              else { /// jsondata == ''
-                ;
-              }
-
-              return ;
-            }
-          }
-
-      ),*/
       floatingActionButton: Container(
         height: 45.0,
         width: 45.0,
@@ -419,7 +363,15 @@ class _SearchState extends State<Search> {
   /// Get DB Data
   Future<void> findWorkmate(BuildContext context, TextEditingController textController) async {
 
-    if(textController.text.isEmpty) { showMessageBox(context, 'Alert', 'Search Text Not Exists !!!'); }
+    if(session['Email'].toString() == '') {
+      showMessageBox(context, 'Message.Alert'.tr(), 'Message.If you do not have permission, only your own information is retrieved'.tr());
+      return;
+    }
+
+    if(textController.text.isEmpty) {
+      showMessageBox(context, 'Message.Alert'.tr(), 'Message.Search Text Not Exists !!!'.tr());
+      return;
+    }
 
     empList.clear();
 
@@ -432,14 +384,14 @@ class _SearchState extends State<Search> {
     );
 
     var url = 'https://jhapi.jahwa.co.kr/MFindWorkmate';
-    var data = {'Name': textController.text, 'EmpCode': session['EmpCode'].toString()};
+    var data = {'Name': textController.text, 'EmpCode': session['EmpCode'].toString(), 'Email': session['Email'].toString()};
 
     try {
 
       await http.post(Uri.parse(url), body: json.encode(data),
           headers: {"Content-Type": "application/json"}).timeout(
           const Duration(seconds: 15)).then<void>((http.Response response) {
-        if (response.statusCode != 200 || response.body == null || response.body == "{}") { pd.close(); }
+        if (response.statusCode != 200 || response.body == "{}") { pd.close(); }
         else if (response.statusCode == 200) {
           if (jsonDecode(response.body)['Table'].length != 0) {
             jsonDecode(response.body)['Table'].forEach((element) {
@@ -499,7 +451,7 @@ class _SearchState extends State<Search> {
       await http.post(Uri.parse(url), body: json.encode(data),
           headers: {"Content-Type": "application/json"}).timeout(
           const Duration(seconds: 15)).then<void>((http.Response response) {
-        if (response.statusCode != 200 || response.body == null || response.body == "{}") {
+        if (response.statusCode != 200 || response.body == "{}") {
           ;
         }
         else if (response.statusCode == 200) {

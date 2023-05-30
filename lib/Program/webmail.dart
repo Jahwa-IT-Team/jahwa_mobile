@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:jahwa_mobile/common/common.dart';
+import 'package:easy_localization/easy_localization.dart';
+
 import 'package:jahwa_mobile/common/variable.dart';
 
 class WebMail extends StatefulWidget {
@@ -28,7 +29,7 @@ class _WebMailState extends State<WebMail> {
           children: <Widget>[
             Icon(Icons.mail, size: 20, color: Colors.lightGreen),
             Container(padding: EdgeInsets.only(left: 10.0),),
-            Text('Web Mail', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.white)),
+            Text('Menu.Web Mail'.tr(), style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.white)),
           ],
         ),
       ),

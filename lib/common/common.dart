@@ -295,7 +295,7 @@ showSelectMessageBox(BuildContext context, String message, String buttonname, St
 
 /// Password Validation Check
 bool isPasswordCompliant(String password, [int minLength = 6, int maxLength = 21]) {
-  if (password == null || password.isEmpty) { return false; } /// Password Null Check
+  if (password.isEmpty) { return false; } /// Password Null Check
 
   bool hasUppercase = password.contains(new RegExp(r'[A-Z]')); /// Upper Case Character Check
   bool hasLowercase = password.contains(new RegExp(r'[a-z]')); /// Lower Case Character Check
@@ -371,7 +371,7 @@ Future<void> showAdditionalBox(BuildContext context) async {
   var data = {'EmpCode' : session['EmpCode']};
 
   await http.post(Uri.parse(url), body: json.encode(data), headers: {"Content-Type": "application/json"}).timeout(const Duration(seconds: 15)).then<void>((http.Response response) {
-    if(response.statusCode != 200 || response.body == null || response.body == "{}" ){ ; }
+    if(response.statusCode != 200 || response.body == "{}" ){ ; }
     if(response.statusCode == 200){
       if(jsonDecode(response.body)['Table'].length != 0) {
         jsonDecode(response.body)['Table'].forEach((element) {
@@ -443,7 +443,7 @@ Future<void> setUser(BuildContext context, String entcode, String deptcode, Stri
     var data = {'EntCode': entcode, 'DeptCode': deptcode, 'EmpCode': empcode, 'OrgEmpCode': orgempcode, 'Token': token}; /// Send Parameter
 
     await http.post(Uri.parse(url), body: json.encode(data), headers: {"Content-Type": "application/json"}).timeout(const Duration(seconds: 15)).then<void>((http.Response response) {
-      if(response.statusCode != 200 || response.body == null || response.body == "{}" ) {
+      if(response.statusCode != 200 || response.body == "{}" ) {
         pd.close();
       }
       if(response.statusCode == 200){
@@ -578,11 +578,12 @@ Future<String> getDBData(String div) async {
     else if(div == 'MPortalQuery') data = {'EntCode': session['EntCode'].toString(), 'DeptCode': session['DeptCode'].toString(), 'EmpCode': session['EmpCode'].toString(), 'Language': session['Languange'].toString()};
     else if(div == 'MMenu') data = {'EntCode': session['EntCode'].toString(), 'Auth': session['Auth'].toString(), 'EmpCode': session['EmpCode'].toString()};
     else if(div == 'MPersonalInformationERP') data = {'EntCode': session['EntCode'].toString(), 'EmpCode': session['EmpCode'].toString()};
+    else if(div == 'MSalaryInformation') data = {'PayYYMM': '202304', 'ProvType': '1', 'EntCode': session['EntCode'].toString(), 'EmpCode': session['EmpCode'].toString()};
 
     await http.post(Uri.parse(url), body: json.encode(data),
         headers: {"Content-Type": "application/json"}).timeout(
         const Duration(seconds: 15)).then<void>((http.Response response) {
-      if (response.statusCode != 200 || response.body == null || response.body == "{}") {;}
+      if (response.statusCode != 200 || response.body == "{}") {;}
       else if (response.statusCode == 200) {
         jsondata = response.body.toString();
       }
@@ -602,7 +603,6 @@ Future<void> viewBBSData(BuildContext context, String div, String num) async {
   var name = '';
   var insdate = '';
 
-  var rauth = 'N';
   var type = 'Basic';
 
   var url = 'https://jhapi.jahwa.co.kr/MBBSView';
@@ -612,7 +612,7 @@ Future<void> viewBBSData(BuildContext context, String div, String num) async {
     await http.post(Uri.parse(url), body: json.encode(data),
         headers: {"Content-Type": "application/json"}).timeout(
         const Duration(seconds: 15)).then<void>((http.Response response) {
-      if (response.statusCode != 200 || response.body == null || response.body == "{}") { ; }
+      if (response.statusCode != 200 || response.body == "{}") { ; }
       else if (response.statusCode == 200) {
         if (jsonDecode(response.body)['Table'].length != 0) {
           jsonDecode(response.body)['Table'].forEach((element) {
@@ -626,7 +626,6 @@ Future<void> viewBBSData(BuildContext context, String div, String num) async {
         if(div != 'Special') {
           if (jsonDecode(response.body)['Table4'].length != 0) {
             jsonDecode(response.body)['Table4'].forEach((element) {
-              rauth = element['RAuth'].toString();
               type = element['Type'].toString();
             });
           }

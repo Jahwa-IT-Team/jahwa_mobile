@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -61,7 +62,7 @@ class _ResetPasswordState extends State<ResetPassword> {
             children: <Widget> [
               Icon(Icons.how_to_reg, size: 20, color: Colors.lightGreen),
               Container(padding: EdgeInsets.only(left: 10.0),),
-              Text('Reset Password', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.white)),
+              Text('Reset Password.Reset Password'.tr(), style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.white)),
             ],
           ),
         ),
@@ -76,7 +77,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                   width: screenWidth,
                   height: (screenHeight - statusBarHeight) * 0.15,
                   alignment: Alignment.center,
-                  child: Text('Reset Password', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30, color: Colors.black,)),
+                  child: Text('Reset Password.Reset Password'.tr(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30, color: Colors.black,)),
                 ),
                 Container( /// Input Area
                   width: screenWidth,
@@ -103,7 +104,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                                 width: 1.0,
                               ),
                             ),
-                            labelText: 'Employee Number',
+                            labelText: 'Check Employee.Employee Number'.tr(),
                             contentPadding: EdgeInsets.all(10),
                           ),
                           textInputAction: TextInputAction.next,
@@ -125,7 +126,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                                 width: 1.0,
                               ),
                             ),
-                            labelText: 'Name',
+                            labelText: 'Check Employee.Name'.tr(),
                             contentPadding: EdgeInsets.all(10),
                           ),
                           textInputAction: TextInputAction.next,
@@ -137,7 +138,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                             children: [
                               Icon(Icons.how_to_reg, size: 20),
                               SizedBox(height: 45, width: 20),
-                              Text('Check Employee', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white,)),
+                              Text('Check Employee.Check Employee'.tr(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white,)),
                             ],
                           ),
                           style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
@@ -163,7 +164,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                                 width: 1.0,
                               ),
                             ),
-                            labelText: 'New Password',
+                            labelText: 'Reset Password.New Password'.tr(),
                             contentPadding: EdgeInsets.all(10),
                           ),
                           textInputAction: TextInputAction.done,
@@ -175,7 +176,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                             children: [
                               Icon(Icons.drive_file_rename_outline, size: 20),
                               SizedBox(height: 45, width: 20),
-                              Text('Reset Password', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white,)),
+                              Text('Reset Password.Reset Password'.tr(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white,)),
                             ],
                           ),
                           style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
@@ -199,7 +200,7 @@ class _ResetPasswordState extends State<ResetPassword> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     if(empcodeController.text.isEmpty && nameController.text.isEmpty) {
-      showMessageBox(context, 'Alert', 'Employee Number and Name Not Exists !!!');
+      showMessageBox(context, 'Message.Alert'.tr(), 'Message.Employee Number and Name Not Exists !!!'.tr());
     } /// Employee Number and Name Empty Check
     else {
       try {
@@ -208,11 +209,11 @@ class _ResetPasswordState extends State<ResetPassword> {
         var url = 'https://jhapi.jahwa.co.kr/MFindEmployee';
 
         // Send Parameter
-        var data = {'EmpCode': empcodeController.text, 'Name' : nameController.text, 'EmpCode': empcodeController.text, 'Token': prefs.getString('Token').toString()};
+        var data = {'EmpCode': empcodeController.text, 'Name' : nameController.text, 'EmpCode2': empcodeController.text, 'Token': prefs.getString('Token').toString()};
 
         return await http.post(Uri.parse(url), body: json.encode(data), headers: {"Content-Type": "application/json"}).timeout(const Duration(seconds: 15)).then<void>((http.Response response) {
-          if(response.statusCode != 200 || response.body == null || response.body == "{}" ){
-            showMessageBox(context, "Alert", "Check Employee Error : " + response.body.toString());
+          if(response.statusCode != 200 || response.body == "{}" ){
+            showMessageBox(context, "Message.Alert".tr(), "Message.Check Employee Error".tr() + " : " + response.body.toString());
           }
           if(response.statusCode == 200){
             if(jsonDecode(response.body)['Table'].length != 0) {
@@ -221,12 +222,12 @@ class _ResetPasswordState extends State<ResetPassword> {
             }
             else {
               _isButtonDisabled = true;
-              showMessageBox(context, "Alert", "Search results do not exist.");
+              showMessageBox(context, "Message.Alert".tr(), "Message.Search results do not exist".tr());
             }
           }
           else{
             _isButtonDisabled = true;
-            showMessageBox(context, "Alert", "Process Error!!! Please Check API Server!!!");
+            showMessageBox(context, "Message.Alert".tr(), "Message.Process Error!!! Please Check API Server!!!".tr());
           }
         });
       }
@@ -241,7 +242,7 @@ class _ResetPasswordState extends State<ResetPassword> {
   Future<void> resetPassword(BuildContext context, TextEditingController empcodeController, TextEditingController nameController, TextEditingController passwordController) async {
 
     if(empcodeController.text.isEmpty || nameController.text.isEmpty) {
-      showMessageBox(context, 'Alert', 'Employee Number or Name Not Exists !!!');
+      showMessageBox(context, 'Message.Alert'.tr(), 'Message.Employee Number or Name Not Exists !!!'.tr());
     } /// Employee Number and Name Empty Check
     else {
       try {
@@ -253,8 +254,8 @@ class _ResetPasswordState extends State<ResetPassword> {
         var data = {'Page' : "AdminPage", 'EmpCode': empcodeController.text, 'Name' : nameController.text, 'Password' : passwordController.text, 'Company' : '', 'Answer1' : '', 'Answer2' : ''};
 
         return await http.post(Uri.parse(url), body: json.encode(data), headers: {"Content-Type": "application/json"}).timeout(const Duration(seconds: 15)).then<void>((http.Response response) {
-          if(response.statusCode != 200 || response.body == null || response.body == "{}" ){
-            showMessageBox(context, "Alert", "Reset Password Error : " + response.body.toString());
+          if(response.statusCode != 200 || response.body == "{}" ){
+            showMessageBox(context, "Message.Alert".tr(), "Message.Reset Password Error".tr() + " : " + response.body.toString());
           }
           if(response.statusCode == 200) {
             showMessageBox(context, "", response.body.toString());
@@ -263,7 +264,7 @@ class _ResetPasswordState extends State<ResetPassword> {
             });
           }
           else{
-            showMessageBox(context, "Alert", "Process Error!!! Please Check API Server!!!");
+            showMessageBox(context, "Message.Alert".tr(), "Message.Process Error!!! Please Check API Server!!!".tr());
           }
         });
       }

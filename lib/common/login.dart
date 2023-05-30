@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:local_auth/local_auth.dart';
@@ -25,11 +24,11 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
 
   final LocalAuthentication auth = LocalAuthentication();
-  _SupportState _supportState = _SupportState.unknown;
-  bool? _canCheckBiometrics;
-  List<BiometricType>? _availableBiometrics;
-  String _authorized = 'Not Authorized';
-  bool _isAuthenticating = false;
+  ///_SupportState _supportState = _SupportState.unknown;
+  ///bool? _canCheckBiometrics;
+  ///List<BiometricType>? _availableBiometrics;
+  ///String _authorized = 'Not Authorized';
+  ///bool _isAuthenticating = false;
 
   TextEditingController empcodeController = new TextEditingController(); /// Employee Number Data Controller
   TextEditingController passwordController = new TextEditingController(); /// Password Data Controller
@@ -42,13 +41,16 @@ class _LoginState extends State<Login> {
     print("open Login Page : " + DateTime.now().toString());
     setEmpCodeController(empcodeController); /// 세션을 이용한 사번 자동 세팅
 
+    /*
     auth.isDeviceSupported().then(
           (bool isSupported) => setState(() => _supportState = isSupported
           ? _SupportState.supported
           : _SupportState.unsupported),
     );
+     */
   }
 
+  /*
   Future<void> _checkBiometrics() async {
     late bool canCheckBiometrics;
     try {
@@ -156,18 +158,11 @@ class _LoginState extends State<Login> {
     await auth.stopAuthentication();
     setState(() => _isAuthenticating = false);
   }
+   */
 
   @override
   Widget build(BuildContext context) {
-/*
-    ProgressDialog pd = ProgressDialog(context: context);
-    pd.show(
-      barrierDismissible: true,
-      progressBgColor: Colors.transparent,
-      msg: "Check Upgrade...",
-      hideValue: true,
-    );
-*/
+
     screenWidth = MediaQuery.of(context).size.width; /// Screen Width
     screenHeight = MediaQuery.of(context).size.height; /// Screen Height
     statusBarHeight = MediaQuery.of(context).padding.top; /// Status Bar Height
@@ -374,7 +369,7 @@ class _LoginState extends State<Login> {
 
     if(empcodeController.text.isEmpty) { showMessageBox(context, 'Alert', 'Employee Number Not Exists !!!'); } /// Employee Number Empty Check
     else if(passwordController.text.isEmpty) { showMessageBox(context, 'Alert', 'Password Not Exists !!!'); } /// Password Empty Check
-    else if(!isPasswordCompliant(passwordController.text)) { showMessageBox(context, 'Alert', 'Password invalid !!!'); } /// Password Validation Check
+    ///else if(!isPasswordCompliant(passwordController.text)) { showMessageBox(context, 'Alert', 'Password invalid !!!'); } /// Password Validation Check
     else {
       if(await signIn(empcodeController.text, passwordController.text)) {
         empcodeController.clear(); /// Employee Number Clear
@@ -413,7 +408,7 @@ class _LoginState extends State<Login> {
       var data = {'id': empcode, 'password' : password}; /// Send Parameter
 
       return await http.post(Uri.parse(url), body: json.encode(data), headers: {"Content-Type": "application/json"}).timeout(const Duration(seconds: 15)).then<bool>((http.Response response) {
-        if(response.statusCode != 200 || response.body == null || response.body == "{}" ) {
+        if(response.statusCode != 200 || response.body == "{}" ) {
           pd.close();
           return false;
         }
@@ -432,7 +427,6 @@ class _LoginState extends State<Login> {
         }
       });
 
-      return false;
     } catch (e) {
       print("signIn Error : " + e.toString());
 
@@ -443,9 +437,10 @@ class _LoginState extends State<Login> {
     }
   }
 }
-
+/*
 enum _SupportState {
   unknown,
   supported,
   unsupported,
 }
+*/

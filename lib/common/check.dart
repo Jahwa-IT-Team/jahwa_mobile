@@ -8,7 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sn_progress_dialog/sn_progress_dialog.dart';
-import 'package:update_checker/update_checker.dart';
+///import 'package:update_checker/update_checker.dart';
 
 import 'package:jahwa_mobile/common/common.dart';
 import 'package:jahwa_mobile/common/variable.dart';
@@ -67,9 +67,9 @@ class _CheckState extends State<Check> {
     );
 
     /// 0. Update Check
+    /*
     var checker = UpdateChecker();
 
-    /*
     if (Platform.isIOS) {
       checker.checkForUpdates("YOUR_APP_STORE_URL").then((value) => {
         // if value is true you can show a dialog to redirect user to app store to perform update
@@ -115,7 +115,7 @@ class _CheckState extends State<Check> {
       session['Level'] = prefs.getString('Level') ?? '';
       session['Email'] = prefs.getString('Email') ?? '';
       session['Photo'] = prefs.getString('Photo') ?? '';
-      session['Auth'] = prefs.getInt('Auth').toString() ?? '0';
+      session['Auth'] = (prefs.getInt('Auth') ?? 0).toString();
       session['EntGroup'] = prefs.getString('EntGroup') ?? '';
       session['OfficeTel'] = prefs.getString('OfficeTel') ?? '';
       session['Mobile'] = prefs.getString('Mobile') ?? '';
@@ -150,7 +150,7 @@ class _CheckState extends State<Check> {
         var data = {'EmpCode': EmpCode, 'Token' : Token};
 
         return await http.post(Uri.parse(url), body: json.encode(data), headers: {"Content-Type": "application/json"}).timeout(const Duration(seconds: 15)).then<bool>((http.Response response) {
-          if(response.statusCode != 200 || response.body == null || response.body == "{}" || response.body == "{\"Table\":[]}" ) { return true; }
+          if(response.statusCode != 200 || response.body == "{}" || response.body == "{\"Table\":[]}" ) { return true; }
           if(response.statusCode == 200){
             Map<dynamic, dynamic> table = jsonDecode(response.body);
             Map userMap = table['Table'][0];
@@ -164,7 +164,6 @@ class _CheckState extends State<Check> {
         print("signIn Error : " + e.toString());
         return true;
       }
-      return false;
     }
   }
 }

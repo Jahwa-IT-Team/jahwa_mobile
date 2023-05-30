@@ -15,11 +15,15 @@ class Index extends StatefulWidget {
 class _IndexState extends State<Index> {
 
   var empcode = '';
+  bool _isButtonDisabled = true;
 
   void initState() {
     // TODO: implement initState
     super.initState();
     currentIndex = 0;
+
+    if(session['Auth'].toString() == '0') _isButtonDisabled = true;
+    else _isButtonDisabled = false;
   }
 
   @override
@@ -37,7 +41,7 @@ class _IndexState extends State<Index> {
                 iconSize: bSize,
                 color: Colors.lightGreen,
                 icon: const Icon(Icons.home, size: 20),
-                tooltip: 'Index.Logout',
+                tooltip: 'Index.Logout'.tr(),
                 onPressed:  () async {
                   await removeUserSharedPreferences();
                   Navigator.pushReplacementNamed(context, '/');
@@ -146,13 +150,22 @@ class _IndexState extends State<Index> {
 
                   if (jsonDecode(snapshot.data)['Table2'].length != 0) {
                     jsonDecode(snapshot.data)['Table2'].forEach((element) {
-                      preapproval = element['PreApproval'].toString();
-                      unapproved = element['UnApproved'].toString();
-                      ongoing = element['OnGoing'].toString();
-                      deptreceived = element['DeptReceived'].toString();
-                      circulation = element['Circulation'].toString();
-                      cooperation = element['Cooperation'].toString();
-                      ;
+                      if(session['Auth'].toString() == "0") {
+                        preapproval = '0';
+                        unapproved = '0';
+                        ongoing = '0';
+                        deptreceived = '0';
+                        circulation = '0';
+                        cooperation = '0';
+                      }
+                      else {
+                        preapproval = element['PreApproval'].toString();
+                        unapproved = element['UnApproved'].toString();
+                        ongoing = element['OnGoing'].toString();
+                        deptreceived = element['DeptReceived'].toString();
+                        circulation = element['Circulation'].toString();
+                        cooperation = element['Cooperation'].toString();
+                      }
                     });
                   }
                   else { /// No Data
@@ -193,7 +206,7 @@ class _IndexState extends State<Index> {
                                                     children: <Widget>[
                                                       Icon(Icons.list, size: 20, color: const Color(0xFF729ee2)),
                                                       SizedBox(width: 10),
-                                                      Text('Recent Posts'.tr(), style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black54)),
+                                                      Text('Index.Recent Posts'.tr(), style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black54)),
                                                     ],
                                                   ),
                                                   Container(
@@ -230,7 +243,7 @@ class _IndexState extends State<Index> {
                                                     children: <Widget> [
                                                       Icon(Icons.work_history, size: 20, color: const Color(0xFF729ee2)),
                                                       SizedBox(width: 10),
-                                                      Text('My Working Time', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black54)),
+                                                      Text('Index.My Working Time'.tr(), style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black54)),
                                                     ],
                                                   ),
                                                   Container(
@@ -244,7 +257,7 @@ class _IndexState extends State<Index> {
                                                             child: Column(
                                                               crossAxisAlignment: CrossAxisAlignment.center,
                                                               children: <Widget>[
-                                                                Text('Working Time', softWrap: false, overflow: TextOverflow.ellipsis),
+                                                                Text('Index.Working Time'.tr(), softWrap: false, overflow: TextOverflow.ellipsis),
                                                                 SizedBox(height: 10),
                                                                 Container(
                                                                   alignment: Alignment.center,
@@ -264,7 +277,7 @@ class _IndexState extends State<Index> {
                                                             child: Column(
                                                               crossAxisAlignment: CrossAxisAlignment.center,
                                                               children: <Widget>[
-                                                                Text('Over Time', softWrap: false, overflow: TextOverflow.ellipsis),
+                                                                Text('Index.Over Time'.tr(), softWrap: false, overflow: TextOverflow.ellipsis),
                                                                 SizedBox(height: 10),
                                                                 Container(
                                                                   alignment: Alignment.center,
@@ -285,7 +298,7 @@ class _IndexState extends State<Index> {
                                                             child: Column(
                                                               crossAxisAlignment: CrossAxisAlignment.center,
                                                               children: <Widget>[
-                                                                Text('Annual Leave', softWrap: false, overflow: TextOverflow.ellipsis),
+                                                                Text('Index.Annual Leave'.tr(), softWrap: false, overflow: TextOverflow.ellipsis),
                                                                 SizedBox(height: 10),
                                                                 Container(
                                                                   alignment: Alignment.center,
@@ -328,7 +341,7 @@ class _IndexState extends State<Index> {
                                                     children: <Widget> [
                                                       Icon(Icons.list_alt, size: 20, color: const Color(0xFF729ee2)),
                                                       SizedBox(width: 10),
-                                                      Text('Worklist', style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black54)),
+                                                      Text('Index.Worklist'.tr(), style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.black54)),
                                                     ],
                                                   ),
                                                   Container(
@@ -340,73 +353,73 @@ class _IndexState extends State<Index> {
                                                       horizontalSpace: 15,
                                                       children: [
                                                         InkWell(
-                                                          onTap: () { print("Click event on : Forenotice Tray"); }, // Handle your callback
+                                                          onTap: _isButtonDisabled ? null : () { print("Click event on : Forenotice Tray"); }, // Handle your callback
                                                           child: Container(
                                                             child: Row(
                                                               children: <Widget> [
                                                                 Icon(Icons.circle, size: 8, color: Colors.black54),
                                                                 SizedBox(width: 5),
-                                                                Flexible(child: Text('Forenotice Tray : ' + preapproval, softWrap: false, overflow: TextOverflow.ellipsis)),
+                                                                Flexible(child: Text('Index.Forenotice Tray'.tr() + ' : ' + preapproval, softWrap: false, overflow: TextOverflow.ellipsis)),
                                                               ],
                                                             ),
                                                           ),
                                                         ),
                                                         InkWell(
-                                                          onTap: () { print("Click event on : In Tray"); }, // Handle your callback
+                                                          onTap: _isButtonDisabled ? null : () { print("Click event on : In Tray"); }, // Handle your callback
                                                           child: Container(
                                                             child: Row(
                                                               children: <Widget> [
                                                                 Icon(Icons.circle, size: 8, color: Colors.deepOrange),
                                                                 SizedBox(width: 5),
-                                                                Flexible(child: Text('In Tray : ' + unapproved, softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: mSize, fontWeight: FontWeight.bold, color: Colors.deepOrange))),
+                                                                Flexible(child: Text('Index.In Tray'.tr() + ' : ' + unapproved, softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: mSize, fontWeight: FontWeight.bold, color: Colors.deepOrange))),
                                                               ],
                                                             ),
                                                           ),
                                                         ),
                                                         InkWell(
-                                                          onTap: () { print("Click event on : Progress Tray"); }, // Handle your callback
+                                                          onTap: _isButtonDisabled ? null : () { print("Click event on : Progress Tray"); }, // Handle your callback
                                                           child: Container(
                                                             child: Row(
                                                               children: <Widget> [
                                                                 Icon(Icons.circle, size: 8, color: Colors.black54),
                                                                 SizedBox(width: 5),
-                                                                Flexible(child: Text('Progress Tray : ' + ongoing, softWrap: false, overflow: TextOverflow.ellipsis)),
+                                                                Flexible(child: Text('Index.Progress Tray'.tr() + ' : ' + ongoing, softWrap: false, overflow: TextOverflow.ellipsis)),
                                                               ],
                                                             ),
                                                           ),
                                                         ),
                                                         InkWell(
-                                                          onTap: () { print("Click event on : Received Tray"); }, // Handle your callback
+                                                          onTap: _isButtonDisabled ? null : () { print("Click event on : Received Tray"); }, // Handle your callback
                                                           child: Container(
                                                             child: Row(
                                                               children: <Widget> [
                                                                 Icon(Icons.circle, size: 8, color: Colors.black54),
                                                                 SizedBox(width: 5),
-                                                                Flexible(child: Text('Received Tray : ' + deptreceived, softWrap: false, overflow: TextOverflow.ellipsis)),
+                                                                Flexible(child: Text('Index.Received Tray'.tr() + ' : ' + deptreceived, softWrap: false, overflow: TextOverflow.ellipsis)),
                                                               ],
                                                             ),
                                                           ),
                                                         ),
                                                         InkWell(
-                                                          onTap: () { print("Click event on : Reference & Circulation Tray"); }, // Handle your callback
+                                                          onTap: _isButtonDisabled ? null : () { print("Click event on : Reference & Circulation Tray"); }, // Handle your callback
                                                           child: Container(
                                                             child: Row(
                                                               children: <Widget> [
                                                                 Icon(Icons.circle, size: 8, color: Colors.black54),
                                                                 SizedBox(width: 5),
-                                                                Flexible(child: Text('Reference. Tray : ' + circulation, softWrap: false, overflow: TextOverflow.ellipsis)),
+                                                                Flexible(child: Text('Index.Reference & Circulation Tray'.tr() + ' : ' + circulation, softWrap: false, overflow: TextOverflow.ellipsis)),
                                                               ],
                                                             ),
                                                           ),
                                                         ),
                                                         InkWell(
-                                                          onTap: () { print("Click event on : Cooperation Progress Tray"); }, // Handle your callback
+                                                          onTap: _isButtonDisabled ? null : () { print("Click event on : Cooperation Progress Tray"); }, // Handle your callback
                                                           child: Container(
                                                             child: Row(
                                                               children: <Widget> [
                                                                 Icon(Icons.circle, size: 8, color: Colors.black54),
                                                                 SizedBox(width: 5),
-                                                                Flexible(child: Text('Cooperation. Tray : ' + cooperation, softWrap: false, overflow: TextOverflow.ellipsis)),
+                                                                Flexible(child: Text('Index.Cooperation Progress Tray'.tr() + ' : ' + cooperation, softWrap: false, overflow: TextOverflow.ellipsis)),
                                                               ],
                                                             ),
                                                           ),
