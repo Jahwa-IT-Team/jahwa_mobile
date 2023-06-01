@@ -408,7 +408,7 @@ Future<void> showAdditionalBox(BuildContext context) async {
 
   /// set up the AlertDialog
   AlertDialog alert = AlertDialog(
-    title: Text('Select Additional Information'.tr()),
+    title: Text('Common.Select Additional Information'.tr()),
     titlePadding: const EdgeInsets.only(top:50, left: 50, bottom: 30,),
     titleTextStyle: TextStyle(fontFamily: "Malgun", color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20,),
     ///contentTextStyle: TextStyle(fontFamily: "Malgun", color: Colors.black,),
@@ -552,7 +552,7 @@ void showDialogWithFields(BuildContext context) {
                     color: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(20))
                 ),
-                child: Text('Change Additional Information'.tr(),
+                child: Text('Common.Change Additional Information'.tr(),
                   style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 12,),
                   textAlign: TextAlign.center,
                 ),
@@ -579,6 +579,7 @@ Future<String> getDBData(String div) async {
     else if(div == 'MMenu') data = {'EntCode': session['EntCode'].toString(), 'Auth': session['Auth'].toString(), 'EmpCode': session['EmpCode'].toString()};
     else if(div == 'MPersonalInformationERP') data = {'EntCode': session['EntCode'].toString(), 'EmpCode': session['EmpCode'].toString()};
     else if(div == 'MSalaryInformation') data = {'PayYYMM': '202304', 'ProvType': '1', 'EntCode': session['EntCode'].toString(), 'EmpCode': session['EmpCode'].toString()};
+    else if(div == 'MSelectList') data = {'Div': 'PAY_YYMM', 'Data': '', 'EntCode': session['EntCode'].toString(), 'EmpCode': session['EmpCode'].toString()};
 
     await http.post(Uri.parse(url), body: json.encode(data),
         headers: {"Content-Type": "application/json"}).timeout(

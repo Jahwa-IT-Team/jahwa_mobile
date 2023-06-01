@@ -7,6 +7,10 @@
     "Question & Answer Authentication" : "Question & Answer Authentication",
     "Select Reset Method !!!" : "Select Reset Method !!!"
   },
+  "Common" : {
+    "Change Additional Information" : "Change Additional Information",
+    "Select Additional Information" : "Select Additional Information"
+  },
   "Index" : {
     "Annual Leave" : "Annual Leave",
     "Cooperation Progress Tray" : "Cooperation. Tray",
@@ -122,8 +126,10 @@
     "Attendance Information" : "Attendance Information",
     "Deduction Details" : "Deduction Details",
     "Deduction Salary" : "Deduction Salary",
+    "Pay Type" : "Pay Type",
     "Payment Details" : "Payment Details",
-    "Total Salary" : "Total Salary"
+    "Total Salary" : "Total Salary",
+    "YYYYMM" : "YYYYMM"
   },
   "Search" : {
     "Information" : "Information",

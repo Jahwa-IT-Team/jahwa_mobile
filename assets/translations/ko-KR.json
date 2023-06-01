@@ -7,6 +7,10 @@
     "Question & Answer Authentication" : "질문 & 덥변 인증",
     "Select Reset Method !!!" : "초기화 방법 선택 !!!"
   },
+  "Common" : {
+    "Change Additional Information" : "겸직변경",
+    "Select Additional Information" : "겸직선택"
+  },
   "Index" : {
     "Annual Leave" : "연차",
     "Cooperation Progress Tray" : "협조진행함",
@@ -122,8 +126,10 @@
     "Attendance Information" : "근태내역",
     "Deduction Details" : "공제내약",
     "Deduction Salary" : "공제금액",
+    "Pay Type" : "급여구분",
     "Payment Details" : "지급내역",
-    "Total Salary" : "급여합계"
+    "Total Salary" : "급여합계",
+    "YYYYMM" : "지급년월"
   },
   "Search" : {
     "Information" : "정보",

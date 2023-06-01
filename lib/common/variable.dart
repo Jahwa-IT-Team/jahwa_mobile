@@ -74,3 +74,9 @@ class User {
 /// 비밀번호 초기화용 변수
 var resetpass = { "company" : "", "empcode" : "", "name" : "", "question1" : "", "question2" : "" };
 var messagenum = "";
+
+/// 급여정보용 변수
+const List<String> yyyymmList = <String>['202301'];
+const List<String> yyyymmTextList = <String>['202301'];
+const List<String> paytypeList = <String>['1'];
+const List<String> paytypeTextList = <String>['Pay'];
