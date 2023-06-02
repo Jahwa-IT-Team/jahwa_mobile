@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:http/http.dart' as http;
+import 'package:sn_progress_dialog/sn_progress_dialog.dart';
 
 import 'package:jahwa_mobile/common/common.dart';
 import 'package:jahwa_mobile/common/variable.dart';
@@ -15,7 +16,11 @@ class SalaryInformation extends StatefulWidget {
 
 class _SalaryInformationState extends State<SalaryInformation> {
 
-  List<DropdownMenuItem<String>> yyyymmItems = [];
+  List yyyymmItem = [];
+  List paytypeItem = [];
+
+  String? yyyymmValue = null;
+  String? paytypeValue = null;
 
   List<Widget> allowList = [];
   Widget allow = new Container();
@@ -29,16 +34,9 @@ class _SalaryInformationState extends State<SalaryInformation> {
   var realAmt = '0';
 
   void initState() {
-    _setYYYYMM().then((result) {
-      setState(() {
-        ;
-      });
-    });
     super.initState();
+    _setYYYYMM();
   }
-
-  String? yyyymmValue = null;
-  String? paytypeValue = null;
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +74,7 @@ class _SalaryInformationState extends State<SalaryInformation> {
                           child: Column(
                             children: <Widget>[
                               Container(
-                                padding: EdgeInsets.all(15.0),
+                                padding: EdgeInsets.all(5.0),
                                 ///margin: EdgeInsets.only(top: 10),
                                 decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: const Color(0xFFFFFFFF)),
                                 child: Center(
@@ -89,39 +87,21 @@ class _SalaryInformationState extends State<SalaryInformation> {
                                       SizedBox(width: 10),
                                       Expanded(
                                         flex: 30,
-                                        child: FutureBuilder(
-                                            future: getDBData('MSelectList'),
-                                            builder: (BuildContext context, AsyncSnapshot snapshot) {
-                                              if (!snapshot.hasData) return CircularProgressIndicator();
-                                              else if (snapshot.hasError) {
-                                                return Padding(
-                                                  padding: const EdgeInsets.all(8.0),
-                                                  child: Text('Error: ${snapshot.error}', style: TextStyle(fontSize: 15),),
-                                                );
-                                              }
-                                              else {
-                                                if (snapshot.data != '') {
-                                                  yyyymmItems.clear();
-                                                  if (jsonDecode(snapshot.data)['Table'].length != 0) {
-                                                    jsonDecode(snapshot.data)['Table'].forEach((element) {
-                                                      yyyymmItems.add(DropdownMenuItem(child: Text(element['Name'].toString()), value: element['Code'].toString()),);
-                                                    });
-                                                  }
-                                                }
-                                              }
-
-                                              if(yyyymmValue == null) yyyymmValue = yyyymmItems.first.value.toString();
-
-                                              return DropdownButton(
-                                                  value: yyyymmValue,
-                                                  onChanged: (String? newValue){
-                                                    setState(() {
-                                                      yyyymmValue = newValue!;
-                                                    });
-                                                  },
-                                                  items: yyyymmItems,
-                                              );
-                                          }
+                                        child: DropdownButton(
+                                          hint: Text('Select'),
+                                          items: yyyymmItem.map((item) {
+                                            return DropdownMenuItem(
+                                              value: item['Code'].toString(),
+                                              child: Text(item['Name'].toString()),
+                                            );
+                                          }).toList(),
+                                          onChanged: (newVal) {
+                                            setState(() {
+                                              yyyymmValue = newVal;
+                                              _setPayType(yyyymmValue);
+                                            });
+                                          },
+                                          value: yyyymmValue,
                                         ),
                                       ),
                                       SizedBox(width: 10),
@@ -132,21 +112,21 @@ class _SalaryInformationState extends State<SalaryInformation> {
                                       SizedBox(width: 10),
                                       Expanded(
                                         flex: 25,
-                                        child: DropdownButton<String>(
-                                          value: paytypeValue,
-                                          style: const TextStyle(color: Colors.black),
-                                          onChanged: (String? value) {
-                                            // This is called when the user selects an item.
-                                            setState(() {
-                                              paytypeValue = value!;
-                                            });
-                                          },
-                                          items: paytypeList.map<DropdownMenuItem<String>>((String value) {
-                                            return DropdownMenuItem<String>(
-                                              value: value,
-                                              child: Text(value, softWrap: false, overflow: TextOverflow.ellipsis),
+                                        child: DropdownButton(
+                                          hint: Text('Select'),
+                                          items: paytypeItem.map((item) {
+                                            return DropdownMenuItem(
+                                              value: item['Code'].toString(),
+                                              child: Text(item['Name'].toString()),
                                             );
                                           }).toList(),
+                                          onChanged: (newVal) {
+                                            setState(() {
+                                              paytypeValue = newVal;
+                                              _setSalary();
+                                            });
+                                          },
+                                          value: paytypeValue,
                                         ),
                                       ),
                                     ],
@@ -189,8 +169,8 @@ class _SalaryInformationState extends State<SalaryInformation> {
                                           height: 15,
                                           child: Row(
                                             children: <Widget>[
-                                              Expanded(flex: 6, child: Text('Name', textAlign: TextAlign.center, softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: sSize, color: Colors.black))),
-                                              Expanded(flex: 4, child: Text('Amount', textAlign: TextAlign.center, softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: sSize, color: Colors.black))),
+                                              Expanded(flex: 6, child: Text('Salary Information.Name'.tr(), textAlign: TextAlign.center, softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: sSize, color: Colors.black))),
+                                              Expanded(flex: 4, child: Text('Salary Information.Amount'.tr(), textAlign: TextAlign.center, softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: sSize, color: Colors.black))),
                                             ],
                                           )
                                       ),
@@ -238,10 +218,10 @@ class _SalaryInformationState extends State<SalaryInformation> {
                                           height: 15,
                                           child: Row(
                                             children: <Widget>[
-                                              Expanded(flex: 40, child: Text('Name', textAlign: TextAlign.center, softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: sSize, color: Colors.black))),
-                                              Expanded(flex: 20, child: Text('Count', textAlign: TextAlign.center, softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: sSize, color: Colors.black))),
-                                              Expanded(flex: 20, child: Text('Hour', textAlign: TextAlign.center, softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: sSize, color: Colors.black))),
-                                              Expanded(flex: 20, child: Text('Minute', textAlign: TextAlign.center, softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: sSize, color: Colors.black))),
+                                              Expanded(flex: 40, child: Text('Salary Information.Name'.tr(), textAlign: TextAlign.center, softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: sSize, color: Colors.black))),
+                                              Expanded(flex: 20, child: Text('Salary Information.Count'.tr(), textAlign: TextAlign.center, softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: sSize, color: Colors.black))),
+                                              Expanded(flex: 20, child: Text('Salary Information.Hour'.tr(), textAlign: TextAlign.center, softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: sSize, color: Colors.black))),
+                                              Expanded(flex: 20, child: Text('Salary Information.Minute'.tr(), textAlign: TextAlign.center, softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: sSize, color: Colors.black))),
                                             ],
                                           )
                                       ),
@@ -289,8 +269,8 @@ class _SalaryInformationState extends State<SalaryInformation> {
                                           height: 15,
                                           child: Row(
                                             children: <Widget>[
-                                              Expanded(flex: 6, child: Text('Name', textAlign: TextAlign.center, softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: sSize, color: Colors.black))),
-                                              Expanded(flex: 4, child: Text('Amount', textAlign: TextAlign.center, softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: sSize, color: Colors.black))),
+                                              Expanded(flex: 6, child: Text('Salary Information.Name'.tr(), textAlign: TextAlign.center, softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: sSize, color: Colors.black))),
+                                              Expanded(flex: 4, child: Text('Salary Information.Amount'.tr(), textAlign: TextAlign.center, softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: sSize, color: Colors.black))),
                                             ],
                                           )
                                       ),
@@ -380,102 +360,37 @@ class _SalaryInformationState extends State<SalaryInformation> {
       ),
     );
   }
-/*
-FutureBuilder(
-future: getDBData('MSalaryInformation'),
-builder: (BuildContext context, AsyncSnapshot snapshot) {
-
-
-
-if (snapshot.hasData == false) {
-return Center(
-child: Column(
-mainAxisSize: MainAxisSize.max,
-mainAxisAlignment: MainAxisAlignment.center,
-children: <Widget>[
-CircularProgressIndicator(),
-]
-),
-);
-}
-else if (snapshot.hasError) {
-return Center(
-child: Column(
-mainAxisSize: MainAxisSize.max,
-mainAxisAlignment: MainAxisAlignment.center,
-children: <Widget>[
-Text('Error: ${snapshot.error}', style: TextStyle(fontSize: 15),)
-]
-),
-);
-}
-else {
-if (snapshot.data != '') {
-if (jsonDecode(snapshot.data)['Table'].length != 0) {
-jsonDecode(snapshot.data)['Table'].forEach((element) {
-allow = Container(
-height: 25,
-child: Row(
-children: <Widget>[
-Expanded(flex: 6, child: Text(element['ALLOW_NM'].toString(), textAlign: TextAlign.center, softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: sSize, color: Colors.black))),
-Expanded(flex: 4, child: Text(element['ALLOW'].toString(), textAlign: TextAlign.right, softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: sSize, color: Colors.black))),
-],
-)
-);
-allowList.add(allow);
-});
-}
-
-if (jsonDecode(snapshot.data)['Table1'].length != 0) {
-jsonDecode(snapshot.data)['Table1'].forEach((element) {
-attend = Container(
-height: 25,
-child: Row(
-children: <Widget>[
-Expanded(flex: 40, child: Text(element['DILIG_NM'].toString(), textAlign: TextAlign.center, softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: sSize, color: Colors.black))),
-Expanded(flex: 20, child: Text(element['DILIG_CNT'].toString(), textAlign: TextAlign.center, softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: sSize, color: Colors.black))),
-Expanded(flex: 20, child: Text(element['DILIG_HH'].toString(), textAlign: TextAlign.center, softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: sSize, color: Colors.black))),
-Expanded(flex: 20, child: Text(element['DILIG_MM'].toString(), textAlign: TextAlign.center, softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: sSize, color: Colors.black))),
-],
-)
-);
-attendList.add(attend);
-});
-}
-
-if (jsonDecode(snapshot.data)['Table2'].length != 0) {
-jsonDecode(snapshot.data)['Table2'].forEach((element) {
-sub = Container(
-height: 25,
-child: Row(
-children: <Widget>[
-Expanded(flex: 6, child: Text(element['SUB_NM'].toString(), textAlign: TextAlign.center, softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: sSize, color: Colors.black))),
-Expanded(flex: 4, child: Text(element['SUB_AMT'].toString(), textAlign: TextAlign.right, softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: sSize, color: Colors.black))),
-],
-)
-);
-subList.add(sub);
-});
-}
-
-if (jsonDecode(snapshot.data)['Table3'].length != 0) {
-jsonDecode(snapshot.data)['Table3'].forEach((element) {
-totalAmt = element["PROV_TOT_AMT"].toString();
-subAmt = element["SUB_TOT_AMT"].toString();
-realAmt = element["REAL_PROV_AMT"].toString();
-});
-}
-}
-else { /// jsondata == ''
-;
-}
-
-return*/
 
   Future<void> _setYYYYMM() async {
-    var jsondata = '';
     var url = 'https://jhapi.jahwa.co.kr/MSelectList';
     var data = {'Div': 'PAY_YYMM', 'Data': '', 'EntCode': session['EntCode'].toString(), 'EmpCode': session['EmpCode'].toString()};
+
+    yyyymmItem.clear();
+
+    try {
+
+      await http.post(Uri.parse(url), body: json.encode(data), headers: {"Content-Type": "application/json"}).timeout(const Duration(seconds: 15)).then<void>((http.Response response) {
+        if (response.statusCode != 200 || response.body == "{}") {;}
+        else if (response.statusCode == 200) {
+
+          setState(() {
+            yyyymmItem = jsonDecode(response.body)['Table'];
+            yyyymmValue = yyyymmItem.first['Code'];
+
+            _setPayType(yyyymmValue);
+          });
+        }
+      });
+    } catch (e) {
+      showMessageBox(context, 'Message.Alert'.tr(), "Set YYYYMM Error : " + e.toString());
+    }
+  }
+
+  Future<void> _setPayType(String? yyyymm) async {
+    var url = 'https://jhapi.jahwa.co.kr/MSelectList';
+    var data = {'Div': 'PROV_TYPE', 'Data': yyyymm, 'EntCode': session['EntCode'].toString(), 'EmpCode': session['EmpCode'].toString()};
+
+    paytypeItem.clear();
 
     try {
 
@@ -484,18 +399,96 @@ return*/
           const Duration(seconds: 15)).then<void>((http.Response response) {
         if (response.statusCode != 200 || response.body == "{}") {;}
         else if (response.statusCode == 200) {
-          if (jsonDecode(response.body)['Table1'].length != 0) {
-            jsonDecode(response.body)['Table1'].forEach((element) {
-              yyyymmList.add(element['Code'].toString());
-            });
-          }
+          setState(() {
+            paytypeItem = jsonDecode(response.body)['Table'];
+            paytypeValue = paytypeItem.first['Code'];
+
+            _setSalary();
+          });
         }
       });
-
-      yyyymmValue = yyyymmList.first;
-      paytypeValue = paytypeList.first;
     } catch (e) {
-      print("set Information Error : " + e.toString());
+      showMessageBox(context, 'Message.Alert'.tr(), "Set Pay Type Error : " + e.toString());
+    }
+  }
+
+  Future<void> _setSalary() async {
+    var url = 'https://jhapi.jahwa.co.kr/MSalaryInformation';
+    var data = {'PayYYMM': yyyymmValue, 'ProvType': paytypeValue, 'EntCode': session['EntCode'].toString(), 'EmpCode': session['EmpCode'].toString()};
+
+    allowList.clear();
+    attendList.clear();
+    subList.clear();
+
+    totalAmt = '0';
+    subAmt = '0';
+    realAmt = '0';
+
+    try {
+
+      await http.post(Uri.parse(url), body: json.encode(data), headers: {"Content-Type": "application/json"}).timeout(const Duration(seconds: 15)).then<void>((http.Response response) {
+        if (response.statusCode != 200 || response.body == "{}") {;}
+        else if (response.statusCode == 200) {
+          setState(() {
+            if (jsonDecode(response.body)['Table'].length != 0) {
+              jsonDecode(response.body)['Table'].forEach((element) {
+                allow = Container(
+                    height: 25,
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(flex: 6, child: Text(element['ALLOW_NM'].toString(), textAlign: TextAlign.center, softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: sSize, color: Colors.black))),
+                        Expanded(flex: 4, child: Text(element['ALLOW'].toString(), textAlign: TextAlign.right, softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: sSize, color: Colors.black))),
+                      ],
+                    )
+                );
+                allowList.add(allow);
+              });
+            }
+
+            if (jsonDecode(response.body)['Table1'].length != 0) {
+              jsonDecode(response.body)['Table1'].forEach((element) {
+                attend = Container(
+                    height: 25,
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(flex: 40, child: Text(element['DILIG_NM'].toString(), textAlign: TextAlign.center, softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: sSize, color: Colors.black))),
+                        Expanded(flex: 20, child: Text(element['DILIG_CNT'].toString(), textAlign: TextAlign.center, softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: sSize, color: Colors.black))),
+                        Expanded(flex: 20, child: Text(element['DILIG_HH'].toString(), textAlign: TextAlign.center, softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: sSize, color: Colors.black))),
+                        Expanded(flex: 20, child: Text(element['DILIG_MM'].toString(), textAlign: TextAlign.center, softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: sSize, color: Colors.black))),
+                      ],
+                    )
+                );
+                attendList.add(attend);
+              });
+            }
+
+            if (jsonDecode(response.body)['Table2'].length != 0) {
+              jsonDecode(response.body)['Table2'].forEach((element) {
+                sub = Container(
+                    height: 25,
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(flex: 6, child: Text(element['SUB_NM'].toString(), textAlign: TextAlign.center, softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: sSize, color: Colors.black))),
+                        Expanded(flex: 4, child: Text(element['SUB_AMT'].toString(), textAlign: TextAlign.right, softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: sSize, color: Colors.black))),
+                      ],
+                    )
+                );
+                subList.add(sub);
+              });
+            }
+
+            if (jsonDecode(response.body)['Table3'].length != 0) {
+              jsonDecode(response.body)['Table3'].forEach((element) {
+                totalAmt = element["PROV_TOT_AMT"].toString();
+                subAmt = element["SUB_TOT_AMT"].toString();
+                realAmt = element["REAL_PROV_AMT"].toString();
+              });
+            }
+          });
+        }
+      });
+    } catch (e) {
+      showMessageBox(context, 'Message.Alert'.tr(), "Set Salary Error : " + e.toString());
     }
   }
 }
