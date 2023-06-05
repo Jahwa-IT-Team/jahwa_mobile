@@ -23,10 +23,15 @@ class _AnnualLeaveInformationState extends State<AnnualLeaveInformation> {
   Widget annual = new Container();
 
   var YearSave = 0.0;
+  var YearSaveHH = 0.0;
   var YearPart = 0.0;
+  var YearPartHH = 0.0;
   var YearSaveTot = 0.0;
+  var YearSaveTotHH = 0.0;
   var YearUse = 0.0;
+  var YearUseHH = 0.0;
   var YearRemain = 0.0;
+  var YearRemainHH = 0.0;
 
   var use01 = 0.0;
   var use02 = 0.0;
@@ -105,8 +110,9 @@ class _AnnualLeaveInformationState extends State<AnnualLeaveInformation> {
                                             );
                                           }).toList(),
                                           onChanged: (newVal) {
-                                            setState(() {
+                                            setState(() async {
                                               yyyyValue = newVal;
+                                              await _setYYYY();
                                             });
                                           },
                                           value: yyyyValue,
@@ -152,45 +158,75 @@ class _AnnualLeaveInformationState extends State<AnnualLeaveInformation> {
                                       Row(
                                         crossAxisAlignment: CrossAxisAlignment.center,
                                         children: <Widget>[
-                                          Text('Annual Leave Information.Base Annual Leave'.tr(), softWrap: false, overflow: TextOverflow.ellipsis),
+                                          Expanded(
+                                            flex: 6,
+                                            child: Text('Annual Leave Information.Base Annual Leave'.tr(), softWrap: false, overflow: TextOverflow.ellipsis)
+                                          ),
                                           SizedBox(height: 10),
-                                          Text('$YearSave'.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
+                                          Expanded(
+                                            flex: 4,
+                                            child: Text('$YearSave'.toString() + '개 (' + '$YearSaveHH'.toString() + '시간)', textAlign: TextAlign.right, style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black))
+                                          ),
                                         ],
                                       ),
                                       SizedBox(height: 10),
                                       Row(
                                         crossAxisAlignment: CrossAxisAlignment.center,
                                         children: <Widget>[
-                                          Text('Annual Leave Information.Additional Annual Leave'.tr(), softWrap: false, overflow: TextOverflow.ellipsis),
+                                          Expanded(
+                                            flex: 6,
+                                            child: Text('Annual Leave Information.Additional Annual Leave'.tr(), softWrap: false, overflow: TextOverflow.ellipsis)
+                                          ),
                                           SizedBox(height: 10),
-                                          Text('$YearPart'.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
+                                          Expanded(
+                                            flex: 4,
+                                            child: Text('$YearPart'.toString() + '개 (' + '$YearPartHH'.toString() + '시간)', textAlign: TextAlign.right, style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black))
+                                          ),
                                         ],
                                       ),
                                       SizedBox(height: 10),
                                       Row(
                                         crossAxisAlignment: CrossAxisAlignment.center,
                                         children: <Widget>[
-                                          Text('Annual Leave Information.Annual Leave Total'.tr(), softWrap: false, overflow: TextOverflow.ellipsis),
+                                          Expanded(
+                                            flex: 6,
+                                            child: Text('Annual Leave Information.Annual Leave Total'.tr(), softWrap: false, overflow: TextOverflow.ellipsis)
+                                          ),
                                           SizedBox(height: 10),
-                                          Text('$YearSaveTot'.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
+                                          Expanded(
+                                            flex: 4,
+                                            child: Text('$YearSaveTot'.toString() + '개 (' + '$YearSaveTotHH'.toString() + '시간)', textAlign: TextAlign.right, style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black))
+                                          ),
                                         ],
                                       ),
                                       SizedBox(height: 10),
                                       Row(
                                         crossAxisAlignment: CrossAxisAlignment.center,
                                         children: <Widget>[
-                                          Text('Annual Leave Information.Annual Leave Use'.tr(), softWrap: false, overflow: TextOverflow.ellipsis),
+                                          Expanded(
+                                            flex: 6,
+                                            child: Text('Annual Leave Information.Annual Leave Use'.tr(), softWrap: false, overflow: TextOverflow.ellipsis)
+                                          ),
                                           SizedBox(height: 10),
-                                          Text('$YearUse'.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
+                                          Expanded(
+                                            flex: 4,
+                                            child: Text('$YearUse'.toString() + '개 (' + '$YearUseHH'.toString() + '시간)', textAlign: TextAlign.right, style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black))
+                                          ),
                                         ],
                                       ),
                                       SizedBox(height: 10),
                                       Row(
                                         crossAxisAlignment: CrossAxisAlignment.center,
                                         children: <Widget>[
-                                          Text('Annual Leave Information.Annual Leave Remain'.tr(), softWrap: false, overflow: TextOverflow.ellipsis),
+                                          Expanded(
+                                            flex: 6,
+                                            child: Text('Annual Leave Information.Annual Leave Remain'.tr(), softWrap: false, overflow: TextOverflow.ellipsis)
+                                          ),
                                           SizedBox(height: 10),
-                                          Text('$YearRemain'.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
+                                          Expanded(
+                                            flex: 4,
+                                            child: Text('$YearRemain'.toString() + '개 (' + '$YearRemainHH'.toString() + '시간)', textAlign: TextAlign.right, style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black))
+                                          ),
                                         ],
                                       ),
                                     ],
@@ -227,163 +263,163 @@ class _AnnualLeaveInformationState extends State<AnnualLeaveInformation> {
                                 margin: EdgeInsets.only(top: 10),
                                 decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: const Color(0xFFFFFFFF)),
                                 child: Center(
-                                  child: Row(
-                                    children: <Widget>[
-                                      Expanded(
-                                        flex: 1,
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: <Widget>[
-                                            Text('Annual Leave Information.Month 01'.tr(), softWrap: false, overflow: TextOverflow.ellipsis),
-                                            SizedBox(height: 10),
-                                            Text('$use01'.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
-                                          ],
-                                        ),
+                                  child: Column(
+                                    children: <Widget> [
+                                      Row(
+                                        children: <Widget>[
+                                          Expanded(
+                                            flex: 1,
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: <Widget>[
+                                                Text('Annual Leave Information.Month 01'.tr(), softWrap: false, overflow: TextOverflow.ellipsis),
+                                                SizedBox(height: 10),
+                                                Text('$use01'.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(width: 10),
+                                          Expanded(
+                                            flex: 1,
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: <Widget>[
+                                                Text('Annual Leave Information.Month 02'.tr(), softWrap: false, overflow: TextOverflow.ellipsis),
+                                                SizedBox(height: 10),
+                                                Text('$use02'.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(width: 10),
+                                          Expanded(
+                                            flex: 1,
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: <Widget>[
+                                                Text('Annual Leave Information.Month 03'.tr(), softWrap: false, overflow: TextOverflow.ellipsis),
+                                                SizedBox(height: 10),
+                                                Text('$use03'.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(width: 10),
+                                          Expanded(
+                                            flex: 1,
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: <Widget>[
+                                                Text('Annual Leave Information.Month 04'.tr(), softWrap: false, overflow: TextOverflow.ellipsis),
+                                                SizedBox(height: 10),
+                                                Text('$use04'.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      SizedBox(width: 10),
-                                      Expanded(
-                                        flex: 1,
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: <Widget>[
-                                            Text('Annual Leave Information.Month 02'.tr(), softWrap: false, overflow: TextOverflow.ellipsis),
-                                            SizedBox(height: 10),
-                                            Text('$use02'.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
-                                          ],
-                                        ),
+                                      SizedBox(height: 10),
+                                      Row(
+                                        children: <Widget>[
+                                          Expanded(
+                                            flex: 1,
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: <Widget>[
+                                                Text('Annual Leave Information.Month 05'.tr(), softWrap: false, overflow: TextOverflow.ellipsis),
+                                                SizedBox(height: 10),
+                                                Text('$use05'.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(width: 10),
+                                          Expanded(
+                                            flex: 1,
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: <Widget>[
+                                                Text('Annual Leave Information.Month 06'.tr(), softWrap: false, overflow: TextOverflow.ellipsis),
+                                                SizedBox(height: 10),
+                                                Text('$use06'.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(width: 10),
+                                          Expanded(
+                                            flex: 1,
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: <Widget>[
+                                                Text('Annual Leave Information.Month 07'.tr(), softWrap: false, overflow: TextOverflow.ellipsis),
+                                                SizedBox(height: 10),
+                                                Text('$use07'.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(width: 10),
+                                          Expanded(
+                                            flex: 1,
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: <Widget>[
+                                                Text('Annual Leave Information.Month 08'.tr(), softWrap: false, overflow: TextOverflow.ellipsis),
+                                                SizedBox(height: 10),
+                                                Text('$use08'.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      SizedBox(width: 10),
-                                      Expanded(
-                                        flex: 1,
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: <Widget>[
-                                            Text('Annual Leave Information.Month 03'.tr(), softWrap: false, overflow: TextOverflow.ellipsis),
-                                            SizedBox(height: 10),
-                                            Text('$use03'.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(width: 10),
-                                      Expanded(
-                                        flex: 1,
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: <Widget>[
-                                            Text('Annual Leave Information.Month 04'.tr(), softWrap: false, overflow: TextOverflow.ellipsis),
-                                            SizedBox(height: 10),
-                                            Text('$use04'.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(width: 10),
-                                      Expanded(
-                                        flex: 1,
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: <Widget>[
-                                            Text('Annual Leave Information.Month 05'.tr(), softWrap: false, overflow: TextOverflow.ellipsis),
-                                            SizedBox(height: 10),
-                                            Text('$use05'.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(width: 10),
-                                      Expanded(
-                                        flex: 1,
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: <Widget>[
-                                            Text('Annual Leave Information.Month 06'.tr(), softWrap: false, overflow: TextOverflow.ellipsis),
-                                            SizedBox(height: 10),
-                                            Text('$use06'.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(width: 10),
-                                      Expanded(
-                                        flex: 1,
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: <Widget>[
-                                            Text('Annual Leave Information.Month 07'.tr(), softWrap: false, overflow: TextOverflow.ellipsis),
-                                            SizedBox(height: 10),
-                                            Text('$use07'.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(width: 10),
-                                      Expanded(
-                                        flex: 1,
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: <Widget>[
-                                            Text('Annual Leave Information.Month 08'.tr(), softWrap: false, overflow: TextOverflow.ellipsis),
-                                            SizedBox(height: 10),
-                                            Text('$use08'.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(width: 10),
-                                      Expanded(
-                                        flex: 1,
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: <Widget>[
-                                            Text('Annual Leave Information.Month 09'.tr(), softWrap: false, overflow: TextOverflow.ellipsis),
-                                            SizedBox(height: 10),
-                                            Text('$use09'.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(width: 10),
-                                      Expanded(
-                                        flex: 1,
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: <Widget>[
-                                            Text('Annual Leave Information.Month 10'.tr(), softWrap: false, overflow: TextOverflow.ellipsis),
-                                            SizedBox(height: 10),
-                                            Text('$use10'.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(width: 10),
-                                      Expanded(
-                                        flex: 1,
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: <Widget>[
-                                            Text('Annual Leave Information.Month 11'.tr(), softWrap: false, overflow: TextOverflow.ellipsis),
-                                            SizedBox(height: 10),
-                                            Text('$use11'.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(width: 10),
-                                      Expanded(
-                                        flex: 1,
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: <Widget>[
-                                            Text('Annual Leave Information.Month 12'.tr(), softWrap: false, overflow: TextOverflow.ellipsis),
-                                            SizedBox(height: 10),
-                                            Text('$use12'.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(width: 10),
-                                      Expanded(
-                                        flex: 1,
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: <Widget>[
-                                            Text('Annual Leave Information.Total Use'.tr(), softWrap: false, overflow: TextOverflow.ellipsis),
-                                            SizedBox(height: 10),
-                                            Text('$YearUse'.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
-                                          ],
-                                        ),
-                                      ),
+                                      SizedBox(height: 10),
+                                      Row(
+                                        children: <Widget>[
+                                          Expanded(
+                                            flex: 1,
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: <Widget>[
+                                                Text('Annual Leave Information.Month 09'.tr(), softWrap: false, overflow: TextOverflow.ellipsis),
+                                                SizedBox(height: 10),
+                                                Text('$use09'.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(width: 10),
+                                          Expanded(
+                                            flex: 1,
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: <Widget>[
+                                                Text('Annual Leave Information.Month 10'.tr(), softWrap: false, overflow: TextOverflow.ellipsis),
+                                                SizedBox(height: 10),
+                                                Text('$use10'.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(width: 10),
+                                          Expanded(
+                                            flex: 1,
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: <Widget>[
+                                                Text('Annual Leave Information.Month 11'.tr(), softWrap: false, overflow: TextOverflow.ellipsis),
+                                                SizedBox(height: 10),
+                                                Text('$use11'.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(width: 10),
+                                          Expanded(
+                                            flex: 1,
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: <Widget>[
+                                                Text('Annual Leave Information.Month 12'.tr(), softWrap: false, overflow: TextOverflow.ellipsis),
+                                                SizedBox(height: 10),
+                                                Text('$use12'.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      )
                                     ],
                                   ),
                                 ),
@@ -486,10 +522,15 @@ class _AnnualLeaveInformationState extends State<AnnualLeaveInformation> {
     annualList.clear();
 
     YearSave = 0.0;
+    YearSaveHH = 0.0;
     YearPart = 0.0;
+    YearPartHH = 0.0;
     YearSaveTot = 0.0;
+    YearSaveTotHH = 0.0;
     YearUse = 0.0;
+    YearUseHH = 0.0;
     YearRemain = 0.0;
+    YearRemainHH = 0.0;
 
     use01 = 0.0;
     use02 = 0.0;
@@ -512,7 +553,7 @@ class _AnnualLeaveInformationState extends State<AnnualLeaveInformation> {
           setState(() {
             if (jsonDecode(response.body)['Table1'].length != 0) {
               jsonDecode(response.body)['Table1'].forEach((element) {
-                YearUse = element["TOTAL"];
+                YearUseHH = element["TOTAL"];
                 use01 = element["MON1"];
                 use02 = element["MON2"];
                 use03 = element["MON3"];
@@ -536,6 +577,12 @@ class _AnnualLeaveInformationState extends State<AnnualLeaveInformation> {
               });
             }
 
+            YearSaveHH = YearSave * 8;
+            YearPartHH = YearPart * 8;
+            YearSaveTotHH = YearSaveTot * 8;
+
+            YearUse = YearUseHH / 8;
+            YearRemainHH = YearSaveTotHH - YearUseHH;
             YearRemain = YearSaveTot - YearUse;
 
             if (jsonDecode(response.body)['Table2'].length != 0) {
