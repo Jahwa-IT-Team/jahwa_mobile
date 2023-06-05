@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:http/http.dart' as http;
-import 'package:sn_progress_dialog/sn_progress_dialog.dart';
 
 import 'package:jahwa_mobile/common/common.dart';
 import 'package:jahwa_mobile/common/variable.dart';
@@ -71,67 +70,64 @@ class _SalaryInformationState extends State<SalaryInformation> {
                       children: <Widget>[
                         Container(
                           padding: EdgeInsets.all(5.0),
+                          decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: const Color(0xFFFFFFFF)),
                           child: Column(
                             children: <Widget>[
-                              Container(
-                                padding: EdgeInsets.all(5.0),
-                                ///margin: EdgeInsets.only(top: 10),
-                                decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: const Color(0xFFFFFFFF)),
-                                child: Center(
-                                  child: Row(
-                                    children: <Widget> [
-                                      Expanded(
-                                        flex: 25,
-                                        child: Text('Salary Information.YYYYMM'.tr(), textAlign: TextAlign.center, softWrap: false, overflow: TextOverflow.ellipsis),
-                                      ),
-                                      SizedBox(width: 10),
-                                      Expanded(
-                                        flex: 30,
-                                        child: DropdownButton(
-                                          hint: Text('Select'),
-                                          items: yyyymmItem.map((item) {
-                                            return DropdownMenuItem(
-                                              value: item['Code'].toString(),
-                                              child: Text(item['Name'].toString()),
-                                            );
-                                          }).toList(),
-                                          onChanged: (newVal) {
-                                            setState(() {
-                                              yyyymmValue = newVal;
-                                              _setPayType(yyyymmValue);
-                                            });
-                                          },
-                                          value: yyyymmValue,
-                                        ),
-                                      ),
-                                      SizedBox(width: 10),
-                                      Expanded(
-                                        flex: 20,
-                                        child: Text('Salary Information.Pay Type'.tr(), textAlign: TextAlign.center, softWrap: false, overflow: TextOverflow.ellipsis),
-                                      ),
-                                      SizedBox(width: 10),
-                                      Expanded(
-                                        flex: 25,
-                                        child: DropdownButton(
-                                          hint: Text('Select'),
-                                          items: paytypeItem.map((item) {
-                                            return DropdownMenuItem(
-                                              value: item['Code'].toString(),
-                                              child: Text(item['Name'].toString()),
-                                            );
-                                          }).toList(),
-                                          onChanged: (newVal) {
-                                            setState(() {
-                                              paytypeValue = newVal;
-                                              _setSalary();
-                                            });
-                                          },
-                                          value: paytypeValue,
-                                        ),
-                                      ),
-                                    ],
+                              Row(
+                                children: <Widget> [
+                                  Expanded(
+                                    flex: 3,
+                                    child: Text('Salary Information.YYYYMM'.tr(), textAlign: TextAlign.center, softWrap: false, overflow: TextOverflow.ellipsis),
                                   ),
-                                ),
+                                  SizedBox(width: 10),
+                                  Expanded(
+                                    flex: 7,
+                                    child: DropdownButton(
+                                      hint: Text('Select'),
+                                      items: yyyymmItem.map((item) {
+                                        return DropdownMenuItem(
+                                          value: item['Code'].toString(),
+                                          child: Text(item['Name'].toString()),
+                                        );
+                                      }).toList(),
+                                      onChanged: (newVal) {
+                                        setState(() {
+                                          yyyymmValue = newVal;
+                                          _setPayType(yyyymmValue);
+                                        });
+                                      },
+                                      value: yyyymmValue,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: <Widget> [
+                                  Expanded(
+                                    flex: 3,
+                                    child: Text('Salary Information.Pay Type'.tr(), textAlign: TextAlign.center, softWrap: false, overflow: TextOverflow.ellipsis),
+                                  ),
+                                  SizedBox(width: 10),
+                                  Expanded(
+                                    flex: 7,
+                                    child: DropdownButton(
+                                      hint: Text('Select'),
+                                      items: paytypeItem.map((item) {
+                                        return DropdownMenuItem(
+                                          value: item['Code'].toString(),
+                                          child: Text(item['Name'].toString()),
+                                        );
+                                      }).toList(),
+                                      onChanged: (newVal) {
+                                        setState(() {
+                                          paytypeValue = newVal;
+                                          _setSalary();
+                                        });
+                                      },
+                                      value: paytypeValue,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
