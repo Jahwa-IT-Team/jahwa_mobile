@@ -1,14 +1,14 @@
 {
   "Annual Leave Information": {
-    "Additional Annual Leave": "Additional Annual Leave",
-    "Annual Generation History": "Annual Generation History",
-    "Annual Leave Details": "Annual Leave Details",
-    "Annual Leave Remain": "Annual Leave Remain",
-    "Annual Leave Total": "Annual Leave Total",
-    "Annual Leave Use": "Annual Leave Use",
-    "Base Annual Leave": "Base Annual Leave",
-    "Comment": "Comment",
-    "Date": "Date",
+    "Additional Annual Leave": "근속가산",
+    "Annual Generation History": "연차 정산 내역",
+    "Annual Leave Details": "연차 사용 내역",
+    "Annual Leave Remain": "잔여연차",
+    "Annual Leave Total": "연차종발생",
+    "Annual Leave Use": "연차사용",
+    "Base Annual Leave": "연차발생",
+    "Comment": "세부내역",
+    "Date": "날짜",
     "Month 01": "1월",
     "Month 02": "2월",
     "Month 03": "3월",
@@ -21,11 +21,21 @@
     "Month 10": "10월",
     "Month 11": "11월",
     "Month 12": "12월",
-    "Monthly Annual Usage Status": "Monthly Annual Usage Status",
-    "Name": "Name",
-    "Time": "Time",
-    "Total Use" : "Total Use",
-    "YYYY" : "YYYY"
+    "Monthly Annual Usage Status": "월별 연차 사용현황",
+    "Name": "근매",
+    "Time": "시간",
+    "Total Use" : "사용합계",
+    "YYYY" : "년도"
+  },
+  "Attendance Information": {
+    "Date": "일시",
+    "End Time": "퇴근시간",
+    "Holiday Type": "휴일타입",
+    "Remark": "비고",
+    "Start Time": "출근시간",
+    "Week Day": "요일",
+    "Work Shift": "근무조",
+    "Work Type": "근무제"
   },
   "Check Employee" : {
     "Check Employee" : "사원 확인",
@@ -38,6 +48,9 @@
   "Common" : {
     "Change Additional Information" : "겸직변경",
     "Select Additional Information" : "겸직선택"
+  },
+  "Electronic Approval": {
+    "Open Electronic Approval": "Open Electronic Approval"
   },
   "Index" : {
     "Annual Leave" : "연차",
@@ -168,5 +181,8 @@
     "Information" : "정보",
     "Search" : "검색"
   },
-  "Title" : "제목"
+  "Title" : "제목",
+  "Web Mail": {
+    "Open Web Mail": "Open Web Mail"
+  }
 }

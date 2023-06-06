@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:jahwa_mobile/common/variable.dart';
+
+final Uri _url = Uri.parse('https://outlook.office.com/mail/');
 
 class WebMail extends StatefulWidget {
   @override
@@ -14,6 +17,8 @@ class _WebMailState extends State<WebMail> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    if(session['EntGroup'].toString() == '1') launchUrl(_url, mode: LaunchMode.externalNonBrowserApplication);
+    else Navigator.of(context).pop();
   }
 
   @override
@@ -66,12 +71,30 @@ class _WebMailState extends State<WebMail> {
                                             child: Column(
                                               children: <Widget>[
                                                 Container(
-                                                    height: 25,
+                                                    height: 40,
                                                     child: Row(
+                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                      crossAxisAlignment: CrossAxisAlignment.center,
                                                       children: <Widget>[
-                                                        Icon(Icons.person_add, size: 18, color: const Color(0xFF729ee2)),
-                                                        SizedBox(width: 10),
-                                                        Flexible(child: Text('Text', softWrap: false, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: sSize, color: Colors.black))),
+                                                        ButtonTheme(
+                                                          child: ElevatedButton(
+                                                            child:Row(
+                                                              mainAxisAlignment: MainAxisAlignment.center,
+                                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                                              children: [
+                                                                Icon(Icons.ads_click, size: 20),
+                                                                SizedBox(width:10),
+                                                                Text('Web Mail.Open Web Mail'.tr(), style: TextStyle(fontSize: bSize, fontWeight: FontWeight.bold, color: Colors.white)),
+                                                              ],
+                                                            ),
+                                                            style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
+                                                            onPressed: () async {
+                                                              if (!await launchUrl(_url, mode: LaunchMode.externalNonBrowserApplication)) {
+                                                                throw Exception('Could not launch $_url');
+                                                              }
+                                                            },
+                                                          ),
+                                                        ),
                                                       ],
                                                     )
                                                 )

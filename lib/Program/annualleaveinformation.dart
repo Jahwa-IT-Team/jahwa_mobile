@@ -88,14 +88,14 @@ class _AnnualLeaveInformationState extends State<AnnualLeaveInformation> {
                           child: Column(
                             children: <Widget>[
                               Container(
-                                padding: EdgeInsets.all(5.0),
+                                padding: EdgeInsets.only(left: 10.0, right: 10.0),
                                 ///margin: EdgeInsets.only(top: 10),
                                 decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: const Color(0xFFFFFFFF)),
                                 child: Center(
                                   child: Row(
                                     children: <Widget> [
                                       Expanded(
-                                        flex: 25,
+                                        flex: 30,
                                         child: Text('Annual Leave Information.YYYY'.tr(), textAlign: TextAlign.center, softWrap: false, overflow: TextOverflow.ellipsis),
                                       ),
                                       SizedBox(width: 10),
@@ -110,15 +110,31 @@ class _AnnualLeaveInformationState extends State<AnnualLeaveInformation> {
                                             );
                                           }).toList(),
                                           onChanged: (newVal) {
-                                            setState(() async {
+                                            setState(() {
                                               yyyyValue = newVal;
-                                              await _setYYYY();
                                             });
                                           },
                                           value: yyyyValue,
                                         ),
                                       ),
                                       SizedBox(width: 10),
+                                      Expanded(
+                                        flex: 15,
+                                        child: ButtonTheme(
+                                          child: ElevatedButton(
+                                            child:Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                Icon(Icons.search, size: 20),
+                                              ],
+                                            ),
+                                            style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
+                                            onPressed: () async {
+                                              await _setAnnualLeave();
+                                            },
+                                          ),
+                                        ),
+                                      )
                                     ],
                                   ),
                                 ),
@@ -132,7 +148,7 @@ class _AnnualLeaveInformationState extends State<AnnualLeaveInformation> {
                 ),
                 Container(
                   padding: EdgeInsets.all(10.0),
-                  margin: EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 20),
+                  margin: EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
                   decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: const Color(0xFFC8DEFF)),
                   child: Center(
                     child: Column(
@@ -242,7 +258,7 @@ class _AnnualLeaveInformationState extends State<AnnualLeaveInformation> {
                 ),
                 Container(
                   padding: EdgeInsets.all(10.0),
-                  margin: EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 20),
+                  margin: EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
                   decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: const Color(0xFFC8DEFF)),
                   child: Center(
                     child: Column(
@@ -433,7 +449,7 @@ class _AnnualLeaveInformationState extends State<AnnualLeaveInformation> {
                 ),
                 Container(
                   padding: EdgeInsets.all(10.0),
-                  margin: EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
+                  margin: EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 20),
                   decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: const Color(0xFFC8DEFF)),
                   child: Center(
                     child: Column(

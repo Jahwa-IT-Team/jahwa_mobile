@@ -27,6 +27,16 @@
     "Total Use" : "Total Use",
     "YYYY" : "YYYY"
   },
+  "Attendance Information": {
+    "Date": "Date",
+    "End Time": "End Time",
+    "Holiday Type": "Holiday Type",
+    "Remark": "Remark",
+    "Start Time": "Start Time",
+    "Week Day": "Week Day",
+    "Work Shift": "Work Shift",
+    "Work Type": "Work Type"
+  },
   "Check Employee" : {
     "Check Employee" : "Check Employee",
     "Employee Number" : "Employee Number",
@@ -38,6 +48,9 @@
   "Common" : {
     "Change Additional Information" : "Change Additional Information",
     "Select Additional Information" : "Select Additional Information"
+  },
+  "Electronic Approval": {
+    "Open Electronic Approval": "Open Electronic Approval"
   },
   "Index" : {
     "Annual Leave" : "Annual Leave",
@@ -168,5 +181,8 @@
     "Information" : "Information",
     "Search" : "Search"
   },
-  "Title" : "Title(VN)"
+  "Title" : "Title(VN)",
+  "Web Mail": {
+    "Open Web Mail": "Open Web Mail"
+  }
 }

@@ -88,13 +88,15 @@ class _AttendanceInformationState extends State<AttendanceInformation> {
                                                 Container(
                                                   height: 25,
                                                   child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                    ///mainAxisAlignment: MainAxisAlignment.center,
+                                                    ///crossAxisAlignment: CrossAxisAlignment.center,
                                                     children: <Widget>[
                                                       Expanded(
                                                         flex: 15,
                                                         child: TextField(
+                                                          keyboardType: TextInputType.text,
                                                           textAlign: TextAlign.center,
+                                                          style: TextStyle(color: Colors.black, fontSize: sSize),
                                                           decoration: InputDecoration (
                                                               enabledBorder: OutlineInputBorder(
                                                                   borderSide: BorderSide(color: Colors.black26)
@@ -111,7 +113,7 @@ class _AttendanceInformationState extends State<AttendanceInformation> {
                                                         ),
                                                       ),
                                                       Container(
-                                                        width: 30,
+                                                        width: 15,
                                                         decoration: BoxDecoration(
                                                             border: Border.all(color: Colors.transparent)
                                                         ),
@@ -120,7 +122,9 @@ class _AttendanceInformationState extends State<AttendanceInformation> {
                                                       Expanded(
                                                         flex: 15,
                                                         child: TextField(
+                                                          keyboardType: TextInputType.text,
                                                           textAlign: TextAlign.center,
+                                                          style: TextStyle(color: Colors.black, fontSize: sSize),
                                                           decoration: InputDecoration (
                                                             enabledBorder: OutlineInputBorder(
                                                               borderSide: BorderSide(color: Colors.black26)
@@ -138,16 +142,16 @@ class _AttendanceInformationState extends State<AttendanceInformation> {
                                                       ),
                                                       SizedBox(width: 10,),
                                                       Expanded(
-                                                        flex: 10,
+                                                        flex: 7,
                                                         child: ButtonTheme(
                                                           child: ElevatedButton(
                                                             child:Row(
                                                               mainAxisAlignment: MainAxisAlignment.center,
                                                               children: [
-                                                                Icon(Icons.search, size: 20),
+                                                                Icon(Icons.search, size: 15),
                                                               ],
                                                             ),
-                                                            style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
+                                                            style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 15)),
                                                             onPressed: () async {
                                                               await findAttendanceInformation(context, frdate, todate);
                                                             },
@@ -166,19 +170,19 @@ class _AttendanceInformationState extends State<AttendanceInformation> {
                                                     children: <Widget> [
                                                       Expanded(
                                                           flex: 10,
-                                                          child:Text('Date', textAlign: TextAlign.center,)
+                                                          child:Text('Attendance Information.Date'.tr(), textAlign: TextAlign.center,)
                                                       ),
                                                       Expanded(
                                                           flex: 10,
-                                                          child:Text('Week Day', textAlign: TextAlign.center,)
+                                                          child:Text('Attendance Information.Week Day'.tr(), textAlign: TextAlign.center,)
                                                       ),
                                                       Expanded(
                                                           flex: 10,
-                                                          child:Text('Start Time', textAlign: TextAlign.center)
+                                                          child:Text('Attendance Information.Start Time'.tr(), textAlign: TextAlign.center)
                                                       ),
                                                       Expanded(
                                                           flex: 10,
-                                                          child:Text('End Time', textAlign: TextAlign.center)
+                                                          child:Text('Attendance Information.End Time'.tr(), textAlign: TextAlign.center)
                                                       ),
                                                     ]
                                                   ),
@@ -343,7 +347,7 @@ class _AttendanceInformationState extends State<AttendanceInformation> {
                       height:25,
                       child: Row(
                         children: <Widget> [
-                          Expanded(flex: 5, child:Text('Date', textAlign: TextAlign.right,)),
+                          Expanded(flex: 5, child:Text('Attendance Information.Date'.tr(), textAlign: TextAlign.right,)),
                           SizedBox(width: 20),
                           Expanded(flex: 10, child:Text(Date, textAlign: TextAlign.left,)),
                         ]
@@ -353,7 +357,7 @@ class _AttendanceInformationState extends State<AttendanceInformation> {
                       height:25,
                       child: Row(
                         children: <Widget> [
-                          Expanded(flex: 5, child:Text('Week Day', textAlign: TextAlign.right,)),
+                          Expanded(flex: 5, child:Text('Attendance Information.Week Day'.tr(), textAlign: TextAlign.right,)),
                           SizedBox(width: 20),
                           Expanded(flex: 10, child:Text(WeekDay, textAlign: TextAlign.left,)),
                         ]
@@ -363,7 +367,7 @@ class _AttendanceInformationState extends State<AttendanceInformation> {
                       height:25,
                       child: Row(
                         children: <Widget> [
-                          Expanded(flex: 5, child:Text('Holiday Type', textAlign: TextAlign.right,)),
+                          Expanded(flex: 5, child:Text('Attendance Information.Holiday Type'.tr(), textAlign: TextAlign.right,)),
                           SizedBox(width: 20),
                           Expanded(flex: 10, child:Text(HoliType, textAlign: TextAlign.left,)),
                         ]
@@ -373,7 +377,7 @@ class _AttendanceInformationState extends State<AttendanceInformation> {
                       height:25,
                       child: Row(
                         children: <Widget> [
-                          Expanded(flex: 5, child:Text('Remark', textAlign: TextAlign.right,)),
+                          Expanded(flex: 5, child:Text('Attendance Information.Remark'.tr(), textAlign: TextAlign.right,)),
                           SizedBox(width: 20),
                           Expanded(flex: 10, child:Text(Remark, textAlign: TextAlign.left,)),
                         ]
@@ -383,7 +387,7 @@ class _AttendanceInformationState extends State<AttendanceInformation> {
                       height:25,
                       child: Row(
                         children: <Widget> [
-                          Expanded(flex: 5, child:Text('Work Shift', textAlign: TextAlign.right,)),
+                          Expanded(flex: 5, child:Text('Attendance Information.Work Shift'.tr(), textAlign: TextAlign.right,)),
                           SizedBox(width: 20),
                           Expanded(flex: 10, child:Text(WorkShift, textAlign: TextAlign.left,)),
                         ]
@@ -393,7 +397,7 @@ class _AttendanceInformationState extends State<AttendanceInformation> {
                       height:25,
                       child: Row(
                         children: <Widget> [
-                          Expanded(flex: 5, child:Text('Work Type', textAlign: TextAlign.right,)),
+                          Expanded(flex: 5, child:Text('Attendance Information.Work Type'.tr(), textAlign: TextAlign.right,)),
                           SizedBox(width: 20),
                           Expanded(flex: 10, child:Text(WorkType, textAlign: TextAlign.left,)),
                         ]
@@ -403,7 +407,7 @@ class _AttendanceInformationState extends State<AttendanceInformation> {
                       height:25,
                       child: Row(
                         children: <Widget> [
-                          Expanded(flex: 5, child:Text('Start Time', textAlign: TextAlign.right,)),
+                          Expanded(flex: 5, child:Text('Attendance Information.Start Time'.tr(), textAlign: TextAlign.right,)),
                           SizedBox(width: 20),
                           Expanded(flex: 10, child:Text(StartTime, textAlign: TextAlign.left,)),
                         ]
@@ -413,7 +417,7 @@ class _AttendanceInformationState extends State<AttendanceInformation> {
                       height:25,
                       child: Row(
                           children: <Widget> [
-                            Expanded(flex: 5, child:Text('End Time', textAlign: TextAlign.right,)),
+                            Expanded(flex: 5, child:Text('Attendance Information.End Time'.tr(), textAlign: TextAlign.right,)),
                             SizedBox(width: 20),
                             Expanded(flex: 10, child:Text(EndTime, textAlign: TextAlign.left,)),
                           ]
